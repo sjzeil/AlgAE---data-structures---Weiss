@@ -3,10 +3,10 @@ package edu.odu.cs.cs361.animations;//!
 import java.awt.Color;//!
 import java.util.ArrayList;//!
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Utilities.DiscreteInteger;//!
-import edu.odu.cs.zeil.AlgAE.Utilities.Index;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;//!
+import edu.odu.cs.AlgAE.Server.Utilities.Index;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
 
 public class Sorting {//!
 
@@ -23,7 +23,7 @@ public class Sorting {//!
 public void insertionSort (DiscreteInteger[] v, int n)//!
 //!void insertionSort (vector<T>&	 v)
 {
-	ActivationRecord arec = Animation.activate(getClass());//!
+	ActivationRecord arec = activate(getClass());//!
 	arec.refParam("v", v);//!
 	arec.breakHere("starting insertion sort");//!
 	int i = 999, j=468; //!    int i, j, n = v.size();
@@ -74,7 +74,7 @@ public void insertionSort (DiscreteInteger[] v, int n)//!
 void shellSort(DiscreteInteger[] a, int n )//!
 //!void shellSort(Etype a[], int n )
 {
-	ActivationRecord arec = Animation.activate(getClass());//!
+	ActivationRecord arec = activate(getClass());//!
 	for (int k = 0; k < n; ++k)//!
 		arec.highlight(a[k], Color.lightGray);//!
 	arec.refParam("a", a).param("n", n);//!
@@ -127,7 +127,7 @@ void shellSort(DiscreteInteger[] a, int n )//!
 
 //!template<typename T>
 void merge(DiscreteInteger[] v, int first, int mid, int last) {//!void merge(vector<T>& v, int first, int mid, int last) {
-	ActivationRecord arec = Animation.activate(getClass());//!
+	ActivationRecord arec = activate(getClass());//!
 	// temporary vector to merge the sorted sublists
 	arec.param("v", "").param("first", first).param("mid", mid).param("last", last);//!
 	arec.breakHere("starting merge");//!
@@ -208,7 +208,7 @@ void merge(DiscreteInteger[] v, int first, int mid, int last) {//!void merge(vec
 //ordered sublists
 //!template<typename T>
 void mergeSort (DiscreteInteger[] v, int first, int last) {//!void mergeSort(vector<T>& v, int first, int last) {
-	ActivationRecord arec = Animation.activate(getClass());//!
+	ActivationRecord arec = activate(getClass());//!
 	// if the sublist has more than 1 element continue
 	arec.refParam("v", v).param("first", first).param("last", last);//!
 	arec.breakHere("starting mergeSort");//!
@@ -239,7 +239,7 @@ void mergeSort (DiscreteInteger[] v, int first, int last) {//!void mergeSort(vec
 
 //!template<typename T>
 int pivotIndex(DiscreteInteger[] v, int first, int last) {//!int pivotIndex(vector<T>& v, int first, int last) {
-	ActivationRecord arec = Animation.activate(getClass());//!
+	ActivationRecord arec = activate(getClass());//!
 	arec.param("v","").param("first", first).param("last",last);
 	// index for the midpoint of [first,last) and the
 	// indices that scan the index range in tandem
@@ -329,7 +329,7 @@ int pivotIndex(DiscreteInteger[] v, int first, int last) {//!int pivotIndex(vect
 
 //!template<typename T>
 void quicksort(DiscreteInteger[] v, int first, int last) {//!void quicksort(vector<T>& v, int first, int last) {
-	ActivationRecord arec = Animation.activate(getClass());//!
+	ActivationRecord arec = activate(getClass());//!
 	for (int k = first; k < Math.min(last, v.length); ++k) arec.highlight(v[k]);//!
 	// index of the pivot
 	int pivotLoc = -27;//!	int pivotLoc;

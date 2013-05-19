@@ -5,19 +5,20 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
-import edu.odu.cs.zeil.AlgAE.Utilities.DiscreteInteger;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;
 
-public class CS361SortingAnimation extends Animation {
+
+public class CS361SortingAnimation extends LocalJavaAnimation {
 
 	public CS361SortingAnimation() {
-		super("Sorting Algorithms", true);
+		super("Sorting Algorithms");
 	}
 
 	@Override
@@ -80,6 +81,7 @@ public class CS361SortingAnimation extends Animation {
 			public void selected() {
 				generateRandomArray(8);
 				globalVar("vector", new ArrayContainer());
+				/*
 				getActivationStack().render(ArrayList.class, 
 						new Renderer<ArrayList<?>>() {
 							@Override
@@ -107,7 +109,7 @@ public class CS361SortingAnimation extends Animation {
 								return null;
 							}
 					
-				});
+				});*/
 			}
 		});
 		
@@ -179,7 +181,7 @@ public class CS361SortingAnimation extends Animation {
 		int n = Integer.parseInt(value);
 		generateReverseArray(n);
 		
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(this);//!
 		arec.var("array", array).breakHere("generated");//!
 	}
 

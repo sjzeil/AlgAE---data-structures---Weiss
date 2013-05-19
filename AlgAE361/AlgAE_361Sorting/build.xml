@@ -1,4 +1,4 @@
-<project name="AlgAE Client" 
+<project name="AlgAE CS361 Sorting" 
 	 default="package" basedir="." 
 	 xmlns:ivy="antlib:org.apache.ivy.ant"
 	 xmlns:jacoco="antlib:org.jacoco.ant">
@@ -9,8 +9,8 @@
     AlgAE (Algorithm Animation Engine): Java examples for Reference Manual
   </description>
 
-  <property name="projectName" value="algae-jrefman" />
-  <property name="version" value="4.0"/>
+  <property name="projectName" value="algae-361sorting" />
+  <property name="version" value="4.0-SNAPSHOT"/>
 
   <tstamp>
     <format property="build.date" pattern="yyyy-MM-dd" locale="en,US" />
@@ -36,6 +36,12 @@
   <property name="reports.dir" location="target/project-reports/${version}" />	
   <property name="webserver" value="forge350.cs.odu.edu"/>
   <property name="website.path" value="/var/lib/gforge/chroot/home/groups/extract-core/htdocs/"/>
+
+  <property name="deploy.dest" location="/home/zeil/secure_html/AlgAE/${projectName}"/>
+  <property name="deploy.url" value="https://secweb.cs.odu.edu/~zeil/AlgAE/${projectName}"/>
+  <property name="main.class" value="edu.odu.cs.cs361.animations.CS361SortingAnimation"/>
+	
+  <property name="keystore" value="myTestKey"/>
 
 
   <!-- === Unit Test Setup === -->
@@ -86,6 +92,7 @@
 
   <target name="retrieve-ivy" depends="install-ivy,install-jsch" unless="skip.download" description="Retrieve library dependencies">
 	  <ivy:retrieve/>
+	  <ivy:cachepath pathid="ivy.path" conf="release,dev" />
   </target>
 
   <target name="resolve-ivy" depends="retrieve-ivy" description="Resolve library dependencies">
@@ -96,42 +103,27 @@
 
   <!-- === Class Paths for Compilation and Execution === -->
 
-  <!-- Classpath for compilation of src/main/java -->
-  <path id="compile-datagen.classpath">
-    <pathelement location="${compile.dest}"/>
-    <pathelement location="../generatedSource/target/classes"/>
-    <fileset dir="${thirdPartyLibs}">
-      <filename name="*.jar"/>
-    </fileset>
-  </path>
 
-  <!-- Classpath for compilation of src/main/java -->
-  <path id="compile.classpath">
-    <fileset dir="${thirdPartyLibs}/">
-      <filename name="*.jar" />
-    </fileset>
-  </path>
-	
- 
-  <!-- Classpath for compilation of src/test/java -->
-  <path id="test-compile.classpath">
-    <pathelement location="${compile.dest}" />
-    <pathelement location="${test.dest}" />
-    <fileset dir="${thirdPartyLibs}/">
-      <filename name="*.jar" />
-    </fileset>
-  </path>
-  
-  <!-- Classpath for execution of Unit tests -->
-  <path id="test.classpath">
-    <pathelement location="${compile.dest}" />
-    <pathelement location="${test.dest}" />
-    <fileset dir="${thirdPartyLibs}/">
-    	<include name="*.jar" />
-    	<exclude name="*-sources.jar" />
-    	<exclude name="*-javadoc.jar" />
-    </fileset>
-  </path>
+	  <!-- Classpath for compilation of src/main/java -->
+	  <path id="compile.classpath">
+	  	<path refid="ivy.path"/>
+	  </path>
+		
+	 
+	  <!-- Classpath for compilation of src/test/java -->
+	  <path id="test-compile.classpath">
+	    <pathelement location="${compile.dest}" />
+	    <pathelement location="${test.dest}" />
+	  	<path refid="ivy.path"/>
+	  </path>
+	  
+		
+	  <!-- Classpath for execution of Unit tests -->
+	  <path id="test.classpath">
+	    <pathelement location="${compile.dest}" />
+	    <pathelement location="${test.dest}" />
+	  	<path refid="ivy.path"/>
+	  </path>
 
 
   <!-- === Targets and Tasks === -->
@@ -263,34 +255,67 @@
   </target>
 	  
 
-  <target name="package" depends="run-tests" description="prepare the Jar file containing the binary library">
-    <jar destfile="target/${projectName}.jar">
-      <fileset dir="${compile.dest}">
-      </fileset>
-      <zipgroupfileset dir="lib">
-      	<include name="*.jar"/>
-      	<exclude name="*-src-*.jar"/>
-      	<exclude name="*-sources.jar"/>
-      	<exclude name="junit*.jar"/>
-      	<exclude name="hamcrest*.jar"/>
-      </zipgroupfileset>
-      <fileset dir="${compile.src}"/>
-      <manifest>
-	     <attribute name="Main-Class" value="edu.odu.cs.AlgAE.Demos.SortingDriver" />
-      </manifest>
-    </jar>
+	  <target name="package" depends="run-tests" description="prepare the Jar file containing the binary library">
+	    <jar destfile="target/${projectName}.jar">
+	      <fileset dir="${compile.dest}">
+	      </fileset>
+	      <zipgroupfileset dir="lib">
+	      	<include name="*.jar"/>
+	      	<exclude name="*-src-*.jar"/>
+	      	<exclude name="*-sources.jar"/>
+	      	<exclude name="junit*.jar"/>
+	      	<exclude name="hamcrest*.jar"/>
+	      </zipgroupfileset>
+	      <fileset dir="${compile.src}"/>
+	      <manifest>
+		     <attribute name="Main-Class" value="${main.class}" />
+	      </manifest>
+	    </jar>
+	  	
+	  	<!--
+	  	<input message="Please enter password for keystore ${keystore}:" addproperty="keystore.password" />
 
-    <jar destfile="target/${projectName}-src.jar">
-      <fileset dir="${compile.src}">
-      </fileset>
-    </jar>
-  	<!--
-    <zip basedir="${data.dest}" destfile="${target}/${projectName}-${version}.zip" />
-    <copy toDir="${target}/lib" overwrite="false" flatten="true">
-      <fileset refid="ThirdPartyJarsToDeploy"/>
-    </copy>
-    -->
-  </target>
+	  	<signjar jar="target/${projectName}.jar" alias="${keystore}" storepass="${keystore.password}" verbose="true"/>
+	  	-->
+	  	
+	  	<copy toDir="target">
+	  		<fileset dir="src/main/data">
+	  			<include name="**/*.html"/>
+	  			<include name="**/*.jnlp"/>
+	  		</fileset>
+	  		<filterset>
+	  			<filter token="JAR" value="${projectName}.jar"/>
+	  			<filter token="PROJECT" value="${projectName}"/>
+	  			<filter token="ORG" value="${organization}"/>
+	  			<filter token="MAINCLASS" value="${main.class}"/>
+		  		<filter token="CODEBASE" value="${deploy.url}"/>
+	  		</filterset>
+	  	</copy>
+	  	
+	    <jar destfile="target/${projectName}-src.jar">
+	      <fileset dir="${compile.src}">
+	      </fileset>
+	    </jar>
+	  	<!--
+	    <zip basedir="${data.dest}" destfile="${target}/${projectName}-${version}.zip" />
+	    <copy toDir="${target}/lib" overwrite="false" flatten="true">
+	      <fileset refid="ThirdPartyJarsToDeploy"/>
+	    </copy>
+	    -->
+	  </target>
+		
+		
+	  <target name="deploy" depends="package">
+	  	<mkdir dir="${deploy.dest}"/>
+	  	<copy todir="${deploy.dest}">
+	  		<fileset dir="target" includes="${projectName}.jar"/>
+	  		<fileset dir="target" includes="*.html"/>
+	  		<fileset dir="target" includes="*.jnlp"/>
+	  	</copy>
+	  </target>
+
+
+	
 
   <target name="pre-publish" depends="package,install-ivy">
   	<ivy:resolve/>
