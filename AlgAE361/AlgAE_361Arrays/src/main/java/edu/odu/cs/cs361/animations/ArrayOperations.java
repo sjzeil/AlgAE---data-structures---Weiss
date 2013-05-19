@@ -1,9 +1,10 @@
 package edu.odu.cs.cs361.animations;//!
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Utilities.DiscreteInteger;//!
-import edu.odu.cs.zeil.AlgAE.Utilities.Index;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;//!
+import edu.odu.cs.AlgAE.Server.Utilities.Index;//!
+
 
 public class ArrayOperations {//!
 
@@ -17,10 +18,10 @@ public class ArrayOperations {//!
 	
 
 
-//int orderedInsert (int arr[], int first, int last, int target)
+//!int orderedInsert (int arr[], int first, int last, int target)
 public int orderedInsert (DiscreteInteger[] arr, int first, int last, int target)//!
 {
-   ActivationRecord arec = Animation.activate(getClass());//!
+   ActivationRecord arec = activate(getClass());//!
    arec.refParam("arr", arr).param("first", first).param("last", last).param("target", target);//!
    arec.breakHere("starting addInOrder");//!
    if (last >= arr.length) {//!
@@ -51,7 +52,7 @@ public int orderedInsert (DiscreteInteger[] arr, int first, int last, int target
 //!int seqSearch(const int arr[], int first, int last, int target)
 public int seqSearch(DiscreteInteger arr[], int first, int last, int target)//!
 {
-	ActivationRecord arec = Animation.activate(getClass());//!
+	ActivationRecord arec = activate(getClass());//!
 	arec.refParam("arr", arr).param("first", first).param("last", last).param("target", target);//!
 	arec.breakHere("starting seqSearch");//!
     int i = first;
@@ -76,7 +77,7 @@ public int binSearch(DiscreteInteger arr[], int first, int last, int target)//!
 //return index of target, or index of
 //next smaller target if not in collection
 {
-	ActivationRecord arec = Animation.activate(getClass());//!
+	ActivationRecord arec = activate(getClass());//!
 	arec.refParam("arr", arr).param("first", new Index(first, arr)).param("last", new Index(last, arr)).param("target", target);//!
 	arec.breakHere("starting binSearch");//!
     int mid = -997;//!    int mid;      // index of the midpoint

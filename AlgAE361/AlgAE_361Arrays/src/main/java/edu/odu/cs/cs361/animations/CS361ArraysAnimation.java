@@ -6,18 +6,19 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
-import edu.odu.cs.zeil.AlgAE.Utilities.DiscreteInteger;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;
 
-public class CS361ArraysAnimation extends Animation {
+
+public class CS361ArraysAnimation extends LocalJavaAnimation {
 
 	public CS361ArraysAnimation() {
-		super("Array Operations", true);
+		super("Array Operations");
 	}
 
 	@Override
@@ -145,7 +146,7 @@ public class CS361ArraysAnimation extends Animation {
 	public void generateRandomArray(int n)
 	{
 		int extraSlots = 4;
-		if (n != array.length) {
+		if (n + extraSlots != array.length) {
 			array = new DiscreteInteger[n+extraSlots];
 		}
 		if (n > 0) {
