@@ -15,7 +15,7 @@
 
 <p>Quick instructions:
 <ul>
-	<li>	Use the button below to launch the AlgAE arrays demo. 
+	<li>	Use the button below to launch the <a href="http://www.cs.odu.edu/~zeil/algae.html">AlgAE</a> sorting demo
 	<p>	
     <!-- ... -->
     <script src=
@@ -23,11 +23,15 @@
     <script>
         // using JavaScript to get location of JNLP
         // file relative to HTML page
-        var dir = location.href.substring(0,
-            location.href.lastIndexOf('/')+1);
-        var url = dir + "sorting361.jnlp";
+        var path = location.href.substring(0,
+            location.href.lastIndexOf('.')+1);
+        var url = dir + "jnlp";
         deployJava.createWebStartLaunchButton(url, '1.6.0');
     </script>
+    </p>
+    <p>
+     or <a href="@JAR@">download the Jar file</a> directly and
+     <a href="../runningJarFiles.html">run it</a> on your local PC. 
     </p>
 	</li>
 	
