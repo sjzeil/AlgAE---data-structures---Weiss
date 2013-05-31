@@ -5,8 +5,8 @@
 package edu.odu.cs.cs361.animations;//!
 
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
 
 public class miniVector {//!
 
@@ -102,7 +102,7 @@ public class miniVector {//!
 //!template <typename T>
 void reserve(int n, boolean copy)//!void miniVector<T>::reserve(int n, bool copy)
 {
-	   ActivationRecord arec = Animation.activate(this);//!
+	   ActivationRecord arec = activate(this);//!
 	int[] newArr;//!//!  T *newArr;
   int i;
 
@@ -172,7 +172,7 @@ miniVector (int size)//!
 miniVector (miniVector obj)//!miniVector<T>::miniVector (const miniVector<T>& obj):
 //!  vSize(0), vCapacity(0), vArr(NULL)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	vSize = vCapacity = 0;//!
 	vArr = null;
   int i;
@@ -202,7 +202,7 @@ miniVector (miniVector obj)//!miniVector<T>::miniVector (const miniVector<T>& ob
 //!template <typename T>
 void destroy()//!miniVector<T>::~miniVector()
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	if (vArr != null)//!  if (vArr != NULL)
     // de-allocate memory for the array
   {	  arec.breakHere("delete array");//!	  
@@ -215,7 +215,7 @@ void destroy()//!miniVector<T>::~miniVector()
 //!template <typename T>
 void clear()//!miniVector<T>::clear()
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	vSize = 0;
 	arec.breakHere("done");//!
 }
@@ -226,7 +226,7 @@ void clear()//!miniVector<T>::clear()
 //!template <typename T>
 void assign (miniVector rhs)//!miniVector<T>& miniVector<T>::operator= (const miniVector<T>& rhs)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
   int i;
 
   // check vCapacity to see if a new array must be allocated
@@ -301,7 +301,7 @@ int get(int i)//!T& miniVector<T>::operator[] (int i)
 //!template <typename T>
 void push_back (int item)//!void miniVector<T>::push_back(const T& item)
 {
-	   ActivationRecord arec = Animation.activate(this);//!
+	   ActivationRecord arec = activate(this);//!
 	   arec.param("item", item).breakHere("starting push_back");//!
   // if space is full, allocate more capacity
   if (vSize == vCapacity)
@@ -364,7 +364,7 @@ int capacity()//!int miniVector<T>:: capacity() const
 //!template <typename T>
 void reserve (int newCapacity)//!  void miniVector<T>::reserve (int newCapcity)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	arec.param("newCapacity", newCapacity).breakHere("starting reserve");//!
 	if (newCapacity > vCapacity)
       reserve (newCapacity, true);
@@ -378,7 +378,7 @@ void reserve (int newCapacity)//!  void miniVector<T>::reserve (int newCapcity)
 //!template <typename T>
 void resize (int newSize, int defaultV)//!  void miniVector<T>::resize (int newSize, const T& default)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	arec.param("newSize", newSize).param("default", defaultV).breakHere("starting resize");//!
 	if (newSize < vSize)
 	{ arec.breakHere("reduce the size");//!

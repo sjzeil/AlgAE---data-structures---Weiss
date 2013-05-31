@@ -6,17 +6,18 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
-import edu.odu.cs.zeil.AlgAE.Utilities.SimpleReference;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;
 
-public class CS361VectorAnimation extends Animation {
+
+public class CS361VectorAnimation extends LocalJavaAnimation {
 
 	public CS361VectorAnimation() {
-		super("Array Operations", true);
+		super("Array Operations");
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class CS361VectorAnimation extends Animation {
 			
 			@Override
 			public void selected() {
-				getActivationStack().render(miniVector.class, new VectorRenderer());
+				getMemoryModel().getActivationStack().render(miniVector.class, new VectorRenderer());
 				generateRandomVector(3);
 				globalVar("a", a);
 				globalVar("b", b);
