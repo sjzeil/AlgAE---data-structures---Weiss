@@ -141,8 +141,9 @@
   
   
   <target name="test-compile" depends="compile-source" unless="test.skip" description="Compile unit test code.">
-    <mkdir dir="${test.dest}" />
+    <!-- <mkdir dir="${test.dest}" />
     <javac srcdir="${test.src}" destdir="${test.dest}" classpathref="test-compile.classpath" debug="true"  includeantruntime="false"/>
+    -->
   </target>
 
   <target name="run-tests" depends="test-compile" if="test.src.exists" unless="test.skip"
