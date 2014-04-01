@@ -2,7 +2,7 @@
 <jnlp
     spec="6.0+" 
     codebase="@CODEBASE@" 
-    href="arrayOps.jnlp"
+    href="vectors.jnlp"
 >
     <information>
         <title>CS361 Vector Implementation</title>
@@ -13,7 +13,7 @@
     </information>
     <resources>
         <!-- Application Resources -->
-        <j2se version="1.6+"/>
+        <j2se version="1.7+"/>
         <jar href="@JAR@"/>
     </resources>
     <application-desc
