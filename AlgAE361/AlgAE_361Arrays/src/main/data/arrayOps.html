@@ -20,35 +20,18 @@
         deployJava.runApplet(attributes, parameters, '1.7'); 
     </script>
     -->
+    <p align="center">
     <applet code="edu.odu.cs.cs361.animations.CS361ArraysAnimation"
             archive="algae-361arrays.jar"
-            width="160" height="150"
+            width="800" height="600"
             <param name="permissions" value="sandbox" />
-            </applet>
+            <param name="inline" value="1" />
+    </applet>
+    </p>
 
 
 <p>Quick instructions:
 <ul>
-	<li> If the program does not run (you may need to click on the box above to authorize it),
-		use the button below to launch the <a href="http://www.cs.odu.edu/~zeil/algae.html">AlgAE</a> arrays demo
-	<p>	
-    <!-- ... -->
-    <script src=
-      "http://www.java.com/js/deployJava.js"></script>
-    <script>
-        // using JavaScript to get location of JNLP
-        // file relative to HTML page
-        var path = location.href.substring(0,
-            location.href.lastIndexOf('.')+1);
-        var url = path + "jnlp";
-        deployJava.createWebStartLaunchButton(url, '1.6.0');
-    </script>
-    </p>
-    <p>
-     or <a href="@JAR@">download the Jar file</a> directly and
-     <a href="../runningJarFiles.html">run it</a> on your local PC. 
-    </p>
-	</li>
 	
    <li>
    Select a desired algorithm from the <B>Algorithm</B> menu.
@@ -71,6 +54,27 @@
 </li>    
     
     
+	<li> If the program does not run (you may need to click on the box above to authorize it),
+	     or if you would prefer to run it in a separate (resizable) window, 
+		use the button below to launch it.
+	<p>	
+    <!-- ... -->
+    <script src=
+      "http://www.java.com/js/deployJava.js"></script>
+    <script>
+        // using JavaScript to get location of JNLP
+        // file relative to HTML page
+        var path = location.href.substring(0,
+            location.href.lastIndexOf('.')+1);
+        var url = path + "jnlp";
+        deployJava.createWebStartLaunchButton(url, '1.6.0');
+    </script>
+    </p>
+    <p>
+     or <a href="@JAR@">download the Jar file</a> directly and
+     <a href="../runningJarFiles.html">run it</a> on your local PC. 
+    </p>
+	</li>
 </ul>
 </p>
 <p>
@@ -84,8 +88,10 @@ More detailed help is available from the <b>Help</b> menu.
 <center>
 <hr width="75%"></center>
 
-<center>Email me at <i><a href="mailto:zeil@cs.odu.edu">zeil@cs.odu.edu</a></i></center>
-
+<p>
+This demo was prepared with 
+the <a href="http://www.cs.odu.edu/~zeil/algae.html">AlgAE</a> animation engine.
+</p>
 </body>
 </html>
   
