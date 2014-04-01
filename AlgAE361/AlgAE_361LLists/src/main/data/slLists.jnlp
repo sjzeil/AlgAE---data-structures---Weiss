@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp
+    spec="6.0+" 
+    codebase="@CODEBASE@" 
+    href="slLists.jnlp"
+>
+    <information>
+        <title>CS361 Singly Linked Lists Operations</title>
+        <vendor>ODU CS 361</vendor>
+        <offline-allowed/>
+	    <homepage href="http://www.cs.odu.edu/~zeil/algae.html"/>
+	    <description>Singly Linked Lists demo</description>
+    </information>
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="1.7+"/>
+        <jar href="@JAR@"/>
+    </resources>
+    <application-desc
+         name="CS361 Singly Linked Lists Operations"
+         main-class="@MAINCLASS@"
+         width="600"
+         height="400"/>
+</jnlp>
