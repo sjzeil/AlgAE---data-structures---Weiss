@@ -10,7 +10,8 @@
     </publications>
     <dependencies>
 	   <dependency org="junit" name="junit" rev="4.11"/>
-       <dependency org="edu.odu.cs.algae" name="algae-client" rev="latest.integration"/>
-       <dependency org="edu.odu.cs.algae" name="algae-jserver" rev="latest.integration"/>
+       <dependency org="edu.odu.cs.algae" name="algae-client" rev="4.0"/>
+       <dependency org="edu.odu.cs.algae" name="algae-jserver" rev="4.0"/>
+       <dependency org="javax.help" name="javahelp" rev="2.0.05"/>       
 	</dependencies>
 </ivy-module>
