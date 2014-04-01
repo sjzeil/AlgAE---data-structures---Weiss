@@ -13,13 +13,12 @@
     </information>
     <resources>
         <!-- Application Resources -->
-        <j2se version="1.6+"/>
+        <j2se version="1.7+"/>
         <jar href="@JAR@"/>
     </resources>
     <application-desc
          name="CS361 Array Operations"
          main-class="@MAINCLASS@"
          width="600"
-         height="400">
-     </application-desc>
+         height="400"/>
 </jnlp>
