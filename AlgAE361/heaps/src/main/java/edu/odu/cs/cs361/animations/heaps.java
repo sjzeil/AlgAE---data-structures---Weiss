@@ -3,8 +3,8 @@ package edu.odu.cs.cs361.animations;//!
 import java.awt.Color;//!
 import java.util.ArrayList;//!
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
 
 
 
@@ -75,7 +75,7 @@ void push_heap (int first, //!void push_heap (RandomIterator first,
 //          heap [first, last).
 
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	HeapIterator rfirst = new HeapIterator(first, this);//!
 	HeapIterator rlast = new HeapIterator(last, this);//!
 	arec.param("first", rfirst).param("last", rlast);//!
@@ -116,7 +116,7 @@ void _percolateDown
      int nodeToPerc,//!     Distance nodeToPerc,
      int heapSize)//!     Distance heapSize)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	HeapIterator rfirst = new HeapIterator(first, this);//!
 	HeapIterator rlast = new HeapIterator(last, this);//!
 	arec.param("first", rfirst).param("last", rlast).param("nodeToPerc", nodeToPerc).param("heapSize", heapSize);//!
@@ -173,7 +173,7 @@ void pop_heap (int first, //!void pop_heap (RandomIterator first,
 //Post: Swaps the value in location first with the value in the location
 //          last-1 and makes [first, last-1) into a heap.
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	HeapIterator rfirst = new HeapIterator(first, this);//!
 	HeapIterator rlast = new HeapIterator(last, this);//!
 	arec.param("first", rfirst).param("last", rlast);//!
@@ -193,7 +193,7 @@ void make_heap (int first, //!void make_heap (RandomIterator first,
 //Pre: 
 //Post: Arranges the values in [first, last) into a heap.
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	HeapIterator rfirst = new HeapIterator(first, this);//!
 	HeapIterator rlast = new HeapIterator(last, this);//!
 	arec.param("first", rfirst).param("last", rlast);//!
@@ -223,7 +223,7 @@ void make_heap (int first, //!void make_heap (RandomIterator first,
 //!template <class Iterator, class Compare> 
 void heapsort (int first, int last, Compare comp)//!void heapsort (Iterator first, Iterator last, Compare comp)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	HeapIterator rfirst = new HeapIterator(first, this);//!
 	HeapIterator rlast = new HeapIterator(last, this);//!
 	arec.param("first", rfirst).param("last", rlast);//!
@@ -255,7 +255,7 @@ static void build_heap (heaps heap, Compare comp)//!void build_heap (Container& 
 //!template <class Container, class T, class Compare>
 static void add_to_heap(heaps heap, int k, Compare comp)//!void add_to_heap(Container& heap, const T& k, Compare comp)
 {
-  ActivationRecord arec = Animation.activate(heaps.class);//!
+  ActivationRecord arec = activate(heaps.class);//!
   arec.refParam("heap", heap).param("k",k);//!
   arec.breakHere("starting add_to_heap");//!
   heap.push_back(k);
@@ -268,7 +268,7 @@ static void add_to_heap(heaps heap, int k, Compare comp)//!void add_to_heap(Cont
 //!template <class Container, class Compare>
 static void remove_from_heap(heaps heap, Compare comp)//!void remove_from_heap(Container& heap, Compare comp)
 {
-  ActivationRecord arec = Animation.activate(heaps.class);//!
+  ActivationRecord arec = activate(heaps.class);//!
   arec.refParam("heap", heap);//!
   arec.breakHere("starting remove_from_heap");//!
   heap.pop_heap (0, heap.data.size()-1, comp);//!  pop_heap (heap.begin(), heap.end(), comp);

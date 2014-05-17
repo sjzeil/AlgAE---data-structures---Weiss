@@ -6,16 +6,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 
-public class HeapDemo extends Animation {
+
+public class HeapDemo extends LocalJavaAnimation {
 
 	public HeapDemo() {
-		super("Heaps", true);
+		super("Heaps");
 	}
 
 	@Override
@@ -134,8 +135,8 @@ public class HeapDemo extends Animation {
 				globalVar("", heap);
 				createSampleHeap(heap);
 				isAHeap = true;
-				getActivationStack().render(heaps.heapnode.class, new heapnodeRendering());
-				getActivationStack().render(heaps.class, new HeapRendering());
+				getMemoryModel().render(heaps.heapnode.class, new heapnodeRendering());
+				getMemoryModel().render(heaps.class, new HeapRendering());
 			}
 			
 		});
