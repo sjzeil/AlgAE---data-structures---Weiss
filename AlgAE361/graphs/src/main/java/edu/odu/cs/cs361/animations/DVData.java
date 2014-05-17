@@ -6,10 +6,11 @@ import java.util.List;
 
 import edu.odu.cs.cs361.animations.graphs.Edge;
 import edu.odu.cs.cs361.animations.graphs.Vertex;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+
 
 public class DVData implements CanBeRendered<DVData>, Renderer<DVData> {
 	Color colorList[] = {Color.yellow, Color.blue, Color.red,

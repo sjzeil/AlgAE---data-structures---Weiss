@@ -9,15 +9,16 @@ import java.util.List;//!
 import java.util.ListIterator;//!
 
 import edu.odu.cs.cs361.animations.graphs.CppIterator;//!
+import edu.odu.cs.cs361.animations.graphs.DiGraph;//!
 import edu.odu.cs.cs361.animations.graphs.Edge;//!
-import edu.odu.cs.cs361.animations.graphs.Graph;//!
+import edu.odu.cs.cs361.animations.graphs.Graph;
 import edu.odu.cs.cs361.animations.graphs.Vertex;//!
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
 
 public class GraphColoring {//!
 
@@ -168,7 +169,7 @@ static Color colorList[] = {Color.yellow, Color.blue, Color.red,//!
 static boolean colorGraph_backtracking (Graph<ColoringData,X> g, int numColors,//!bool colorGraph_backtracking (Graph& g, unsigned numColors,
 			      Color[] colors)//!			      ColorMap& colors)
 {
-	ActivationRecord arec = Animation.activate(GraphColoring.class);//!
+	ActivationRecord arec = activate(GraphColoring.class);//!
 	HashMap<Vertex<ColoringData,X>, Integer> vertexNumbers = new HashMap<Vertex<ColoringData,X>, Integer>();//!  VertexToIntegers vertexNumbers;
 
   for (CppIterator<Vertex<ColoringData,X>> v = g.vbegin(); v.notEnd(); v.increment())//!  for (AllVertices v = g.vbegin(); v != g.vend(); ++v)
@@ -307,7 +308,7 @@ private static int computeConstraints (Graph<ColoringData,X> g, Vertex<ColoringD
 static boolean colorGraph_heuristic (Graph<ColoringData,X> g, int numColors//!bool colorGraph_heuristic (Graph& g, unsigned numColors,
 			   )//!			   ColorMap& colors)
 {
-	ActivationRecord arec = Animation.activate(GraphColoring.class);//!
+	ActivationRecord arec = activate(GraphColoring.class);//!
 	  for (CppIterator<Vertex<ColoringData,X>> vv = g.vbegin(); vv.notEnd(); vv.increment())//!
 	    {//!
 		  vv.at().set(new ColoringData());//

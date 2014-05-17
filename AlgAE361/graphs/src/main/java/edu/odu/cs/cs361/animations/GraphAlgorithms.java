@@ -8,12 +8,13 @@ import edu.odu.cs.cs361.animations.graphs.CppIterator;//!
 import edu.odu.cs.cs361.animations.graphs.DiGraph;//!
 import edu.odu.cs.cs361.animations.graphs.Edge;//!
 import edu.odu.cs.cs361.animations.graphs.Vertex;//!
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+
 
 public class GraphAlgorithms {//!
 
@@ -120,7 +121,7 @@ public static class VList extends LinkedList<Vertex<TopoData,X>> implements CanB
 //
 static boolean topologicalSort (DiGraph<TopoData,X> g, VList sorted)//!bool topologicalSort (const DiGraph& g, list<Vertex>& sorted)
 {
-	ActivationRecord arec = Animation.activate(GraphAlgorithms.class);//!
+	ActivationRecord arec = activate(GraphAlgorithms.class);//!
 	arec.param("g", "").refParam("sorted", sorted).breakHere("Starting topological sort");//!
   // Step 1: get the indegrees of all vertices. Place vertices with
   // indegree 0 into a queue.
@@ -197,7 +198,7 @@ static boolean depthFirst (DiGraph<TopoData,X> g,//!bool depthFirst (const DiGra
 		 String lookFor,//!		 const string& lookFor,
 		 VList visited)//!		 set<Vertex, less<Vertex> >& visited)
 {
-	ActivationRecord arec = Animation.activate(GraphAlgorithms.class);//!
+	ActivationRecord arec = activate(GraphAlgorithms.class);//!
 	v.setColor(Color.red);//!
 	arec.param("g", "").refParam("v", v).param("lookFor", lookFor).refParam("visited", visited).breakHere("Entered depthFirst.");//!
 	v.setColor(Color.pink);//!
@@ -239,7 +240,7 @@ static void depthFirstSearch (DiGraph<TopoData,X> g,//!void depthFirstSearch (co
 		       Vertex<TopoData,X> start,//!		       const Vertex &start,
 		       String lookFor)//!		       const string &lookFor)
 {
-	ActivationRecord arec = Animation.activate(GraphAlgorithms.class);//!
+	ActivationRecord arec = activate(GraphAlgorithms.class);//!
 	for (CppIterator<Vertex<TopoData,X>> v = g.vbegin(); v.notEnd(); v.increment()) {v.at().set(null); v.at().setColor(Color.gray);}//!
 	VList visited = new VList(Color.cyan); //!	set<Vertex, less<Vertex> > visited;
 	arec.param("g", "").refParam("start", start).param("lookFor", lookFor).refVar("visited", visited).breakHere("Start recursion");//!
@@ -252,7 +253,7 @@ static void breadthFirstSearch (DiGraph<TopoData,X> g,//!void breadthFirstSearch
 			 Vertex<TopoData,X> start,//!			 const Vertex& start,
 			 String lookFor)//!const string& lookFor)
 {
-	ActivationRecord arec = Animation.activate(GraphAlgorithms.class);//!
+	ActivationRecord arec = activate(GraphAlgorithms.class);//!
 	for (CppIterator<Vertex<TopoData,X>> v = g.vbegin(); v.notEnd(); v.increment()) {v.at().set(null); v.at().setColor(Color.gray);}//!
 	arec.param("g", "").refParam("start", start).param("lookFor", lookFor).breakHere("Set up the data structures");//!
 	VList q = new VList(Color.blue);//!	queue<list<Vertex> > q;

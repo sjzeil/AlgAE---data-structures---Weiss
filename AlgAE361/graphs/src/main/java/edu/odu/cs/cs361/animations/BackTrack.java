@@ -5,10 +5,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+
 
 public class BackTrack implements CanBeRendered<BackTrack>, Renderer<BackTrack> {
 

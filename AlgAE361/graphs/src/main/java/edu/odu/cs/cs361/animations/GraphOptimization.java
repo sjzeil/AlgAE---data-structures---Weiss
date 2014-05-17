@@ -6,17 +6,18 @@ import java.util.Comparator;//!
 import java.util.LinkedList;//!
 import java.util.List;//!
 
+import edu.odu.cs.AlgAE.Server.Animations.Animation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
 import edu.odu.cs.cs361.animations.graphs.CppIterator;//!
 import edu.odu.cs.cs361.animations.graphs.DiGraph;//!
 import edu.odu.cs.cs361.animations.graphs.Edge;//!
 import edu.odu.cs.cs361.animations.graphs.Labeled;
 import edu.odu.cs.cs361.animations.graphs.Vertex;//!
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
 
 public class GraphOptimization {//!
 
@@ -201,7 +202,7 @@ static//!
 	{      // Dijkstra's Algorithm
 //!	  hash_map<Vertex, Vertex, VertexHash> cameFrom;
 //!	  VDistMap dist;
-      ActivationRecord arec = Animation.activate(GraphOptimization.class);//!
+      ActivationRecord arec = activate(GraphOptimization.class);//!
   	  arec.param("g", "").refParam("path", path).param("start",start.getLabel()).param("finish",finish.getLabel());//!
   	  arec.breakHere("Starting Dijkstra's algorithm");//!
 	  for (CppIterator<Vertex<DVData, DEData>> vi = g.vbegin(); vi.notEnd(); vi.increment())//!	  for (AllVertices vi = g.vbegin(); vi != g.vend(); ++vi)
@@ -283,7 +284,7 @@ void findMinSpanTree (
 //!	VDistMap dist;   /*{*/vDist = &dist;
 //!	hash_map<Vertex, Edge, VertexHash> cameFrom;
 
-	ActivationRecord arec = Animation.activate(GraphOptimization.class);//!
+	ActivationRecord arec = activate(GraphOptimization.class);//!
 	arec.param("g", "").refParam("spanTree", spanTree).param("start",start.getLabel()).breakHere("Starting Prim's algorithm");//!
 	for (CppIterator<Vertex<DVData, DEData>> vi = g.vbegin(); vi.notEnd(); vi.increment())//!	  for (AllVertices vi = g.vbegin(); vi != g.vend(); ++vi)
 	{

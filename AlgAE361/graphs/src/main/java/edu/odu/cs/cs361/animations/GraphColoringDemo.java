@@ -1,21 +1,27 @@
-package edu.odu.cs.cs361.animations;
+package edu.odu.cs.cs361.animations;//!
 
 
-import java.awt.Color;
-import java.util.Random;
+import java.awt.Color;//!
+import java.util.Random;//!
 
-import edu.odu.cs.cs361.animations.graphs.CppIterator;
-import edu.odu.cs.cs361.animations.graphs.DiGraph;
-import edu.odu.cs.cs361.animations.graphs.Edge;
-import edu.odu.cs.cs361.animations.graphs.Graph;
-import edu.odu.cs.cs361.animations.graphs.Vertex;
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
+import edu.odu.cs.cs361.animations.graphs.CppIterator;//!
+import edu.odu.cs.cs361.animations.graphs.DiGraph;//!
+import edu.odu.cs.cs361.animations.graphs.Edge;//!
+import edu.odu.cs.cs361.animations.graphs.Graph;//!
+import edu.odu.cs.cs361.animations.graphs.Vertex;//!
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 
-public class GraphColoringDemo extends Animation {
+public class GraphColoringDemo extends LocalJavaAnimation {
 
 	public GraphColoringDemo() {
-		super("Graph Traversals", true);
+		super("Graph Traversals");
 	}
 
 	@Override
@@ -275,7 +281,7 @@ public class GraphColoringDemo extends Animation {
 	
 
 	private void showVertices(DiGraph<ColoringData,X> g) {
-		getActivationStack().getGlobalComponents().clear();
+		getMemoryModel().getGlobalComponents().clear();
 		for (CppIterator<Vertex<ColoringData,X>> v = g.vbegin(); !v.equals(g.vend()); v.increment()) {
 			globalVar("", v.at());
 		}

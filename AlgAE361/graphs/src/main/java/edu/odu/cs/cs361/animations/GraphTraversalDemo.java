@@ -4,17 +4,18 @@ package edu.odu.cs.cs361.animations;
 import java.awt.Color;
 import java.util.Random;
 
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 import edu.odu.cs.cs361.animations.graphs.CppIterator;
 import edu.odu.cs.cs361.animations.graphs.DiGraph;
 import edu.odu.cs.cs361.animations.graphs.Edge;
 import edu.odu.cs.cs361.animations.graphs.Vertex;
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
 
-public class GraphTraversalDemo extends Animation {
+
+public class GraphTraversalDemo extends LocalJavaAnimation {
 
 	public GraphTraversalDemo() {
-		super("Graph Traversals", true);
+		super("Graph Traversals");
 	}
 
 	@Override
@@ -298,7 +299,7 @@ public class GraphTraversalDemo extends Animation {
 	
 
 	private void showVertices(DiGraph<TopoData,X> g) {
-		getActivationStack().getGlobalComponents().clear();
+		getMemoryModel().getGlobalComponents().clear();
 		for (CppIterator<Vertex<TopoData,X>> v = g.vbegin(); !v.equals(g.vend()); v.increment()) {
 			globalVar("", v.at());
 		}
