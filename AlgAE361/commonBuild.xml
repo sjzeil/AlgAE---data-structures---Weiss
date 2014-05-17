@@ -183,6 +183,13 @@
   	
 
   <target name="build" depends="run-tests" description="prepare the Jar file containing the binary library">
+  	<copy toFile="target/javahelp.jar">
+  	  		<fileset dir="lib">
+  	  			<include name="javahelp-*.jar"/> 
+  	  			<exclude name="javahelp*-*sources.jar"/> 
+  			    <exclude name="javahelp*-*javadoc.jar"/> 
+  	  		</fileset>
+  	</copy>
     <jar destfile="target/${projectName}.jar">
       <fileset dir="${compile.dest}">
       </fileset>
@@ -191,6 +198,7 @@
       	<exclude name="META-INF/**/*"/>
       </zipfileset>
       <zipfileset includes="**/*.class" src="lib/algae-jserver-${version}.jar"/>
+      <zipfileset includes="**/*.class" src="target/javahelp.jar"/>
       <fileset dir="${compile.src}"/>
       <manifest>
 	     <attribute name="Main-Class" value="${mainClassName}" />
@@ -215,13 +223,6 @@
   			<filter token="PROJECT" value="${projectName}"/>
   			<filter token="ORG" value="${organization}"/>
   		</filterset>
-  	</copy>
-  	<copy toFile="target/javahelp.jar">
-  		<fileset dir="lib">
-  			<include name="javahelp-*.jar"/> 
-  			<exclude name="javahelp*-*sources.jar"/> 
-		    <exclude name="javahelp*-*javadoc.jar"/> 
-  		</fileset>
   	</copy>	
   </target>
   	
