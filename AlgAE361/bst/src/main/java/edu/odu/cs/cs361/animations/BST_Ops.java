@@ -6,17 +6,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
-import edu.odu.cs.zeil.AlgAE.Utilities.SimpleReference;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
 
-public class BST_Ops extends Animation {
+public class BST_Ops extends LocalJavaAnimation {
 
 	public BST_Ops() {
-		super("Binary Search Trees", true);
+		super("Binary Search Trees");
 	}
 
 	@Override
@@ -160,8 +162,8 @@ public class BST_Ops extends Animation {
 				globalVar("tree", bst);
 				globalVar("current", current);
 				createSampleTree1(bst);
-				getActivationStack().render(stnode.class, new stnodeRendering());
-				getActivationStack().render(stree.class, new BinaryTreeRendering());
+				getMemoryModel().getActivationStack().render(stnode.class, new stnodeRendering());
+				getMemoryModel().getActivationStack().render(stree.class, new BinaryTreeRendering());
 			}
 			
 		});

@@ -1,16 +1,19 @@
 package edu.odu.cs.cs361.animations;//!
 
-import java.awt.Color;
-import java.util.LinkedList;
-import java.util.List;
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
-import edu.odu.cs.zeil.AlgAE.Utilities.SimpleReference;
+import java.awt.Color;//!
+import java.util.LinkedList;//!
+import java.util.List;//!
+
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
+//!
+//!
 
 
 
@@ -67,7 +70,7 @@ public class stree<T extends Comparable<T>> {//!
             // preincrement. move forward to next larger value
             iterator increment ()//!            iterator& operator++ ()
             {
-            	ActivationRecord arec = Animation.activate(this);//!
+            	ActivationRecord arec = activate(getClass());//!
                 stnode<T> p = null;//!                stnode<T> *p;
 
             	arec.refVar("p", p).breakHere("entered operator++()");//!
@@ -637,7 +640,7 @@ stree() { root = (NULL);treeSize=(0);}//!stree<T>::stree(): root(NULL),treeSize(
 //!template <typename T>
 stnode<T> findNode(T item) //!stnode<T> *stree<T>::findNode(const T& item) const
 {   
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	arec.param("item", item).breakHere("entered findNode()");//!
 	// cycle t through the tree starting with root
 	stnode<T> t = root;//!	stnode<T> *t = root;
@@ -665,7 +668,7 @@ stnode<T> findNode(T item) //!stnode<T> *stree<T>::findNode(const T& item) const
 //!template <typename T>
 iterator find(T item)//!stree<T>::iterator stree<T>::find(const T& item)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
     stnode<T> curr = null;//!    stnode<T> *curr;
 	arec.param("item", item).refVar("curr", curr).breakHere("entered find()");//!
 
@@ -716,7 +719,7 @@ int size() //!int stree<T>::size() const
 //!template <typename T>
 pair<iterator, Boolean> insert(T item)//!pair<stree<T>::iterator, bool> stree<T>::insert(const T& item)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
     // t is current node in traversal, parent the previous node
 	arec.param("item", item).breakHere("entered insert()");//!
     stnode<T> t = root; stnode<T> parent = NULL; stnode<T> newNode = null;//!    stnode<T> *t = root, *parent = NULL, *newNode;
@@ -779,7 +782,7 @@ pair<iterator, Boolean> insert(T item)//!pair<stree<T>::iterator, bool> stree<T>
 //!template <typename T>
 void erase(iterator pos)//!void stree<T>::erase(iterator pos)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	arec.param("pos", pos).breakHere("entered erase()");//!
     // dNodePtr = pointer to node D that is deleted
     // pNodePtr = pointer to parent P of node D
@@ -934,7 +937,7 @@ void erase(iterator pos)//!void stree<T>::erase(iterator pos)
 //!template <typename T>
 int erase(T item)//!int stree<T>::erase(const T& item)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	arec.param("item", item).breakHere("entered erase()");//!
     int numberErased = 1;
     // search tree for item
@@ -982,7 +985,7 @@ int erase(T item)//!int stree<T>::erase(const T& item)
 //!template <typename T>
 iterator begin()//!stree<T>::iterator stree<T>::begin()
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	arec.breakHere("start at the root");//!
     stnode<T> curr = root;//!    stnode<T> *curr = root;
 
@@ -1022,7 +1025,7 @@ iterator begin()//!stree<T>::iterator stree<T>::begin()
 iterator end()//!stree<T>::iterator stree<T>::end()
 {
     // end indicated by an iterator with NULL stnode pointer
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	arec.breakHere("entered end()");//!
     return new iterator(NULL, this);//!    return iterator(NULL, this);
 }
