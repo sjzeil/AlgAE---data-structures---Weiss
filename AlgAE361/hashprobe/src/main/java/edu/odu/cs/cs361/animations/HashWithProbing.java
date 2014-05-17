@@ -6,15 +6,19 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.ActivationStack;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationStack;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
+//!
+//!
+//!
+//!
 
-public class HashWithProbing extends Animation {
+public class HashWithProbing extends LocalJavaAnimation {
 
 	public class LPHashTableRendering implements Renderer<hash_set_LP<?>> {
 
@@ -117,7 +121,7 @@ public class HashWithProbing extends Animation {
 	}
 
 	public HashWithProbing() {
-		super("hashing with probing", true);
+		super("hashing with probing");
 		self = this;
 	}
 
@@ -188,7 +192,7 @@ public class HashWithProbing extends Animation {
 		}
 	}
 
-	Animation self;
+	LocalJavaAnimation self;
 	
 	hash_set_LP<SillyString> linear = new hash_set_LP<HashWithProbing.SillyString>();
 	hash_set_QP<SillyString> quadratic = new hash_set_QP<HashWithProbing.SillyString>();
@@ -237,7 +241,7 @@ public class HashWithProbing extends Animation {
 			public void selected() {
 				generateInitialTable();
 				globalVar("Tables", new Twotables());
-				ActivationStack stk = getActivationStack();
+				ActivationStack stk = getMemoryModel().getActivationStack();
 				stk.render(hash_set_LP.class, new LPHashTableRendering());
 				stk.render(hash_set_QP.class, new QPHashTableRendering());
 				stk.render(ArrayList.class, new TableRendering());

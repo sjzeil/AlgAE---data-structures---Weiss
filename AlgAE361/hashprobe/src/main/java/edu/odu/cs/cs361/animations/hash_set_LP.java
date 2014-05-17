@@ -1,17 +1,19 @@
 package edu.odu.cs.cs361.animations;//!
 
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+
 import java.awt.Color;//!
 import java.util.ArrayList;//!
 import java.util.LinkedList;
 import java.util.List;//!
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;//!
-import edu.odu.cs.zeil.AlgAE.Utilities.Index;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.Utilities.Index;//!
+//!
 
 public class hash_set_LP<T> {//!
 
@@ -97,7 +99,7 @@ public Renderer<HashEntry> getRenderer() {//!
   //!
   boolean insert (T element)//!  bool insert (const T& element)
   {
-	  ActivationRecord arec = Animation.activate(this);//!
+	  ActivationRecord arec = activate(getClass());//!
 	  arec.param("element",element);//!
 	  arec.breakHere("Starting insert");//!
     int h0 = element.hashCode();//!      unsigned h0 = hash(element);
@@ -177,7 +179,7 @@ public Renderer<HashEntry> getRenderer() {//!
   
   int count (T element)//!  int count (const T& element)
   {//!    {
-	  ActivationRecord arec = Animation.activate(this);//!
+	  ActivationRecord arec = activate(getClass());//!
 	  arec.param("element",element);//!
 	  arec.breakHere("Starting count");//!
     int h0 = element.hashCode();//!      unsigned h0 = hash(element);
@@ -194,7 +196,7 @@ public Renderer<HashEntry> getRenderer() {//!
   
   void erase (T element)//!  void erase (const T& element)
   {
-	  ActivationRecord arec = Animation.activate(this);//!
+	  ActivationRecord arec = activate(getClass());//!
 	  arec.param("element",element);//!
 	  arec.breakHere("Starting erase");//!
     int h0 = element.hashCode();//!      unsigned h0 = hash(element);
@@ -224,7 +226,7 @@ public Renderer<HashEntry> getRenderer() {//!
   //!
   int find (T element, int h0)//!  int find (const T& element, int h0) const
   {//!    {
-	  ActivationRecord arec = Animation.activate(this);//!
+	  ActivationRecord arec = activate(getClass());//!
 	  arec.param("element",element);//!
 	  arec.param("h0",h0);//!
 	  arec.breakHere("Starting insert");//!
