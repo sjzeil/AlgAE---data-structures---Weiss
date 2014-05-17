@@ -4,13 +4,14 @@ import java.awt.Color;//!
 import java.util.LinkedList;//!
 import java.util.List;//!
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;//!
-import edu.odu.cs.zeil.AlgAE.Utilities.SimpleReference;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+
 
 public class LListHeader implements CanBeRendered<LListHeader>, Renderer<LListHeader> {//!
 
@@ -57,7 +58,7 @@ public class LListHeader implements CanBeRendered<LListHeader>, Renderer<LListHe
 	//!template <typename Data>
 void outputOp ()//!std::ostream& operator<< (const std::ostream& out, const LListHeader<Data>& list)
 {
-	ActivationRecord arec = Animation.activate(getClass());//!
+	ActivationRecord arec = activate(getClass());//!
 	LListHeader list = this;//!
 	arec.param("out", "").refParam("list", list);//!
 	arec.breakHere("starting traversal");//!
@@ -82,7 +83,7 @@ void outputOp ()//!std::ostream& operator<< (const std::ostream& out, const LLis
 //!template <typename Data>
 void add (String value)//!void LListHeader<Data>::add (const Data& value)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	arec.param("value", value);//!
 	arec.breakHere("starting add");//!
 	addInOrder (value);
@@ -94,7 +95,7 @@ void add (String value)//!void LListHeader<Data>::add (const Data& value)
 //!template <typename Data>
 void remove (String value)	//!void LListHeader<Data>::remove (const Data& value)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	arec.param("value", value);//!
 	arec.breakHere("starting remove");//!
 	node prev = null;//!  node<Data>* prev = NULL;
@@ -146,7 +147,7 @@ void delete(node n, ActivationRecord arec)//!
 //!template <typename Data>
 void clear()	//!void LListHeader<Data>::clear()
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	node current = first;//!  node<Data>* current = first;
 	arec.refVar("current", current);//!
 	arec.breakHere("delete nodes, starting at the beginning");//!
@@ -174,7 +175,7 @@ void clear()	//!void LListHeader<Data>::clear()
 //!template <typename Data>
 void addInOrder (String value)//!void LListHeader<Data>::addInOrder(const Data& value)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	arec.param("value", value);//!
 	arec.breakHere("starting addInOrder");//!
 	if (first == NULL)
@@ -217,7 +218,7 @@ void addInOrder (String value)//!void LListHeader<Data>::addInOrder(const Data& 
 //!template <typename Data>
 void addToEnd (String value)//!void LListHeader<Data>::addToEnd(const Data& value)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	arec.breakHere("starting addToEnd");//!
 	node newNode = new node(value, null);//!  node<Data>* newNode = new node<Data>(value, NULL);
 	arec.refVar("newNode", newNode);//!
@@ -256,7 +257,7 @@ void addToFront (String value)//!void LListHeader<Data>::addToFront(const Data& 
 //!template <typename Data>
 void addAfter (node afterThis, String value)//!void LListHeader<Data>::addAfter (node<Data>* afterThis, const Data value)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	arec.refParam("afterThis", afterThis).param("value", value);//!
 	arec.breakHere("starting addAfter: allocate the new node");//!
 	node newNode = new node(value, afterThis.next);//!  node<Data>* newNode = new node<Data> (value, afterThis->next);
@@ -287,7 +288,7 @@ void addBefore (node beforeThis, String value)//!void LListHeader<Data>::addBefo
 //!template <typename Data>
 void removeAfter (node afterThis)//!void LListHeader<Data>::removeAfter (node<Data>* afterThis)
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	arec.refParam("afterThis", afterThis);//!
 	arec.breakHere("starting removeAfter");//!
 	node toRemove = afterThis.next;//!  node<Data>* toRemove = afterThis->next;
@@ -303,7 +304,7 @@ void removeAfter (node afterThis)//!void LListHeader<Data>::removeAfter (node<Da
 //!template <typename Data>
 node find (String value)//!const node<Data>* LListHeader<Data>::find (const Data& value) const
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(this);//!
 	arec.param("value", value);//!
 	arec.breakHere("starting a search");//!
 	node current = first;//!    const node<Data>* current = first;

@@ -2,3 +2,5 @@
 /lib/*
 /ivy/*
 /ant.log
+/ivy
+/lib

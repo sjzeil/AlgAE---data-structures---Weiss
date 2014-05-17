@@ -2,13 +2,13 @@ package edu.odu.cs.cs361.animations;
 
 
 
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 
-public class CS361SLAnimation extends Animation {
+public class CS361SLAnimation extends LocalJavaAnimation {
 
 	public CS361SLAnimation() {
-		super("Singly Linked List Operations", true);
+		super("Singly Linked List Operations");
 	}
 
 	@Override
