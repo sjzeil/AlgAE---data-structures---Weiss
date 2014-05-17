@@ -1,8 +1,9 @@
 package edu.odu.cs.cs361.animations;//!
 
 import java.util.Stack;//!
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
+
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
 
 //
 //	rpn calculator routine
@@ -47,7 +48,7 @@ class calculatorEngine {
 void doOperator(binaryOperator theOp)//!void calculatorEngine::doOperator(binaryOperator theOp)
 	// perform a binary operation on stack values
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 	arec.breakHere("Process a binary operator");//!
 	int right = data.peek();//!	int right = data.top();
 	data.pop();
@@ -85,7 +86,7 @@ void doOperator(binaryOperator theOp)//!void calculatorEngine::doOperator(binary
 
 static void calculator(calculatorEngine calc)//!void calculator()
 {	
-	ActivationRecord arec = Animation.activate(calculatorEngine.class);//!
+	ActivationRecord arec = activate(calculatorEngine.class);//!
 	arec.breakHere("entered calculator()");//!
 	int intval = 0;//!    int intval;
 	//!	calculatorEngine calc;

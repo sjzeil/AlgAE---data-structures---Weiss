@@ -5,13 +5,14 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.Utilities.Index;
 
-public class RPNcalculator extends Animation {
+public class RPNcalculator extends LocalJavaAnimation {
 
 	public class CalculatorRenderer implements Renderer<calculatorEngine> {
 
@@ -49,7 +50,7 @@ public class RPNcalculator extends Animation {
 
 
 	public RPNcalculator() {
-		super("Recursive Calculator", true);
+		super("Recursive Calculator");
 	}
 
 	@Override
@@ -69,7 +70,7 @@ public class RPNcalculator extends Animation {
 			
 			@Override
 			public void selected() {
-				getActivationStack().render(calculatorEngine.class, new CalculatorRenderer());
+				getMemoryModel().render(calculatorEngine.class, new CalculatorRenderer());
 				globalVar("calc", calc);
 			}
 		}

@@ -7,16 +7,16 @@ import java.util.List;
 
 import edu.odu.cs.cs361.animations.Stacks.Stack_via_List;
 import edu.odu.cs.cs361.animations.Stacks.Stack_via_Vector;
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.AnimationContext;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.LinkedListRenderer;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
-import edu.odu.cs.zeil.AlgAE.Utilities.SimpleReference;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.LinkedListRenderer;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.Utilities.Index;
+import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;
 
-public class StackDemo extends Animation {
+public class StackDemo extends LocalJavaAnimation {
 
 	public class VStackRenderer implements Renderer<Stack_via_Vector> {
 
@@ -84,10 +84,10 @@ public class StackDemo extends Animation {
 
 
 
-	private AnimationContext self;
+	private LocalJavaAnimation self;
 	
 	public StackDemo() {
-		super("Stack Implementations", true);
+		super("Stack Implementations");
 		self = this;
 	}
 
@@ -109,12 +109,12 @@ public class StackDemo extends Animation {
 
 			@Override
 			public void selected() {
-				getAnimator().setSpeed(30);
-				getActivationStack().render(LinkedList.class, new LinkedListRenderer<String>(true, false, self));
-				getActivationStack().render(Stack_via_Vector.class, new VStackRenderer());
-				getActivationStack().render(Stack_via_List.class, new LStackRenderer());
+				//getAnimator().setSpeed(30);
+				getMemoryModel().render(LinkedList.class, new LinkedListRenderer<String>(true, false, self));
+				getMemoryModel().render(Stack_via_Vector.class, new VStackRenderer());
+				getMemoryModel().render(Stack_via_List.class, new LStackRenderer());
 				
-				new Stacks().demo();
+				new Stacks().demo(self);
 			}
 			
 		});

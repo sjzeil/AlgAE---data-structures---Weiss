@@ -5,15 +5,15 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.Utilities.Index;
 import edu.odu.cs.cs361.animations.Queues.Queue_via_Array;
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
-import edu.odu.cs.zeil.AlgAE.Utilities.Index;
 
-public class QViaArrayDemo extends Animation {
+public class QViaArrayDemo extends LocalJavaAnimation {
 
 	public class AQueueRenderer implements Renderer<Queue_via_Array> {
 
@@ -53,10 +53,11 @@ public class QViaArrayDemo extends Animation {
 
 
 
-
+    private LocalJavaAnimation self;
 	
 	public QViaArrayDemo() {
-		super("Queue Implementations", true);
+		super("Queue Implementations");
+		self = this;
 	}
 
 	@Override
@@ -77,10 +78,10 @@ public class QViaArrayDemo extends Animation {
 
 			@Override
 			public void selected() {
-				getAnimator().setSpeed(30);
-				getActivationStack().render(Queue_via_Array.class, new AQueueRenderer());
+				//getAnimator().setSpeed(30);
+				getMemoryModel().render(Queue_via_Array.class, new AQueueRenderer());
 				
-				new Queues().arrayQDemo();
+				new Queues().arrayQDemo(self);
 			}
 			
 		});

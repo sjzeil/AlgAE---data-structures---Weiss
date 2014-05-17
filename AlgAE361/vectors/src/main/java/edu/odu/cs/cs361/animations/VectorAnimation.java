@@ -14,9 +14,9 @@ import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;
 
 
-public class CS361VectorAnimation extends LocalJavaAnimation {
+public class VectorAnimation extends LocalJavaAnimation {
 
-	public CS361VectorAnimation() {
+	public VectorAnimation() {
 		super("Array Operations");
 	}
 
@@ -141,7 +141,7 @@ public class CS361VectorAnimation extends LocalJavaAnimation {
 	
 	
 	public static void main (String[] args) {
-		CS361VectorAnimation demo = new CS361VectorAnimation();
+		VectorAnimation demo = new VectorAnimation();
 		demo.runAsMain();
 	}
 	

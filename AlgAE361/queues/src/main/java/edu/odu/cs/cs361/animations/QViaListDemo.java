@@ -6,16 +6,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 import edu.odu.cs.cs361.animations.Queues.Queue_via_List;
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.AnimationContext;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.LinkedListRenderer;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
-import edu.odu.cs.zeil.AlgAE.Utilities.SimpleReference;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.LinkedListRenderer;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;
 
-public class QViaListDemo extends Animation {
+
+public class QViaListDemo extends LocalJavaAnimation {
 
 
 	public class LQueueRenderer implements Renderer<Queue_via_List> {
@@ -52,10 +52,10 @@ public class QViaListDemo extends Animation {
 
 
 
-	private AnimationContext self;
+	private LocalJavaAnimation self;
 	
 	public QViaListDemo() {
-		super("Queue Implementations", true);
+		super("Queue Implementations");
 		self = this;
 	}
 
@@ -77,11 +77,11 @@ public class QViaListDemo extends Animation {
 
 			@Override
 			public void selected() {
-				getAnimator().setSpeed(30);
-				getActivationStack().render(LinkedList.class, new LinkedListRenderer<String>(true, false, self));
-				getActivationStack().render(Queue_via_List.class, new LQueueRenderer());
+				//getAnimator().setSpeed(30);
+				getMemoryModel().render(LinkedList.class, new LinkedListRenderer<String>(true, false, self));
+				getMemoryModel().render(Queue_via_List.class, new LQueueRenderer());
 				
-				new Queues().listQDemo();
+				new Queues().listQDemo(self);
 			}
 			
 		});

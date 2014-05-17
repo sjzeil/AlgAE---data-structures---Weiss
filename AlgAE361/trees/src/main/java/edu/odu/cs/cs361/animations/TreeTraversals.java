@@ -6,16 +6,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 
-public class TreeTraversals extends Animation {
+public class TreeTraversals extends LocalJavaAnimation {
 
 	public TreeTraversals() {
-		super("Tree Traversals", true);
+		super("Tree Traversals");
 	}
 
 	@Override
@@ -147,8 +147,8 @@ public class TreeTraversals extends Animation {
 			public void selected() {
 				globalVar("root", bt);
 				bt.root = createSampleTree1();
-				getActivationStack().render(tnode.class, new tnodeRendering());
-				getActivationStack().render(BinaryTrees.class, new BinaryTreeRendering());
+				getMemoryModel().render(tnode.class, new tnodeRendering());
+				getMemoryModel().render(BinaryTrees.class, new BinaryTreeRendering());
 			}
 			
 		});

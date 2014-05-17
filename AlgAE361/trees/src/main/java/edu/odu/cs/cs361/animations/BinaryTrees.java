@@ -1,13 +1,13 @@
 package edu.odu.cs.cs361.animations;//!
 
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+
 import java.util.LinkedList;//!
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.HorizontalRenderer;//!
-import edu.odu.cs.zeil.AlgAE.Utilities.SimpleReference;
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.Rendering.HorizontalRenderer;//!
+import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
 
-//!
 
 public class BinaryTrees {//!
 
@@ -21,7 +21,7 @@ public class BinaryTrees {//!
 //!void preorderOutput(tnode<T> *t, const string& separator);
 public void preorderOutput (tnode<String> t, String separator)//!
 {
-   ActivationRecord arec = Animation.activate(getClass());//!
+   ActivationRecord arec = activate(getClass());//!
    if (t != null) arec.highlight(t);//!
    arec.refParam("t", t).param("separator",separator);//!
    arec.breakHere("entered preOrder()");//!
@@ -45,7 +45,7 @@ public void preorderOutput (tnode<String> t, String separator)//!
 //!void postorderOutput(tnode<T> *t, const string& separator);
 public void postorderOutput (tnode<String> t, String separator)//!
 {
-ActivationRecord arec = Animation.activate(getClass());//!
+ActivationRecord arec = activate(getClass());//!
 if (t != null) arec.highlight(t);//!
 arec.refParam("t", t).param("separator",separator).breakHere("entered postOrder()");//!
 // the recursive scan terminates on a empty subtree
@@ -69,7 +69,7 @@ if (t != NULL)
 //!void inorderOutput(tnode<T> *t, const string& separator);
 public void inorderOutput (tnode<String> t, String separator)//!
 {
-ActivationRecord arec = Animation.activate(getClass());//!
+ActivationRecord arec = activate(getClass());//!
 if (t != null) arec.highlight(t);//!
 arec.refParam("t", t).param("separator",separator).breakHere("entered postOrder()");//!
 //the recursive scan terminates on a empty subtree
@@ -91,7 +91,7 @@ if (t != NULL)
 @SuppressWarnings("unchecked")
 void levelorderOutput(tnode<String> t, String separator)//!void levelorderOutput(tnode<T> *t, const string& separator = "  ")
 {
-	ActivationRecord arec = Animation.activate(getClass());//!
+	ActivationRecord arec = activate(getClass());//!
    // store siblings of each node in a queue so that they are
    // visited in order at the next level of the tree
    arec.refParam("t", t).param("separator",separator).breakHere("entered levelorderOutput()");//!

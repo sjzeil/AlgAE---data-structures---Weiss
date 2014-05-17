@@ -4,12 +4,14 @@ import java.awt.Color;//!
 import java.util.ArrayList;//!
 import java.util.List;//!
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+
 
 public class Queues {//!
 
@@ -33,7 +35,7 @@ class Queue_via_Array
 	
 	void push (String x)//!	void push (const T& x)
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.param("x", x);//!
 		arec.breakHere("pushing");//!
 //!		assert (theSize &lt; ArraySize);
@@ -47,7 +49,7 @@ class Queue_via_Array
 	
 	void pop ()
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.breakHere("popping");//!
 //!		assert (theSize &gt; 0);
 		arec.breakHere("advance start, wrapping if necessary");//!
@@ -59,7 +61,7 @@ class Queue_via_Array
 	
 	String front()//!    T front() const
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.breakHere("getting top");//!
 		return array[start];
 	}
@@ -128,7 +130,7 @@ class Queue_via_List
 	
 	void push (String x)//!	void push (const T& x)
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.param("x", x);//!
 		arec.breakHere("pushing");//!
 		if (first == null) first = last = new Node(x, null); else last = last.next = new Node(x, null);;//!		list.push_back(x);
@@ -137,7 +139,7 @@ class Queue_via_List
 	
 	void pop ()
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.breakHere("popping");//!
 		first = first.next; if(first == null) last = null;//!		list.pop_front(x);
 		arec.breakHere("done popping");//!
@@ -145,7 +147,7 @@ class Queue_via_List
 	
 	String front()//!    T front() const
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.breakHere("getting front");//!
 		return (first != null) ? first.data : "";//!        return list.front();
 	}
@@ -162,11 +164,11 @@ class Queue_via_List
 
 
 
-void listQDemo ()
+void listQDemo (LocalJavaAnimation self)
 {
-	ActivationRecord arec = Animation.activate(Queues.class);//!
+	ActivationRecord arec = activate(Queues.class);//!
 	Queue_via_List lqueue = new Queue_via_List();//!Queue_via_List<string> lqueue;
-	arec.context().getActivationStack().globalVar("lqueue", lqueue);//!
+	self.getMemoryModel().globalVar("lqueue", lqueue);//!
 	arec.breakHere("queues");//!
 	for (int i = 0; i < 1000; ++i)
 	{
@@ -189,11 +191,11 @@ void listQDemo ()
 	}
 }
 
-void arrayQDemo ()
+void arrayQDemo (LocalJavaAnimation self)
 {
-	ActivationRecord arec = Animation.activate(Queues.class);//!
+	ActivationRecord arec = activate(Queues.class);//!
 	Queue_via_Array aqueue = new Queue_via_Array();//!Queue_via_Array<string> aqueue;
-	arec.context().getActivationStack().globalVar("aqueue", aqueue);//!
+	self.getMemoryModel().globalVar("aqueue", aqueue);//!
 	arec.breakHere("queues");//!
 	for (int i = 0; i < 1000; ++i)
 	{

@@ -4,12 +4,13 @@ import java.awt.Color;//!
 import java.util.ArrayList;//!
 import java.util.List;//!
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
 
 public class Stacks {//!
 
@@ -27,7 +28,7 @@ class Stack_via_Vector
 	
 	void push (String x)//!	void push (const T& x)
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.param("x", x).breakHere("pushing");//!
 		v.add(x);//!		v.push_back(x);
 		arec.breakHere("done pushing");//!
@@ -35,7 +36,7 @@ class Stack_via_Vector
 	
 	void pop ()
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.breakHere("popping");//!
 		v.remove(v.size()-1);//!		v.pop_back(x);
 		arec.breakHere("done popping");//!
@@ -43,7 +44,7 @@ class Stack_via_Vector
 	
 	String top()
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.breakHere("getting top");//!
 		return (v.size() > 0) ? v.get(0) : "";//!        return v.front();
 	}
@@ -108,7 +109,7 @@ class Stack_via_List
 	
 	void push (String x)//!	void push (const T& x)
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.param("x", x).breakHere("pushing");//!
 		first = new Node(x, first);//!		list.push_back(x);
 		arec.breakHere("done pushing");//!
@@ -116,7 +117,7 @@ class Stack_via_List
 	
 	void pop ()
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.breakHere("popping");//!
 		first = first.next;//!		list.pop_back(x);
 		arec.breakHere("done popping");//!
@@ -124,7 +125,7 @@ class Stack_via_List
 	
 	String top()//!    T top() const
 	{
-		ActivationRecord arec = Animation.activate(this);//!
+		ActivationRecord arec = activate(getClass());//!
 		arec.breakHere("getting top");//!
 		return (first != null) ? first.data : "";//!        return list.front();
 	}
@@ -141,13 +142,13 @@ class Stack_via_List
 
 
 
-void demo ()
+void demo (LocalJavaAnimation anim)
 {
-	ActivationRecord arec = Animation.activate(Stacks.class);//!
+	ActivationRecord arec = activate(Stacks.class);//!
 	Stack_via_Vector vstack = new Stack_via_Vector();//!Stack_via_Vector<string> vstack;
 	Stack_via_List lstack = new Stack_via_List();//!Stack_via_List<string> lstack;
-	arec.context().getActivationStack().globalVar("vstack", vstack);//!
-	arec.context().getActivationStack().globalVar("lstack", lstack);//!
+	anim.getMemoryModel().globalVar("vstack", vstack);//!
+	anim.getMemoryModel().globalVar("lstack", lstack);//!
 	arec.breakHere("stacks");//!
 	vstack.push("Adams");
 	arec.breakHere("pushed onto vector stack");//!
