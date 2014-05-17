@@ -1,11 +1,11 @@
-<project name="AlgAE top-level" 
+<project name="AlgAE DS Ford-Topp top-level" 
 	 default="build" basedir=".">
   
   <record name="ant.log" action="start" append="false" />
   
   <description>
-    AlgAE (Algorithm Animation Engine): top level build, used mainly
-    by Continuous Integration systems.
+    Animations of code for a C++ data structured class,
+  	based primarily on Ford and Topp, Data Structures with C++ using STL
   </description>
   
   <property name="projectName" value="algae" />
@@ -18,29 +18,23 @@
   <property name="reports.dir" location="AlgAE/reports/" />	
   
   
-  <target name="build" description="build main subprojects">
-    <ant dir="AlgAE/algae-client" target="publish-local" inheritAll="false"/>
-    <ant dir="AlgAE/algae-jserver" target="publish-local" inheritAll="false"/>
-    <ant dir="AlgAE/demos/ReferenceManualJava" target="build" inheritAll="false"/>
+  <target name="build" description="build all subprojects">
+  	<subant target="build" inheritall="false">
+  		<fileset dir="." includes="*/build.xml"/>
+  	</subant>
   </target>
   
-  <target name="docs" description="build documentation">
-    <ant dir="AlgAE/demos/ReferenceManualJava" target="build"/>
-  </target>
-
 	
-	<target name="publish" description="build and publish main subprojects">
-    <ant dir="AlgAE/algae-client" target="publish" inheritAll="false"/>
-    <ant dir="AlgAE/algae-jserver" target="publish" inheritAll="false"/>
-    <ant dir="AlgAE/demos/ReferenceManualJava" target="publish" inheritAll="false"/>
+  <target name="publish" description="build and publish all subprojects">
+	 <subant target="publish" inheritall="false">
+	  	<fileset dir="." includes="*/build.xml"/>
+	 </subant>
   </target>
   
   <target name="clean" description="clean all subprojects">
-    <ant dir="AlgAE/algae-client" target="clean" inheritAll="false"/>
-    <ant dir="AlgAE/algae-jserver" target="clean" inheritAll="false"/>
-    <ant dir="AlgAE/algae-referenceManual" target="clean" inheritAll="false"/>
-    <ant dir="AlgAE/demos/FordTopp-BST" target="clean" inheritAll="false"/>
-    <ant dir="AlgAE/demos/ReferenceManualJava" target="clean" inheritAll="false"/>
+	 <subant target="clean" inheritall="false">
+	  	<fileset dir="." includes="*/build.xml"/>
+	 </subant>
   </target>
   
   
