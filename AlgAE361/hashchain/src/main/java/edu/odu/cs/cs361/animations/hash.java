@@ -1,13 +1,14 @@
 package edu.odu.cs.cs361.animations;//!
 
+import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+
 import java.util.ArrayList;//!
 import java.util.LinkedList;//!
 import java.util.ListIterator;//!
 
-import edu.odu.cs.zeil.AlgAE.ActivationRecord;//!
-import edu.odu.cs.zeil.AlgAE.Animation;//!
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.ListIteratorRenderer;
-import edu.odu.cs.zeil.AlgAE.Utilities.Index;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.Rendering.ListIteratorRenderer;//!
+import edu.odu.cs.AlgAE.Server.Utilities.Index;//!
 
 public class hash<T> {//!
 
@@ -441,7 +442,7 @@ public class hash<T> {//!
 //!hash<T, HashFunc>::find(const T& item) const
 public boolean find(T item)//!
 {
-	ActivationRecord arec = Animation.activate(this);//!
+	ActivationRecord arec = activate(getClass());//!
 //!  using namespace std;
 
   // hashIndex is the bucket number (index of the linked list)
@@ -487,7 +488,7 @@ public boolean find(T item)//!
 //!typename std::pair<typename hash<T, HashFunc>::iterator,bool>
   public void insert(T item)//!hash<T, HashFunc>::insert(const T& item)
 {
-	  ActivationRecord arec = Animation.activate(this);//!
+	  ActivationRecord arec = activate(getClass());//!
 //!  using namespace std;
 //!
   // hashIndex is the bucket number

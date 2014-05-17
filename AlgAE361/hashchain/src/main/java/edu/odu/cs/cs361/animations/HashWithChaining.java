@@ -5,16 +5,16 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.odu.cs.zeil.AlgAE.Animation;
-import edu.odu.cs.zeil.AlgAE.Server.MenuFunction;
-import edu.odu.cs.zeil.AlgAE.Snapshot.ActivationStack;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Component;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Connection;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.CanBeRendered;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.LinkedListRenderer;
-import edu.odu.cs.zeil.AlgAE.Snapshot.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
+import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationStack;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
+import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
+import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
+import edu.odu.cs.AlgAE.Server.Rendering.LinkedListRenderer;
+import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 
-public class HashWithChaining extends Animation {
+public class HashWithChaining extends LocalJavaAnimation {
 
 	public class HashTableRendering implements Renderer<hash<?>> {
 
@@ -50,7 +50,7 @@ public class HashWithChaining extends Animation {
 	}
 
 	public HashWithChaining() {
-		super("hashing with Separate Chaining", true);
+		super("hashing with Separate Chaining");
 		self = this;
 	}
 
@@ -123,7 +123,7 @@ public class HashWithChaining extends Animation {
 	}
 
 	hash<SillyString> table = new hash<HashWithChaining.SillyString>(6);
-	Animation self;
+	LocalJavaAnimation self;
 	
 	
 	@Override
@@ -136,7 +136,7 @@ public class HashWithChaining extends Animation {
 			public void selected() {
 				generateInitialTable();
 				globalVar("table", table);
-				ActivationStack stk = getActivationStack();
+				ActivationStack stk = getMemoryModel().getActivationStack();
 				stk.render(hash.class, new HashTableRendering());
 				stk.render(LinkedList.class, new LinkedListRenderer<String>(false, false, self));
 			}
