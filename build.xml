@@ -20,20 +20,20 @@
   
   <target name="build" description="build all subprojects">
   	<subant target="build" inheritall="false">
-  		<fileset dir="." includes="*/build.xml"/>
+  		<fileset dir="." includes="*/*/build.xml"/>
   	</subant>
   </target>
   
 	
   <target name="publish" description="build and publish all subprojects">
 	 <subant target="publish" inheritall="false">
-	  	<fileset dir="." includes="*/build.xml"/>
+	  	<fileset dir="." includes="*/*/build.xml"/>
 	 </subant>
   </target>
   
   <target name="clean" description="clean all subprojects">
 	 <subant target="clean" inheritall="false">
-	  	<fileset dir="." includes="*/build.xml"/>
+	  	<fileset dir="." includes="*/*/build.xml"/>
 	 </subant>
   </target>
   
