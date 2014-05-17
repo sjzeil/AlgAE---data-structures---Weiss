@@ -1,0 +1,41 @@
+<project name="AlgAE DS Ford-Topp top-level" 
+	 default="build" basedir=".">
+  
+  <record name="ant.log" action="start" append="false" />
+  
+  <description>
+    Animations of code for a C++ data structured class,
+  	based primarily on Ford and Topp, Data Structures with C++ using STL
+  </description>
+  
+  <property name="projectName" value="algae" />
+  <property file="shared.properties"/>
+  
+  <property name="configuration" value="${os.name}" />
+  
+  <!-- === Directory Setup === -->
+  
+  <property name="reports.dir" location="AlgAE/reports/" />	
+  
+  
+  <target name="build" description="build all subprojects">
+  	<subant target="build" inheritall="false">
+  		<fileset dir="." includes="*/build.xml"/>
+  	</subant>
+  </target>
+  
+	
+  <target name="publish" description="build and publish all subprojects">
+	 <subant target="publish" inheritall="false">
+	  	<fileset dir="." includes="*/build.xml"/>
+	 </subant>
+  </target>
+  
+  <target name="clean" description="clean all subprojects">
+	 <subant target="clean" inheritall="false">
+	  	<fileset dir="." includes="*/build.xml"/>
+	 </subant>
+  </target>
+  
+  
+</project>
