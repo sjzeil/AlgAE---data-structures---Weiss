@@ -1,0 +1,16 @@
+<project name="Binary search trees"
+	 default="build" basedir="." >
+
+	
+  <description>
+    BVinary search trees for Data Structures, Ford and Topp
+  </description>
+
+
+  <property name="projectName" value="algae-dsft-bst"/>
+  <property name="mainClassName" value="edu.odu.cs.cs361.animations.BST_Ops" />
+
+  <import file="../commonBuild.xml"/>
+
+
+</project>
