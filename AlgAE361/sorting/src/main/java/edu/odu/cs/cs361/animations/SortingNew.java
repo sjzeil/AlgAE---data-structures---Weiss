@@ -250,11 +250,11 @@ void mergeSort (DiscreteInteger[] v, int first, int last) {//!void mergeSort(vec
 
 		arec.var("midPt", midpt);//!
 		arec.breakHere("sort to left of center");//!
-		mergeSort(v, first, midpt);
+		//mergeSort(v, first, midpt);
 		arec.breakHere("sort to right of center");//!
-		mergeSort(v, midpt, last);
+		//mergeSort(v, midpt, last);
 		arec.breakHere("merge sorted subarrays");//!
-		merge(v, first, midpt, last);
+		//merge(v, first, midpt, last);
 	}
 }
 
