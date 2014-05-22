@@ -25,13 +25,13 @@ public class CS361SortingAnimationNew extends LocalJavaAnimation {
 	public String about() {
 		return "Demonstration of Sorting Algorithms,\n" +
 				"prepared for CS 361, Advanced Data Strcutures\n" +
-				"and Algorithms, Old Dominion University\n" +
+				"and Algorithms, Old Dominion Universi"
+				+ "ty\n" +
 				"Summer 2010";
 	}
 
 	
 	private DiscreteInteger[] array = new DiscreteInteger[0];
-	
 	private class ArrayContainer implements CanBeRendered<ArrayContainer>, Renderer<ArrayContainer> {
 
 		@Override
@@ -79,7 +79,7 @@ public class CS361SortingAnimationNew extends LocalJavaAnimation {
 			
 			@Override
 			public void selected() {
-				generateRandomArray(8);
+				generateRandomArray(12);
 				globalVar("vector", new ArrayContainer());
 				/*
 				getActivationStack().render(ArrayList.class, 
@@ -144,14 +144,14 @@ public class CS361SortingAnimationNew extends LocalJavaAnimation {
 		register ("Merge Sort", new MenuFunction() {
 			@Override
 			public void selected() {
-				new SortingNew().mergeSort (array, 0, array.length);
+				new SortingNew().mergeSort (array, array.length);
 			}
 		});
 
 		register ("Quick Sort", new MenuFunction() {
 			@Override
 			public void selected() {
-				new SortingNew().quicksort (array, 0, array.length);
+				new SortingNew().quicksort (array, array.length);
 			}
 		});
 	}
