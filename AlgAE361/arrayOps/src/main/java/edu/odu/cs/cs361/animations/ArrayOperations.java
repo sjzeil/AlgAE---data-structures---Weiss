@@ -7,116 +7,247 @@ import edu.odu.cs.AlgAE.Server.Utilities.Index;//!
 
 
 public class ArrayOperations {//!
-
-
-//!# include <iostream>
-//!# include <string>
-	
-//!using namespace std;
-
 	
 	
-
-
-//!int orderedInsert (int arr[], int first, int last, int target)
-public int orderedInsert (DiscreteInteger[] arr, int first, int last, int target)//!
-{
-   ActivationRecord arec = activate(getClass());//!
-   arec.refParam("arr", arr).param("first", first).param("last", last).param("target", target);//!
-   arec.breakHere("starting addInOrder");//!
-   if (last >= arr.length) {//!
-	   arec.breakHere("array is already full - program may crash");//!
-	   return first-1;//!
-   }//!
-  Index i = new Index(last, arr);//!  int i = last;
-  arec.var("i", i);//!
-  arec.breakHere("start at high end of the data");//!
-  while (i.get() > first && target < arr[i.get()-1].get()) //!  while ((i > first) && (target < arr[i-1]))
-  {   
-	arec.breakHere("in loop: ready to move an element up");//!
-    arr[i.get()] = arr[i.get()-1];//!    arr[i] = arr[i-1];
-	arec.breakHere("in loop: Moved the element");//!
-    i.set(i.get() - 1);//!    i = i - 1;
-	arec.breakHere("in loop: decremented");//!
-  }
-  arec.breakHere("exited loop: insert the new value");//!
-  arr[i.get()] = new DiscreteInteger(target);//!  arr[i] = target;  
-  arec.breakHere("Done");//!
-  return i.get();//!  return i;
-}
+//!#ifndef ARRAYOPS_H
+//!#define ARRAYOPS_H
 	
+
 /*
- * seqSearch from Ford & Topp, Data Structures in C++ using STL, 2nd ed.
- * section 3-2
+*
+* Assume the elements of the array are already in order
+* Find the position where value could be added to keep
+*    everything in order, and insert it there.
+* Return the position where it was inserted
+*  - Assumes that we have a separate integer (size) indicating how
+*     many elements are in the array
+*  - and that the "true" size of the array is at least one larger 
+*      than the current value of that counter
+*
+*  @param array array into which to add an element
+*  @param size  number of data elements in hte array. Must be less than
+*               the number of elements allocated for the array. Incremented
+*               upon output from this function.
+*  @param value value to add into the array
+*  @return the position where the element was added
+*/
+
+//!template <typename Comparable>
+public Index addInOrder (String[] array, DiscreteInteger size, String value)//!
+//!int addInOrder (Comparable* array, int& size, Comparable value)
+{
+	 ActivationRecord arec = activate(ArrayOperations.class);//!
+	 arec.refParam("array", array).refParam("size", size).param("value", value).breakHere("starting addInOrder");//!
+	// Make room for the insertion
+    //!  int toBeMoved = size - 1;
+	 Index toBeMoved = new Index(size.get() - 1, array);//!
+	 arec.var("toBeMoved", toBeMoved).breakHere("start at high end of the data");//!
+	//!  while (toBeMoved >= 0 && value < array[toBeMoved]) {
+	 while (toBeMoved.get() >= 0 && value.compareTo(array[toBeMoved.get()]) < 0) {//!
+		arec.breakHere("in loop: ready to move an element up");//!
+	//!    array[toBeMoved+1] = array[toBeMoved];
+		  if (toBeMoved.get()+1 >= array.length) {//!
+			 arec.breakHere("array is already full - program may crash");//!
+			 return toBeMoved;//!
+		   }//!
+	  array[toBeMoved.get()+1] = array[toBeMoved.get()];//!
+      arec.breakHere("in loop: Moved the element");//!
+	//!    --toBeMoved;
+	  toBeMoved.set (toBeMoved.get() - 1);//!
+      arec.breakHere("in loop: decremented");//!
+	 }
+	// Insert the new value
+	 arec.breakHere("exited loop: insert the new value");//!
+	//!  array[toBeMoved+1] = value;
+	 array[toBeMoved.get()+1] = value;//!
+	 arec.breakHere("Inserted new value");//!
+	//!  ++size;
+	 size.set(size.get() + 1);//!
+	 arec.breakHere("Incremented size");//!
+	//!  return toBeMoved+1;
+	  return new Index(toBeMoved.get()+1, array);
+}
+
+
+
+/*
+ * Search an array for a given value, returning the index where 
+ *    found or -1 if not found.
+ *
+ * From Malik, C++ Programming: From Problem Analysis to Program Design
+ *
+ * @param list the array to be searched
+ * @param listLength the number of data elements in the array
+ * @param searchItem the value to search for
+ * @return the position at which value was found, or -1 if not found
  */
-//!int seqSearch(const int arr[], int first, int last, int target)
-public int seqSearch(DiscreteInteger arr[], int first, int last, int target)//!
+
+//!template <typename T>
+//!int seqSearch(const T list[], int listLength, T searchItem)
+public Index seqSearch(String list[], int listLength, String searchItem)//!
+{
+	ActivationRecord arec = activate(ArrayOperations.class);//!
+	arec.refParam("list", list).param("listLength", listLength).param("searchItem", searchItem).breakHere("starting seqSearch");//!
+//!    int loc;
+  Index loc = new Index(-1, list);//!
+
+//!    for (loc = 0; loc < listLength; loc++)
+  for (loc.set(0); loc.get() < listLength; loc.set(loc.get()+1)) {//!
+  	arec.var("loc", loc).breakHere("in loop: see if we have found it");//!
+//!        if (list[loc] == searchItem)
+      if (list[loc.get()].equals(searchItem)) { //!
+      	  arec.breakHere("Found it! Return " + loc.get());//!
+          return loc;
+      }//!
+  }//!
+	arec.breakHere("Couldn't find it. Return -1");//!
+//!    return -1;
+  return new Index(-1, list);//!
+}
+
+
+
+/*
+ * Search an ordered array for a given value, returning the index where 
+ *    found or -1 if not found.
+ * @param list the array to be searched. Must be ordered.
+ * @param listLength the number of data elements in the array
+ * @param searchItem the value to search for
+ * @return the position at which value was found, or -1 if not found
+ */
+//!template <typename Comparable>
+//!int seqOrderedSearch(const Comparable list[], int listLength, Comparable searchItem)
+public Index seqOrderedSearch(String list[], int listLength, String searchItem)//!
+{
+	ActivationRecord arec = activate(ArrayOperations.class);//!
+	arec.refParam("list", list).param("listLength", listLength).param("searchItem", searchItem).breakHere("starting seqOrderedSearch");//!
+//!    int loc = 0;
+  Index loc = new Index(0, list);//!
+
+	arec.var("loc", loc).breakHere("start searching from the beginning");//!
+//!    while (loc < listLength && list[loc] < searchItem)
+  while (loc.get() < listLength && list[loc.get()].compareTo(searchItem) < 0)//!
+    {
+  	arec.breakHere("move forward");//!
+//!       ++loc;
+     loc.set (loc.get()+1);//!
+    }
+	arec.breakHere("Out of the loop: did we find it?");//!
+//!    if (loc < listLength && list[loc] == searchItem)
+  if (loc.get() < listLength && list[loc.get()].equals(searchItem)) { //!
+  	 arec.breakHere("Found It! Return " + loc.get());//!
+     return loc;
+  }//!
+  else
+  {//!
+  	arec.breakHere("Could not find it. Return -1");//!
+//!       return -1;
+     return new Index(-1, list);
+  }//!
+}
+
+
+
+/*
+ * Removes an element from the indicated position in the array, moving
+ * all elements in higher positions down one to fill in the gap.
+ * 
+ *  @param array array from which to remove an element
+ *  @param size  number of data elements in the array. Decremented
+ *               upon output from this function.
+ *  @param index position from which to remove the element. Must be < size
+ */
+
+//!template <typename T>
+//!void removeElement (T* array, int& size, int index)
+public void removeElement (String[] array, DiscreteInteger size, Index index)//!
+{
+ ActivationRecord arec = activate(ArrayOperations.class);//!
+ arec.refParam("array", array).refParam("size", size).param("index", index).breakHere("starting removeElement");//!
+ if (index.get() < 0 || index.get() >= array.length) { //!
+	   arec.breakHere("index is out of bounds - program may crash");//!
+	   return; //!
+ } //!
+//!   int toBeMoved = index + 1;
+ Index toBeMoved = new Index(index.get() + 1, array); //!
+ arec.var("toBeMoved",toBeMoved).breakHere("start above index");//!
+//!   while (toBeMoved < size) {
+ while (toBeMoved.get() < size.get()) {//!
+	 arec.breakHere("move an element down");//!
+//!     array[toBeMoved-1] = array[toBeMoved];
+   array[toBeMoved.get()-1] = array[toBeMoved.get()]; //!
+	 arec.breakHere("moved");//!
+//!     ++toBeMoved;
+   toBeMoved.set(toBeMoved.get()+1);//!
+ }
+	 arec.breakHere("Done moving elements");//!
+//!  --size;
+size.set(size.get()-1);//!
+}
+
+
+/*
+ * Performs the standard binary search using two comparisons per level.
+ * Returns index where item is found or -1 if not found
+ *
+ * From Weiss,  Data Structures and Algorithm Analysis, 4e
+ * ( modified SJ Zeil)
+ *
+ * @param a array to search. Must be ordered.
+ * @param size number of elements i nthe array
+ * @param x value to search for
+ * @return position where found or -1 if not found
+ */
+
+//!template <typename Comparable>
+//!int binarySearch( const Comparable* a, int size, const Comparable & x )
+public int binarySearch(String[] a, int size, String x)//!
 {
 	ActivationRecord arec = activate(getClass());//!
-	arec.refParam("arr", arr).param("first", first).param("last", last).param("target", target);//!
-	arec.breakHere("starting seqSearch");//!
-    int i = first;
-    
-    // scan indices in the range first <= i < last; test for a match
-    // or index out of range
-    
-    arec.var("i", new Index(i, arr));//!
-    while (i != last && arr[i].get() != target) {//!    while (i != last && arr[i] != target)
-    	arec.breakHere("in loop: have not found it");//!
-    	++i;
-        arec.var("i", new Index(i, arr));//!
-    }//!
-    arec.breakHere("Found it or ran out of data.");//!
-    return i; // i is index of match or i = last if no match
-}//!
-
-
-//!int binSearch (const int arr[], int first, int last, int target)
-public int binSearch(DiscreteInteger arr[], int first, int last, int target)//!
-//search for target in ordered array of data
-//return index of target, or index of
-//next smaller target if not in collection
-{
-	ActivationRecord arec = activate(getClass());//!
-	arec.refParam("arr", arr).param("first", new Index(first, arr)).param("last", new Index(last, arr)).param("target", target);//!
-	arec.breakHere("starting binSearch");//!
-    int mid = -997;//!    int mid;      // index of the midpoint
-    int midValue = -1;//!	int midValue; // object that is assigned arr[mid]
-	int origLast = last; // save original value of last 
-
-	arec.var("mid", new Index(mid, arr)).var("midValue", midValue).var("origLast", origLast);//!
+	arec.refParam("a", a).param("size", size).param("x", x);//!
+	arec.breakHere("starting binarySearch");//!
+	
+	int NOT_FOUND = -1;
+	//!const int NOT_FOUND = -1;
+	
+	int low = 0;//!
+	int high = a.length-1;//!
+	//! int low = 0, high = a.size( ) - 1;
+	arec.var("low", new Index(low, a)).var("high",new Index(high, a));//!
 	arec.breakHere("start the loop");//!
-    // repeatedly reduce the area of search
-    // until it is just one target
-	while (first < last) {  // test for nonempty sublist
-		for (int i = first; i < last; ++i) arec.highlight(arr[i]); //!
-		arec.breakHere("in the loop");//!
-		mid = (first + last) / 2; 
-		midValue = arr[mid].get();//!		midValue = arr[mid];  
-		arec.var("mid", new Index(mid, arr)).var("midValue", midValue);//!
-		arec.breakHere("look at the midpoint");//!
-		if (target == midValue) 
-		{//!
-			arec.breakHere("Found it!");//!
-			return mid;
-		} //!
-		else if (target < midValue)
-		{ //!
-			arec.breakHere("middle value is too high");//!
-			last = mid;        // search lower sublist, reset last
-			arec.param("last", new Index(last, arr));//!
-		}//!
-		else 
+	// repeatedly reduce the area of search
+	  // until it is just one target
+	while (low <= high) {  // test for nonempty sublist
+		
+		int mid = ( low + high ) / 2; // index of the midpoint
+		arec.var("mid", new Index(mid, a));
+		
+		if( a[ mid ].compareTo(x) < 0 )//!if( a[ mid ] < x )
 		{//!
 			arec.breakHere("middle value is too low");//!
-			first = mid+1;     // search upper sublist, reset first
-			arec.param("first", new Index(first, arr));//!
+            low = mid + 1;   // search upper sublist, reset first
+            arec.param("low", new Index(low, a));//!
 		}//!
-		arec.clearRenderings();//!
+		else if( a[ mid ].compareTo(x)  > 0 )//!else if( a[ mid ] > x )
+		{//!
+			arec.breakHere("middle value is too high");//!
+			high = mid - 1;
+			arec.param("low", new Index(low, a));//!
+		}//!
+		 else
+		 {//!
+			 arec.breakHere("Found it!");//!
+	         return mid;   // Found
+		 }//!
+		 arec.clearRenderings();//!
 	}
-	arec.breakHere("target is not in the array");//!
-	return origLast;
-}
-
-        
+	arec.breakHere("target is not in the array");//!	 
+	return NOT_FOUND;     // NOT_FOUND is defined as -1
+		
+		
+	}
+	
+	
+	
+         
 }//!
