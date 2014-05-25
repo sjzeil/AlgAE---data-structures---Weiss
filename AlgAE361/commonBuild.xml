@@ -1,36 +1,56 @@
 <project name="basic build for AlgAE Java animation" 
-	 default="build" basedir="." 
-	 xmlns:ivy="antlib:org.apache.ivy.ant"
-	 xmlns:jacoco="antlib:org.jacoco.ant">
-
+         default="build" basedir="." 
+         xmlns:ivy="antlib:org.apache.ivy.ant"
+         xmlns:jacoco="antlib:org.jacoco.ant">
+  
   <record name="ant.log" action="start" append="false" />
-	
+  
   <description>
     AlgAE (Algorithm Animation Engine): Java algorithm animation project
   </description>
-
+  
   <property name="version" value="4.0"/>
   <property name="algae.version" value="4.0"/>
-  
+  <property name="superProjectName" value="algae-361-weiss"/>
 
+
+  <!-- Deployment and signing properties are kept outside of the project
+       because we don't want these as part of the version-control
+       repository. 
+
+       These properties are:
+          ${superProjectName}.deploy.dir= deployment directory
+          ${superProjectName}.deploy.server= ssh server where project 
+                                             is deployed (if empty, simple copy
+                                             is performed instead)
+          ${superProjectName}.deploy.user= user name for ssh server
+          ${superProjectName}.deploy.user= password for ssh server (will promot if missing)
+
+          ${superProjectName}.keystore.file=absolute path to code signing key
+          ${superProjectName}.keystore.alias=alias to use for code signing
+          ${superProjectName}.keystore.password=password to use for code signing (will prompt if missing)
+  -->
+  <property file="${user.home}/.ant-global.properties"/>
+  
   <!-- These should be specified in the main build file that imports this one -->
-  <property name="projectName" value="algae-jrefman" />
-  <property name="mainClassName" value="edu.odu.cs.AlgAE.Demos.SortingDriver" />
+  <property name="projectName" value="algae-animation" />
+  <property name="mainClassName" value="edu.odu.cs.AlgAE.driver" />
+  <property name="organization" value="edu.odu.cs.algae" />
+
   <!-- ====================================================== -->
   
-  <property name="organization" value="edu.odu.cs.algae" />
-  	
+  
   <tstamp>
     <format property="build.date" pattern="yyyy-MM-dd" locale="en,US" />
     <format property="build.dateTime" 
-	    pattern="yyyy-MM-dd HH:mm" locale="en,US" />    
+            pattern="yyyy-MM-dd HH:mm" locale="en,US" />    
   </tstamp>
   <property name="configuration" value="${os.name}" />
   <property name="packageName" value="${projectName}-${version}.jar" />
   
-
+  
   <!-- === Directory Setup === -->
-
+  
   <property name="compile.src" location="src/main/java" />
   <available file="${compile.src}" property="compile.src.exists" />
   <property name="compile.data" location="src/main/data" />
@@ -41,24 +61,19 @@
   <available file="${test.src}" property="test.src.exists" />
   <property name="test.dest" location="target/test-classes" />
   <property name="test.reports" location="target/test_reports" />
-  <property name="reports.dir" location="target/project-reports/${version}" />	
-  <property name="webserver" value="forge350.cs.odu.edu"/>
-  <property name="website.path" value="/var/lib/gforge/chroot/home/groups/extract-core/htdocs/"/>
-  <property name="deploy.dest" location="/home/zeil/public_html/AlgAE/$projectName}"/>
+  <property name="reports.dir" location="target/project-reports/${version}" />  
   <property name="developersKeystore" location="../devKeystore"/>
-  <property name="deploymentKeystore" location="${user.dir}/keystore"/> <!-- move to external property file? -->
-  <available file="${deploymentKeystore}" property="keystore.exists" />
-	  
+          
 
   <!-- === Unit Test Setup === -->
-	
+        
 
   <fileset id="unitTestsExpectedToPass" dir="${test.dest}">
     <include name="**/Test*.class" />
     <exclude name="**/Test*$*.class" />
   </fileset>
-
- 
+  
+  
   <!-- === Ivy Configuration Manager Setup === 
        See also ivy.xml, ivysettings.xml, forge350-settings.xml
   -->
@@ -69,45 +84,47 @@
   <property name="jsch.jar.file" value="${ivy.jar.dir}/jsch.jar"/>
   <property name="build.dir" value="build"/>
   <property name="src.dir" value="src"/>
-
+  
   <target name="download-ivy" unless="skip.download">
     <mkdir dir="${ivy.jar.dir}"/>
     <echo message="installing ivy..."/>
     <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" 
-	 dest="${ivy.jar.file}" usetimestamp="true"/>
+         dest="${ivy.jar.file}" usetimestamp="true"/>
   </target>
-
+  
   <target name="download-jsch" unless="skip.download">
     <mkdir dir="${ivy.jar.dir}"/>
     <echo message="installing jsch..."/>
     <get src="http://repo1.maven.org/maven2/com/jcraft/jsch/${jsch.install.version}/jsch-${jsch.install.version}.jar" 
-	 dest="${jsch.jar.file}" usetimestamp="true"/>
+         dest="${jsch.jar.file}" usetimestamp="true"/>
   </target>
-	
+  
   <target name="install-jsch" depends="download-jsch">
   </target>
-	
+  
   <target name="install-ivy" depends="download-ivy"  unless="skip.download"
-	  description="--> install ivy">
+          description="--> install ivy">
     <path id="ivy.lib.path">
       <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
     </path>
     <taskdef resource="org/apache/ivy/ant/antlib.xml" 
-	     uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+             uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
   </target>
-
-  <target name="retrieve-ivy" depends="install-ivy,install-jsch" unless="skip.download" description="Retrieve library dependencies">
-	  <ivy:retrieve/>
+  
+  <target name="retrieve-ivy" depends="install-ivy,install-jsch" 
+          unless="skip.download" description="Retrieve library dependencies">
+    <ivy:retrieve/>
   </target>
-
-  <target name="resolve-ivy" depends="retrieve-ivy" description="Resolve library dependencies">
-  	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-  		<classpath refid="test.classpath"/>
-  	</taskdef>
+  
+  <target name="resolve-ivy" depends="retrieve-ivy" 
+          description="Resolve library dependencies">
+    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+      <classpath refid="test.classpath"/>
+    </taskdef>
   </target>
-
+  
   <!-- === Class Paths for Compilation and Execution === -->
-
+  
   <!-- Classpath for compilation of src/main/java -->
   <path id="compile-datagen.classpath">
     <pathelement location="${compile.dest}"/>
@@ -116,15 +133,15 @@
       <filename name="*.jar"/>
     </fileset>
   </path>
-
+  
   <!-- Classpath for compilation of src/main/java -->
   <path id="compile.classpath">
     <fileset dir="${thirdPartyLibs}/">
       <filename name="*.jar" />
     </fileset>
   </path>
-	
- 
+  
+  
   <!-- Classpath for compilation of src/test/java -->
   <path id="test-compile.classpath">
     <pathelement location="${compile.dest}" />
@@ -139,132 +156,201 @@
     <pathelement location="${compile.dest}" />
     <pathelement location="${test.dest}" />
     <fileset dir="${thirdPartyLibs}/">
-    	<include name="*.jar" />
-    	<exclude name="*-sources.jar" />
-    	<exclude name="*-javadoc.jar" />
+      <include name="*.jar" />
+      <exclude name="*-sources.jar" />
+      <exclude name="*-javadoc.jar" />
     </fileset>
   </path>
-
-
+  
+  
   <!-- === Targets and Tasks === -->
-
+  
   <!-- target name="setup" depends="resolve-ivy" -->
   <target name="setup" depends="resolve-ivy">
   </target>
-
   
-  <target name="compile-source" depends="setup" description="Compile the main source code">
+  
+  <target name="compile-source" depends="setup" 
+          description="Compile the main source code">
     <mkdir dir="${compile.dest}" />
-    <javac srcdir="${compile.src}" destdir="${compile.dest}" classpathref="compile.classpath" 
-	   debug="true" includeantruntime="false"/>
+    <javac srcdir="${compile.src}" destdir="${compile.dest}" 
+           classpathref="compile.classpath" 
+           debug="true" includeantruntime="false"/>
   </target>
   
   
-  <target name="test-compile" depends="compile-source" if="test.src.exists" unless="test.skip" description="Compile unit test code.">
+  <target name="test-compile" depends="compile-source" 
+          if="test.src.exists" unless="test.skip" 
+          description="Compile unit test code.">
     <mkdir dir="${test.dest}" />
     <javac srcdir="${test.src}" destdir="${test.dest}" 
-    	classpathref="test-compile.classpath" debug="true"  includeantruntime="false"/>
+           classpathref="test-compile.classpath" debug="true"  
+           includeantruntime="false"/>
   </target>
 
-  <target name="run-tests" depends="test-compile" if="test.src.exists" unless="test.skip"
-  	description="Perform unit testing">
+  <target name="run-tests" depends="test-compile" 
+          if="test.src.exists" unless="test.skip"
+          description="Perform unit testing">
     <mkdir dir="${test.reports}" />
-  	<mkdir dir="${test.reports}/details"/>
-    <junit printsummary="on" haltonfailure="true" fork="true" forkmode="perTest">
+    <mkdir dir="${test.reports}/details"/>
+    <junit printsummary="on" haltonfailure="true" 
+           fork="true" forkmode="perTest">
       <classpath refid="test.classpath" />
       <jvmarg value="-Djava.library.path=${thirdPartyLibs}" />
       <formatter type="xml" />
       
       <batchtest todir="${test.reports}/details">
-	<fileset refid="unitTestsExpectedToPass" />
+        <fileset refid="unitTestsExpectedToPass" />
       </batchtest>
     </junit>
   </target>
-  	
-
-  <target name="build" depends="run-tests" description="prepare the Jar file containing the binary library">
-  	<copy toFile="target/javahelp.jar">
-  	  		<fileset dir="lib">
-  	  			<include name="javahelp-*.jar"/> 
-  	  			<exclude name="javahelp*-*sources.jar"/> 
-  			    <exclude name="javahelp*-*javadoc.jar"/> 
-  	  		</fileset>
-  	</copy>
-    <jar destfile="target/${projectName}.jar">
+  
+  
+  <target name="build" depends="run-tests" 
+          description="prepare the Jar file containing the binary library">
+    <copy toFile="target/javahelp.jar">
+      <fileset dir="lib">
+        <include name="javahelp-*.jar"/> 
+        <exclude name="javahelp*-*sources.jar"/> 
+        <exclude name="javahelp*-*javadoc.jar"/> 
+      </fileset>
+    </copy>
+    <jar destfile="target/${projectName}.unsigned.jar">
       <fileset dir="${compile.dest}">
       </fileset>
       <zipfileset src="lib/algae-client-${version}.jar">
-      	<include name="**/*"/>
-      	<exclude name="META-INF/**/*"/>
+        <include name="**/*"/>
+        <exclude name="META-INF/**/*"/>
       </zipfileset>
       <zipfileset includes="**/*.class" src="lib/algae-jserver-${version}.jar"/>
       <zipfileset includes="**/*.class" src="target/javahelp.jar"/>
       <fileset dir="${compile.src}"/>
       <manifest>
-	     <attribute name="Main-Class" value="${mainClassName}" />
+        <attribute name="Main-Class" value="${mainClassName}" />
       </manifest>
     </jar>
-  	<!-- We immediately self-certify the jar because browsers are so painful about loading
-  	     applets from file:// locations, making debugging painful -->
-  	<copy file="target/${projectName}.jar" tofile="target/selfcert-${projectName}.jar"/>
-  	<signjar jar="target/selfcert-${projectName}.jar"
-  	         keystore="${developersKeystore}"
-  	         alias="devKey" 
-  	         storepass="developer" 
-  	         verbose="true"/>
-  	<copy toDir="target">
-  		<fileset dir="src/main/data">
-  			<include name="**/*.html"/>
-  			<include name="**/*.jnlp"/>
-  		</fileset>
-  		<filterset>
-  			<filter token="JAR" value="selfcert-${projectName}.jar"/>
-  			<filter token="MAINCLASS" value="${mainClassName}"/>
-  			<filter token="PROJECT" value="${projectName}"/>
-  			<filter token="ORG" value="${organization}"/>
-  		</filterset>
-  	</copy>	
+    <!-- We immediately self-certify the jar because browsers are 
+         so painful about loading applets from
+         file:// locations, making debugging painful -->
+    <copy file="target/${projectName}.unsigned.jar" 
+          tofile="target/selfcert-${projectName}.jar"/>
+    <signjar jar="target/selfcert-${projectName}.jar"
+             keystore="${developersKeystore}"
+             alias="devKey" 
+             storepass="developer" 
+             verbose="false"/>
+    <copy toDir="target">
+      <fileset dir="src/main/data">
+        <include name="**/*.html"/>
+        <include name="**/*.jnlp"/>
+      </fileset>
+      <filterset>
+        <filter token="JAR" value="selfcert-${projectName}.jar"/>
+        <filter token="MAINCLASS" value="${mainClassName}"/>
+        <filter token="PROJECT" value="${projectName}"/>
+        <filter token="ORG" value="${organization}"/>
+      </filterset>
+    </copy>
   </target>
-  	
-  <target name="sign-jar" depends="build" if="keystore-exists">
-  	<input message="Please enter password for keystore ${keystore}:" addproperty="keystore.password" />
-  	<signjar jar="target/${projectName}.jar" alias="${keystore}" storepass="${keystore.password}" verbose="true"/>
-  </target>  	
+        
+  <target name="signing-password" if="algae-361-weiss.keystore.file" 
+                                  unless="algae-361-weiss.keystore.password">
+    <input message="Please enter password for keystore ${algae-361-weiss.keystore.file}:" 
+           addproperty="algae-361-weiss.keystore.password" />
+  </target>
+
+  <target name="sign-jar" depends="build,signing-password" if="algae-361-weiss.keystore.file">
+  	<copy file="target/${projectName}.unsigned.jar" 
+  	          tofile="target/${projectName}.jar"/>
+  	<signjar jar="target/${projectName}.jar" 
+             keystore="${algae-361-weiss.keystore.file}" 
+             storetype="PKCS12"
+             alias="${algae-361-weiss.keystore.alias}" 
+             storepass="${algae-361-weiss.keystore.password}" 
+             verbose="false"/>
+  </target>     
   
-  <target name="package" depends="sign-jar" description="Prepare zip file with signed jar and accompanying html file">
-  	<copy toDir="target">
-  		<fileset dir="src/main/data">
-  			<include name="**/*.html"/>
-  			<include name="**/*.jnlp"/>
-  		</fileset>
-  		<filterset>
-  			<filter token="JAR" value="${projectName}.jar"/>
-  			<filter token="MAINCLASS" value="${mainClassName}"/>
-  			<filter token="PROJECT" value="${projectName}"/>
-  			<filter token="ORG" value="${organization}"/>
-  		</filterset>
-  	</copy>
+  <target name="package" depends="sign-jar" 
+          description="Prepare zip file with signed jar and accompanying html file">
+    <copy toDir="target">
+      <fileset dir="src/main/data">
+        <include name="**/*.html"/>
+        <include name="**/*.jnlp"/>
+      </fileset>
+      <filterset>
+        <filter token="JAR" value="${projectName}.jar"/>
+        <filter token="MAINCLASS" value="${mainClassName}"/>
+        <filter token="PROJECT" value="${projectName}"/>
+        <filter token="ORG" value="${organization}"/>
+      </filterset>
+    </copy>
+  	<delete file="target/${projectName}-${version}.zip" failonerror="false"/>
     <zip basedir="target" destfile="target/${projectName}-${version}.zip">
-    	<fileset dir="target">
-    		<include name="${projectName}.jar"/>
-    		<include name="javahelp.jar"/>
-    		<include name="*.html"/>
-	        <include name="*.jnlp"/>
-    	</fileset>
+      <fileset dir="target">
+        <include name="${projectName}.jar"/>
+        <include name="javahelp.jar"/>
+        <include name="*.html"/>
+        <include name="*.jnlp"/>
+        <exclude name="*.zip"/>
+      </fileset>
     </zip>
   </target>
-	
+
+  <target name="deployByCopy" depends="package" 
+          unless="algae-361-weiss.deploy.server"
+          description="deploy by simple copy">
+  	<mkdir dir="${algae-361-weiss.deploy.dir}"/>
+    <copy toDir="${algae-361-weiss.deploy.dir}">
+      <fileset dir="target">
+        <include name="${projectName}.jar"/>
+        <include name="javahelp.jar"/>
+        <include name="*.html"/>
+        <include name="*.jnlp"/>
+      </fileset>
+    </copy>
+  </target>
+        
+  <target name="deploy-password" if="algae-361-weiss.deploy.server" 
+	                              unless="algae-361-weiss.deploy.password">
+	    <input message="Please enter password for server ${algae-361-weiss.deploy.server}:" 
+	           addproperty="algae-361-weiss.deploy.password" />
+  </target>
+
+  <target name="deployBySSH" depends="package" 
+          if="algae-361-weiss.deploy.server"
+          description="deploy by ssh to remote server">
+  	<scp toDir="${algae-361-weiss.deploy.user}@${algae-361-weiss.deploy.server}:${algae-361-weiss.deploy.dir}/"
+  	     sftp="true"
+  		 password="${algae-361-weiss.deploy.password}"
+  	     >
+        <fileset dir="target">
+          <include name="${projectName}.jar"/>
+          <include name="javahelp.jar"/>
+          <include name="*.html"/>
+          <include name="*.jnlp"/>
+        </fileset>
+  	</scp>
+  </target>
+
+
+  <target name="deploy" depends="deployByCopy,deployBySSH"
+          description="Deploy package for use">
+  </target>
+
+
+
 
   <target name="clean" description="Remove all normal build products">
     <delete dir="target"/>
   </target>
-
-  <target name="cleaner" depends="clean" description="Remove all normal build products and all downloaded 3rd party libraries">
+  
+  <target name="cleaner" depends="clean" 
+          description="Remove all normal build products and all downloaded 3rd party libraries">
     <delete dir="lib"/>
   </target>
 
   <target name="cleanest" depends="cleaner" 
-	  description="Remove all normal build products, all downloaded 3rd party libraries, and the Ivy jars">
+          description="Remove all normal build products, all downloaded 3rd party libraries, and the Ivy jars">
     <delete dir="ivy"/>
   </target>
 
