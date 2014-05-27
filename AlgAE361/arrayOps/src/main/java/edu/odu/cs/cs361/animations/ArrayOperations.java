@@ -33,17 +33,17 @@ public class ArrayOperations {//!
 */
 
 //!template <typename Comparable>
-public Index addInOrder (String[] array, DiscreteInteger size, String value)//!
+public Index addInOrder (DiscreteInteger[] array, int size, int value)//!
 //!int addInOrder (Comparable* array, int& size, Comparable value)
 {
 	 ActivationRecord arec = activate(ArrayOperations.class);//!
 	 arec.refParam("array", array).refParam("size", size).param("value", value).breakHere("starting addInOrder");//!
 	// Make room for the insertion
     //!  int toBeMoved = size - 1;
-	 Index toBeMoved = new Index(size.get() - 1, array);//!
+	 Index toBeMoved = new Index(size - 1, array);//!
 	 arec.var("toBeMoved", toBeMoved).breakHere("start at high end of the data");//!
 	//!  while (toBeMoved >= 0 && value < array[toBeMoved]) {
-	 while (toBeMoved.get() >= 0 && value.compareTo(array[toBeMoved.get()]) < 0) {//!
+	 while (toBeMoved.get() >= 0 && value < array[toBeMoved.get()].get()) {//!
 		arec.breakHere("in loop: ready to move an element up");//!
 	//!    array[toBeMoved+1] = array[toBeMoved];
 		  if (toBeMoved.get()+1 >= array.length) {//!
@@ -59,10 +59,10 @@ public Index addInOrder (String[] array, DiscreteInteger size, String value)//!
 	// Insert the new value
 	 arec.breakHere("exited loop: insert the new value");//!
 	//!  array[toBeMoved+1] = value;
-	 array[toBeMoved.get()+1] = value;//!
+	 array[toBeMoved.get()+1] = new DiscreteInteger(value);//!
 	 arec.breakHere("Inserted new value");//!
 	//!  ++size;
-	 size.set(size.get() + 1);//!
+	 size = size  + 1;//!
 	 arec.breakHere("Incremented size");//!
 	//!  return toBeMoved+1;
 	  return new Index(toBeMoved.get()+1, array);
@@ -84,7 +84,7 @@ public Index addInOrder (String[] array, DiscreteInteger size, String value)//!
 
 //!template <typename T>
 //!int seqSearch(const T list[], int listLength, T searchItem)
-public Index seqSearch(String list[], int listLength, String searchItem)//!
+public Index seqSearch(DiscreteInteger list[], int listLength, int searchItem)//!
 {
 	ActivationRecord arec = activate(ArrayOperations.class);//!
 	arec.refParam("list", list).param("listLength", listLength).param("searchItem", searchItem).breakHere("starting seqSearch");//!
@@ -117,7 +117,7 @@ public Index seqSearch(String list[], int listLength, String searchItem)//!
  */
 //!template <typename Comparable>
 //!int seqOrderedSearch(const Comparable list[], int listLength, Comparable searchItem)
-public Index seqOrderedSearch(String list[], int listLength, String searchItem)//!
+public Index seqOrderedSearch(DiscreteInteger list[], int listLength, int searchItem)//!
 {
 	ActivationRecord arec = activate(ArrayOperations.class);//!
 	arec.refParam("list", list).param("listLength", listLength).param("searchItem", searchItem).breakHere("starting seqOrderedSearch");//!
@@ -126,7 +126,7 @@ public Index seqOrderedSearch(String list[], int listLength, String searchItem)/
 
 	arec.var("loc", loc).breakHere("start searching from the beginning");//!
 //!    while (loc < listLength && list[loc] < searchItem)
-  while (loc.get() < listLength && list[loc.get()].compareTo(searchItem) < 0)//!
+  while (loc.get() < listLength && list[loc.get()].get() < searchItem )//!
     {
   	arec.breakHere("move forward");//!
 //!       ++loc;
@@ -160,7 +160,7 @@ public Index seqOrderedSearch(String list[], int listLength, String searchItem)/
 
 //!template <typename T>
 //!void removeElement (T* array, int& size, int index)
-public void removeElement (String[] array, DiscreteInteger size, Index index)//!
+public void removeElement (DiscreteInteger[] array, int size, Index index)//!
 {
  ActivationRecord arec = activate(ArrayOperations.class);//!
  arec.refParam("array", array).refParam("size", size).param("index", index).breakHere("starting removeElement");//!
@@ -172,7 +172,7 @@ public void removeElement (String[] array, DiscreteInteger size, Index index)//!
  Index toBeMoved = new Index(index.get() + 1, array); //!
  arec.var("toBeMoved",toBeMoved).breakHere("start above index");//!
 //!   while (toBeMoved < size) {
- while (toBeMoved.get() < size.get()) {//!
+ while (toBeMoved.get() < size) {//!
 	 arec.breakHere("move an element down");//!
 //!     array[toBeMoved-1] = array[toBeMoved];
    array[toBeMoved.get()-1] = array[toBeMoved.get()]; //!
@@ -182,7 +182,7 @@ public void removeElement (String[] array, DiscreteInteger size, Index index)//!
  }
 	 arec.breakHere("Done moving elements");//!
 //!  --size;
-size.set(size.get()-1);//!
+size = size -1;//!
 }
 
 
@@ -201,7 +201,7 @@ size.set(size.get()-1);//!
 
 //!template <typename Comparable>
 //!int binarySearch( const Comparable* a, int size, const Comparable & x )
-public int binarySearch(String[] a, int size, String x)//!
+public int binarySearch(DiscreteInteger[] a, int size, int x)//!
 {
 	ActivationRecord arec = activate(getClass());//!
 	arec.refParam("a", a).param("size", size).param("x", x);//!
@@ -219,16 +219,19 @@ public int binarySearch(String[] a, int size, String x)//!
 	  // until it is just one target
 	while (low <= high) {  // test for nonempty sublist
 		
+		for (int i = low; i < high; i++) arec.highlight(a[i]); //!
+		arec.breakHere("in the loop");//!
+		
 		int mid = ( low + high ) / 2; // index of the midpoint
 		arec.var("mid", new Index(mid, a));
 		
-		if( a[ mid ].compareTo(x) < 0 )//!if( a[ mid ] < x )
+		if( a[ mid ].get() < x )//!if( a[ mid ] < x )
 		{//!
 			arec.breakHere("middle value is too low");//!
             low = mid + 1;   // search upper sublist, reset first
             arec.param("low", new Index(low, a));//!
 		}//!
-		else if( a[ mid ].compareTo(x)  > 0 )//!else if( a[ mid ] > x )
+		else if( a[ mid ].get() > x )//!else if( a[ mid ] > x )
 		{//!
 			arec.breakHere("middle value is too high");//!
 			high = mid - 1;

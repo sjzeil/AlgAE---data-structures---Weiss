@@ -16,145 +16,175 @@ import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;
 import edu.odu.cs.AlgAE.Server.Utilities.Index;
 
 
-
-
 public class CS361ArraysAnimation extends LocalJavaAnimation {
 
-	public CS361ArraysAnimation() {
-		super("Array Operations");
-	}
+public CS361ArraysAnimation() {
+    super("Array Operations");
+}
 
-	@Override
-	public String about() {
-		return "Demonstration of Array Manipulation Algorithms,\n" +
-		"prepared for CS 361, Advanced Data Structures\n" +
-		"and Algorithms, Old Dominion University\n" +
-		"Summer 2014";
-	}
-	
-	private class ArrayContainer implements CanBeRendered<ArrayContainer>, Renderer<ArrayContainer> {
+@Override
+public String about() {
+     return "Demonstration of Array Manipulation Algorithms,\n" +
+     "prepared for CS 361, Advanced Data Structures\n" +
+     "and Algorithms, Old Dominion University\n" +
+     "Summer 2014";
+}
 
-		@Override
-		public Renderer<ArrayContainer> getRenderer() {
-			return this;
-		}
+private DiscreteInteger[] array = new DiscreteInteger[0];
 
-		@Override
-		public Color getColor(ArrayContainer obj) {
-			return Color.white;
-		}
+private class ArrayContainer implements CanBeRendered<ArrayContainer>, Renderer<ArrayContainer> {
 
-		@Override
-		public List<Component> getComponents(ArrayContainer obj) {
-			ArrayList<Component> c = new ArrayList<Component>();
-			c.add (new Component(array));
-			return c;
-		}
+@Override
+public Renderer<ArrayContainer> getRenderer() {
+     return this;
+}
 
-		@Override
-		public List<Connection> getConnections(ArrayContainer obj) {
-			return new ArrayList<Connection>();
-		}
+@Override
+public Color getColor(ArrayContainer obj) {
+     return Color.white;
+}
 
-		@Override
-		public int getMaxComponentsPerRow(ArrayContainer obj) {
-			return 1;
-		}
+@Override
+public List<Component> getComponents(ArrayContainer obj) {
+     ArrayList<Component> c = new ArrayList<Component>();
+     c.add (new Component(array));
+     return c;
+}
 
-		@Override
-		public String getValue(ArrayContainer obj) {
-			return "";
-		}
-		
-	}
+@Override
+public List<Connection> getConnections(ArrayContainer obj) {
+     return new ArrayList<Connection>();
+}
 
-	private String[] array = new String[8];
-	private DiscreteInteger size = new DiscreteInteger(0);
+@Override
+public int getMaxComponentsPerRow(ArrayContainer obj) {
+     return 1;
+}
 
-	
-	
-	@Override
-	public void buildMenu() {
-		
-		registerStartingAction(new MenuFunction() {
+@Override
+public String getValue(ArrayContainer obj) {
+     return "";
+}
 
-			@Override
-			public void selected() {
-				array[0] = "Adams";
-				array[1] = "Baker";
-				array[2] = "Clarke";
-				for (int i = 3; i < array.length; ++i)
-					array[i] = "";
-				size.set(3);
-				globalVar("array", array);
-				globalVar("size", size);
-			}
-			
-		});
-		
-		
-		register ("reset array", new MenuFunction() {
-			@Override
-			public void selected() {
-				array[0] = "Adams";
-				array[1] = "Baker";
-				array[2] = "Clarke";
-				for (int i = 3; i < array.length; ++i)
-					array[i] = "";
-				size.set(3);
-			}
-		});
+}
 
-		register ("add in order (version 1)", new MenuFunction() {
-			@Override
-			public void selected() {
-				String value = promptForInput("Value to add:", ".+");
-				new ArrayOperations().addInOrder(array, size, value);
-			}
-		});
+private int size = 0;
 
 
-		register ("sequential search", new MenuFunction() {
-			@Override
-			public void selected() {
-				String value = promptForInput("Value to search for:", ".+");
-				new ArrayOperations().seqSearch(array, size.get(), value);
-			}
-		});
 
-		register ("sequential ordered search", new MenuFunction() {
-			@Override
-			public void selected() {
-				String value = promptForInput("Value to search for:", ".+");
-				new ArrayOperations().seqOrderedSearch(array, size.get(), value);
-			}
-		});
-		
-		
-		register ("sequential ordered search", new MenuFunction() {
-			@Override
-			public void selected() {
-				String value = promptForInput("Value to search for:", ".+");
-				new ArrayOperations().binarySearch(array, size.get(), value);
-			}
-		});
-		
-		register ("remove Element", new MenuFunction() {
-			@Override
-			public void selected() {
-				String indexStr = promptForInput("Position from which to remove (0.." + (size.get()-1) + "):", "\\d+");
-				int indexVal = Integer.parseInt(indexStr);
-				Index index = new Index(indexVal, array);
-				new ArrayOperations().removeElement(array, size, index);
-			}
-		});
-	}
+@Override
+public void buildMenu() {
 
-	
-	
-	
-	public static void main (String[] args) {
-		CS361ArraysAnimation demo = new CS361ArraysAnimation();
-		demo.runAsMain();
-	}
+registerStartingAction(new MenuFunction() {
+
+@Override
+public void selected() {
+     generateRandomArray(8);
+     globalVar("array", new ArrayContainer());
+}
+});
+
+
+
+register ("binary search", new MenuFunction() {
+@Override
+public void selected() {
+         String value = promptForInput("Value to search for:", "[0-9]+");
+         try {
+               Integer v = Integer.parseInt(value);
+               int k = new ArrayOperations().binarySearch(array, size, v);
+                out.println ("binarySearch returned " + k);
+             } catch (Exception e) {
+// do nothing
+}
+}
+});
+
+
+register ("sequential orderred search", new MenuFunction() {
+@Override
+public void selected() {
+       String value = promptForInput("Value to search for:", "[0-9]+");
+       try {
+             Integer v = Integer.parseInt(value);
+             Index k = new ArrayOperations().seqOrderedSearch(array, size, v);
+             out.println ("seqorderredSearch returned " + k);
+             } catch (Exception e) {
+             // do nothing
+             }
+}
+});
+
+
+
+register ("sequential search", new MenuFunction() {
+@Override
+public void selected() {
+       String value = promptForInput("Value to search for:", "[0-9]+");
+       try {
+             Integer v = Integer.parseInt(value);
+             Index k = new ArrayOperations().seqSearch(array, size, v);
+             out.println ("seqSearch returned " + k);
+             } catch (Exception e) {
+             // do nothing
+             }
+}
+});
+
+
+register ("add in order", new MenuFunction() {
+@Override
+public void selected() {
+     String value = promptForInput("Value to add:", "[0-9]+");
+     try {
+          Integer v = Integer.parseInt(value);
+          new ArrayOperations().addInOrder(array, size, v);
+         } catch (Exception e) {
+         // do nothing
+         }
+}
+});
+
+register ("generate an array", new MenuFunction() {
+@Override
+public void selected() {
+     randomArrayGenerated();
+}
+});
+
+}
+
+
+public void randomArrayGenerated()
+{
+     String value = promptForInput("How many elements?", "\\d+");
+     int n = Integer.parseInt(value);
+     generateRandomArray(n);
+}
+
+public void generateRandomArray(int n)
+{
+     int extraSlots = 4;
+     if (n + extraSlots != array.length) {
+     array = new DiscreteInteger[n+extraSlots];
+}
+if (n > 0) {
+     array[0] = new DiscreteInteger((int)(5.0 * Math.random()));
+}
+for (int i = 1; i < n; ++i) {
+     array[i] = new DiscreteInteger(array[i-1].get() + ((int)(5.0 * Math.random())));
+}
+for (int i = n; i < n+extraSlots; ++i) {
+     array[i] = new DiscreteInteger(-1);
+}
+     size= n;
+}
+
+ 
+
+public static void main (String[] args) {
+     CS361ArraysAnimation demo = new CS361ArraysAnimation();
+     demo.runAsMain();
+}
+
 }
