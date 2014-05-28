@@ -135,8 +135,8 @@ public Index seqOrderedSearch(DiscreteInteger list[], int listLength, int search
 	arec.breakHere("Out of the loop: did we find it?");//!
 //!    if (loc < listLength && list[loc] == searchItem)
   if (loc.get() < listLength && list[loc.get()].equals(searchItem)) { //!
-  	 arec.breakHere("Found It! Return " + loc.get());//!
-     return loc;
+  	     arec.breakHere("Found It! Return " + loc.get());//!
+         return loc;
   }//!
   else
   {//!
@@ -208,34 +208,34 @@ public int binarySearch(DiscreteInteger[] a, int size, int x)//!
 	arec.breakHere("starting binarySearch");//!
 	
 	int NOT_FOUND = -1;
-	//!const int NOT_FOUND = -1;
+//! const int NOT_FOUND = -1;
 	
 	int low = 0;//!
 	int high = a.length-1;//!
-	//! int low = 0, high = a.size( ) - 1;
+//! int low = 0, high = a.size( ) - 1;
 	arec.var("low", new Index(low, a)).var("high",new Index(high, a));//!
 	arec.breakHere("start the loop");//!
-	// repeatedly reduce the area of search
-	  // until it is just one target
-	while (low <= high) {  // test for nonempty sublist
+	while (low <= high) {
 		
 		for (int i = low; i < high; i++) arec.highlight(a[i]); //!
 		arec.breakHere("in the loop");//!
 		
-		int mid = ( low + high ) / 2; // index of the midpoint
+		int mid = ( low + high ) / 2;
 		arec.var("mid", new Index(mid, a));
 		
-		if( a[ mid ].get() < x )//!if( a[ mid ] < x )
+		if( a[ mid ].get() < x )//!
+//!     if( a[ mid ] < x )
 		{//!
 			arec.breakHere("middle value is too low");//!
-            low = mid + 1;   // search upper sublist, reset first
-            arec.param("low", new Index(low, a));//!
+            low = mid + 1;
+            arec.var("low", new Index(low, a));//!
 		}//!
-		else if( a[ mid ].get() > x )//!else if( a[ mid ] > x )
+		else if( a[ mid ].get() > x )// !
+//!     else if( a[ mid ] > x )
 		{//!
 			arec.breakHere("middle value is too high");//!
 			high = mid - 1;
-			arec.param("low", new Index(low, a));//!
+			arec.var("high", new Index(high, a));//!
 		}//!
 		 else
 		 {//!
@@ -254,3 +254,5 @@ public int binarySearch(DiscreteInteger[] a, int size, int x)//!
 	
          
 }//!
+
+//!#endif
