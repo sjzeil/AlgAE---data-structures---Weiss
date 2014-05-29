@@ -65,7 +65,7 @@ public Index addInOrder (DiscreteInteger[] array, int size, int value)//!
 	 size = size  + 1;//!
 	 arec.breakHere("Incremented size");//!
 	//!  return toBeMoved+1;
-	  return new Index(toBeMoved.get()+1, array);
+	 return new Index(toBeMoved.get()+1, array);//!
 }
 
 
@@ -134,15 +134,15 @@ public Index seqOrderedSearch(DiscreteInteger list[], int listLength, int search
     }
 	arec.breakHere("Out of the loop: did we find it?");//!
 //!    if (loc < listLength && list[loc] == searchItem)
-  if (loc.get() < listLength && list[loc.get()].equals(searchItem)) { //!
+    if (loc.get() < listLength && list[loc.get()].equals(searchItem)) { //!
   	     arec.breakHere("Found It! Return " + loc.get());//!
          return loc;
-  }//!
-  else
-  {//!
-  	arec.breakHere("Could not find it. Return -1");//!
-//!       return -1;
-     return new Index(-1, list);
+    }//!
+    else
+    {//!
+  	     arec.breakHere("Could not find it. Return -1");//!
+//!         return -1;
+    return new Index(-1, list);//!
   }//!
 }
 
@@ -207,50 +207,43 @@ public int binarySearch(DiscreteInteger[] a, int size, int x)//!
 	arec.refParam("a", a).param("size", size).param("x", x);//!
 	arec.breakHere("starting binarySearch");//!
 	
-	int NOT_FOUND = -1;
-//! const int NOT_FOUND = -1;
+	int NOT_FOUND = -1;//!
+    //!    const int NOT_FOUND = -1;
 	
 	int low = 0;//!
 	int high = a.length-1;//!
-//! int low = 0, high = a.size( ) - 1;
+    //!    int low = 0, high = a.size( ) - 1;
 	arec.var("low", new Index(low, a)).var("high",new Index(high, a));//!
 	arec.breakHere("start the loop");//!
 	while (low <= high) {
-		
 		for (int i = low; i < high; i++) arec.highlight(a[i]); //!
 		arec.breakHere("in the loop");//!
 		
-		int mid = ( low + high ) / 2;
-		arec.var("mid", new Index(mid, a));
-		
+	   int mid = ( low + high ) / 2;
+		arec.var("mid", new Index(mid, a));//!
 		if( a[ mid ].get() < x )//!
-//!     if( a[ mid ] < x )
-		{//!
+    //!       if( a[ mid ] < x )
+		 {//!
 			arec.breakHere("middle value is too low");//!
             low = mid + 1;
-            arec.var("low", new Index(low, a));//!
-		}//!
-		else if( a[ mid ].get() > x )// !
-//!     else if( a[ mid ] > x )
-		{//!
+            arec.var("low", new Index(low, a)); }//!
+		 else if( a[ mid ].get() > x )//!
+    //!       else if( a[ mid ] > x )
+		 {//!
 			arec.breakHere("middle value is too high");//!
 			high = mid - 1;
-			arec.var("high", new Index(high, a));//!
-		}//!
-		 else
-		 {//!
-			 arec.breakHere("Found it!");//!
-	         return mid;   // Found
-		 }//!
+			arec.var("high", new Index(high, a)); }//!
+		  else//!       else
+		  {//!
+			arec.breakHere("Found it!");//!
+	        return mid;   // Found
+		  }//!
 		 arec.clearRenderings();//!
 	}
 	arec.breakHere("target is not in the array");//!	 
-	return NOT_FOUND;     // NOT_FOUND is defined as -1
-		
+	return NOT_FOUND;     // NOT_FOUND is defined as -1	
 		
 	}
-	
-	
 	
          
 }//!
