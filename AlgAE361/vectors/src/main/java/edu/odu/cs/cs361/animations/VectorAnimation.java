@@ -28,8 +28,8 @@ public class VectorAnimation extends LocalJavaAnimation {
 		"Summer 2011";
 	}
 
-	private miniVector a = new miniVector(0);
-	private miniVector b = new miniVector(0);
+	private Vector a = new Vector(0);
+	private Vector b = new Vector(0);
 
 	
 	
@@ -43,7 +43,7 @@ public class VectorAnimation extends LocalJavaAnimation {
 			
 			@Override
 			public void selected() {
-				getMemoryModel().getActivationStack().render(miniVector.class, new VectorRenderer());
+				getMemoryModel().getActivationStack().render(Vector.class, new VectorRenderer());
 				generateRandomVector(3);
 				globalVar("a", a);
 				globalVar("b", b);
@@ -88,17 +88,17 @@ public class VectorAnimation extends LocalJavaAnimation {
 			@Override
 			public void selected() {
 				String sz = promptForInput("Reset size to this many elements:", "[0-9]+");
-				String value = promptForInput("Value to fill in to new elements:", "[0-9]+");
+				//String value = promptForInput("Value to fill in to new elements:", "[0-9]+");
 				try {
 					Integer sizeV = Integer.parseInt(sz);
-					Integer v = Integer.parseInt(value);
-					a.resize (sizeV.intValue(), v.intValue());
+					//Integer v = Integer.parseInt(value);
+					a.resize (sizeV.intValue());
 				} catch (Exception e) {
 					// do nothing
 				}
 			}
 		});
-
+/*
 		register ("a.clear()", new MenuFunction() {
 			@Override
 			public void selected() {
@@ -106,7 +106,7 @@ public class VectorAnimation extends LocalJavaAnimation {
 			}
 		});
 
-
+*/
 		register ("b = a; // operator=", new MenuFunction() {
 			@Override
 			public void selected() {
@@ -146,20 +146,20 @@ public class VectorAnimation extends LocalJavaAnimation {
 	}
 	
 	
-	private class VectorRenderer implements Renderer<miniVector> {
+	private class VectorRenderer implements Renderer<Vector> {
 
 		@Override
-		public Color getColor(miniVector obj) {
+		public Color getColor(Vector obj) {
 			return null;
 		}
 
 		@Override
-		public List<Component> getComponents(miniVector v) {
+		public List<Component> getComponents(Vector v) {
 			List<Component> components = new ArrayList<Component>();
-			Component c1 = new Component(v.vCapacity, "vCapacity");
-			Component c2 = new Component(v.vSize, "vSize");
-			SimpleReference ar = new SimpleReference(v.vArr, 90, 90);
-			Component c3 = new Component(ar, "vArr");
+			Component c1 = new Component(v.theCapacity, "theCapacity");
+			Component c2 = new Component(v.theSize, "theSize");
+			SimpleReference ar = new SimpleReference(v.objects, 90, 90);
+			Component c3 = new Component(ar, "objects");
 			components.add(c1);
 			components.add(c2);
 			components.add(c3);
@@ -167,17 +167,17 @@ public class VectorAnimation extends LocalJavaAnimation {
 		}
 
 		@Override
-		public List<Connection> getConnections(miniVector obj) {
+		public List<Connection> getConnections(Vector obj) {
 			return new ArrayList<Connection>();
 		}
 
 		@Override
-		public int getMaxComponentsPerRow(miniVector obj) {
+		public int getMaxComponentsPerRow(Vector obj) {
 			return 1;
 		}
 
 		@Override
-		public String getValue(miniVector obj) {
+		public String getValue(Vector obj) {
 			return "";
 		}
 	}
