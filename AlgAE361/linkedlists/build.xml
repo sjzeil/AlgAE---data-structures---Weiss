@@ -8,7 +8,7 @@
 
 
   <property name="projectName" value="algae-dsft-sllist"/>
-  <property name="mainClassName" value="edu.odu.cs.cs361.animations.CS361SLAnimation" />
+  <property name="mainClassName" value="edu.odu.cs.cs361.animations.CS361DLAnimation" />
 
   <import file="../commonBuild.xml"/>
 
