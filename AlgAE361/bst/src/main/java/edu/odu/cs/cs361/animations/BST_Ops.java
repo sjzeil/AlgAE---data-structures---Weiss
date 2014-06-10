@@ -27,76 +27,76 @@ public class BST_Ops extends LocalJavaAnimation {
 		"prepared for CS 361, \n" +
 		"Advanced Data Structures and Algorithms,\n" +
 		"Old Dominion University\n" +
-				"Summer 2011";
+				"Summer 2014";
 	}
 
 	boolean displayParentPointers = false;
 
-	class stnodeRendering implements Renderer<stnode<Integer>> {
+	class BinaryNodeRendering implements Renderer<BinaryNode<Integer>> {
 		
 		@Override
-		public Color getColor(stnode<Integer> obj) {
+		public Color getColor(BinaryNode<Integer> obj) {
 			return Color.cyan;
 		}
 
 		@Override
-		public List<Component> getComponents(stnode<Integer> obj) {
+		public List<Component> getComponents(BinaryNode<Integer> obj) {
 			List<Component> results = new LinkedList<Component>();
 			return results;
 		}
 		
 		@Override
-		public List<Connection> getConnections(stnode<Integer> t) {
+		public List<Connection> getConnections(BinaryNode<Integer> t) {
 			LinkedList<Connection> results = new LinkedList<Connection>();
-			Connection parC = new Connection(t.parent, 340, 20);
+			//Connection parC = new Connection(t.parent, 340, 20);
 			Connection leftC = new Connection(t.left, 215, 215);
 			Connection rightC = new Connection(t.right, 145, 145);
-			if (displayParentPointers)
-				results.add (parC);
+			//if (displayParentPointers)
+				//results.add (parC);
 			results.add (leftC);
 			results.add (rightC);
 			return results;
 		}
 		@Override
-		public int getMaxComponentsPerRow(stnode<Integer> obj) {
+		public int getMaxComponentsPerRow(BinaryNode<Integer> obj) {
 			return 0;
 		}
 		
 		@Override
-		public String getValue(stnode<Integer> t) {
-			return "" + t.nodeValue;
+		public String getValue(BinaryNode<Integer> t) {
+			return "" + t.element;
 		}
 			
 	}
 	
 	
-	class BinaryTreeRendering implements Renderer<stree<Integer>> {
+	class BinaryTreeRendering implements Renderer<BinarySearchTree<Integer>> {
 
 		@Override
-		public Color getColor(stree<Integer> obj) {
+		public Color getColor(BinarySearchTree<Integer> obj) {
 			return null;
 		}
 
 		@Override
-		public List<Component> getComponents(stree<Integer> bst) {
+		public List<Component> getComponents(BinarySearchTree<Integer> bst) {
 			LinkedList<Component> comps = new LinkedList<Component>();
 			comps.add (new Component(new SimpleReference(bst.root, 140, 220), "root"));
-			comps.add (new Component(bst.treeSize, "treeSize"));
+			//comps.add (new Component(bst.treeSize, "treeSize"));
 			return comps;
 		}
 
 		@Override
-		public List<Connection> getConnections(stree<Integer> obj) {
+		public List<Connection> getConnections(BinarySearchTree<Integer> obj) {
 			return new LinkedList<Connection>();
 		}
 
 		@Override
-		public int getMaxComponentsPerRow(stree<Integer> obj) {
+		public int getMaxComponentsPerRow(BinarySearchTree<Integer> obj) {
 			return 2;
 		}
 
 		@Override
-		public String getValue(stree<Integer> obj) {
+		public String getValue(BinarySearchTree<Integer> obj) {
 			return "";
 		}
 		
@@ -104,9 +104,9 @@ public class BST_Ops extends LocalJavaAnimation {
 
 
 
-	public void quickInsert (stnode<Integer> t, int element)
+	public void quickInsert (BinaryNode<Integer> t, int element)
 	{ 
-		if (element < t.nodeValue) 
+		if (element < t.element) 
 		{
 			if (t.left != null)
 			{
@@ -114,7 +114,7 @@ public class BST_Ops extends LocalJavaAnimation {
 			}
 			else
 			{
-				t.left = new stnode<Integer>(element, null, null, t);
+				t.left = new BinaryNode<Integer>(element, null, null);
 			}
 		} 
 		else
@@ -125,31 +125,33 @@ public class BST_Ops extends LocalJavaAnimation {
 			}
 			else
 			{
-				t.right = new stnode<Integer>(element, null, null, t);
+				t.right = new BinaryNode<Integer>(element, null, null);
 			}
 		} 
+		
 	}
 
-	public void quickInsert (stree<Integer> tree, int element)
+	public void quickInsert (BinarySearchTree<Integer> tree, int element)
 	{ 
 		if (tree.root != null)
 			quickInsert(tree.root, element);
 		else
-			tree.root = new stnode<Integer>(element);
+			tree.root = new BinaryNode<Integer>(element);
 	}
 	
-	public void createSampleTree1(stree<Integer> bst) {
+	public void createSampleTree1(BinarySearchTree<Integer> bst) {
 		bst.root = null;
 		int[] data = {30, 20, 70, 10, 50, 40, 60};
 		for (int k: data) {
 			quickInsert (bst, k);
+			
 		}
-		bst.treeSize = data.length;
+		//bst.treeSize = data.length;
 	}
 
 	
-	stree<Integer> bst = new stree<Integer>();
-	stree<Integer>.iterator current = bst.quickEnd();
+	BinarySearchTree<Integer> bst = new BinarySearchTree<Integer>();
+	//BinarySearchTree<Integer>.iterator current = bst.quickEnd();
 	Random rand = new Random();
 	
 	@Override
@@ -160,61 +162,16 @@ public class BST_Ops extends LocalJavaAnimation {
 			@Override
 			public void selected() {
 				globalVar("tree", bst);
-				globalVar("current", current);
+				//globalVar("current", current);
 				createSampleTree1(bst);
-				getMemoryModel().getActivationStack().render(stnode.class, new stnodeRendering());
-				getMemoryModel().getActivationStack().render(stree.class, new BinaryTreeRendering());
+				getMemoryModel().getActivationStack().render(BinaryNode.class, new BinaryNodeRendering());
+				getMemoryModel().getActivationStack().render(BinarySearchTree.class, new BinaryTreeRendering());
 			}
 			
 		});
 
-		register("Toggle display of parent pointers", new MenuFunction() {
-
-			@Override
-			public void selected() {
-				displayParentPointers = !displayParentPointers;
-			}
-		});
-
-		
-		register("current = begin()", new MenuFunction() {
-
-			@Override
-			public void selected() {
-				current.nodePtr = bst.begin().nodePtr;
-			}
-			
-		});
-
-		register("current = end()", new MenuFunction() {
-
-			@Override
-			public void selected() {
-				current.nodePtr = bst.end().nodePtr;
-			}
-			
-		});
-
-		register("++current", new MenuFunction() {
-
-			@Override
-			public void selected() {
-				current.increment();
-			}
-			
-		});
-
-		register("current = find(...)", new MenuFunction() {
-
-			@Override
-			public void selected() {
-				String xs = promptForInput("Integer value to search for?", "[0-9]+");
-				int x = Integer.parseInt(xs);
-				current.nodePtr = bst.find(x).nodePtr;
-			}
-			
-		});
-
+				
+	
 		register("create a random tree", new MenuFunction() {
 
 			@Override
@@ -237,7 +194,7 @@ public class BST_Ops extends LocalJavaAnimation {
 				for (int i = 0; i < nNodes; ++i) {
 					quickInsert (bst, v[i]);
 				}
-				bst.treeSize = nNodes;
+				//bst.treeSize = nNodes;
 			}
 		});
 		
@@ -265,18 +222,19 @@ public class BST_Ops extends LocalJavaAnimation {
 				String xs = promptForInput("Integer to remove:", "[0-9]+");
 				try { 
 					int x = Integer.parseInt(xs);
-					bst.erase (x);
+					bst.remove(x);
 				} catch (Exception e) {}
 			}
 			
 		});
+		
 		
 		register("clear tree", new MenuFunction() {
 
 			@Override
 			public void selected() {
 				bst.root = null;
-				bst.treeSize = 0;
+				//bst.treeSize = 0;
 			}
 			
 		});
