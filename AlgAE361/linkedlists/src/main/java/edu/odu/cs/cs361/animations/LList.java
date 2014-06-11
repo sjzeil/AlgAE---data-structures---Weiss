@@ -30,17 +30,17 @@ public class LList implements CanBeRendered<LList>, Renderer<LList> {//!
 	    // Nested inside of List, can be public
 	    // because the Node is itself private
 	   
-    /*//!struct Node
-    //!{
-        //!Object  data;
-        //!Node   *prev;
-        //!Node   *next;
+    /*//!   struct Node
+    //!     {
+    //!        Object  data;
+    //!        Node   *prev;
+    //!        Node   *next;
 
-        //!Node( const Object & d = Object{ }, Node * p = nullptr, Node * n = nullptr )
-        //!  : data{ d }, prev{ p }, next{ n } { }
+    //!        Node( const Object & d = Object{ }, Node * p = nullptr, Node * n = nullptr )
+    //!          : data{ d }, prev{ p }, next{ n } { }
         
-        //!Node( Object && d, Node * p = nullptr, Node * n = nullptr )
-        //!  : data{ std::move( d ) }, prev{ p }, next{ n } { }
+    //!        Node( Object && d, Node * p = nullptr, Node * n = nullptr )
+    //!          : data{ std::move( d ) }, prev{ p }, next{ n } { }
     //!};
      * 
      */
@@ -52,26 +52,15 @@ public class LList implements CanBeRendered<LList>, Renderer<LList> {//!
     
 class Node implements CanBeRendered<Node>, Renderer<Node> {//!
 
-	    //!struct Node
-	    //!{
-		     String data;//! Object  data;
-		     Node prev;//! Node  *prev;
-		     Node next;//! Node  *next;
-		     
-		//! Node( const Object & d = Object{ }, Node * p = nullptr, Node * n = nullptr )
-	    //!   : data{ d }, prev{ p }, next{ n } { }
-		     
-		
+		String data;//!     
+		Node prev;  //!     
+		Node next;  //!     
 	    public Node()//!
 	    {//!
 	    	data = "";//!
 	    	prev = null;//!
 	    	next = null;//!
 	    }//!
-
-	    //!Node( Object && d, Node * p = nullptr, Node * n = nullptr )
-	    //!   : data{ std::move( d ) }, prev{ p }, next{ n } { }
-	    
 	    public Node(String d, Node p, Node n)//!
 	    {//!Node
 	    	data = d;//!
@@ -183,7 +172,7 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
 
         boolean IsNotEqual ( const_iterator rhs ) //!    
 //!        bool operator!= ( const const_iterator & rhs ) const
-        { return !( this == rhs ); }
+        { return !( this == rhs ); }//!
 //!          { return !( *this == rhs ); }
 
 //!      protected:
@@ -194,7 +183,7 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
         // three versions of operator* without any type conversions.
         String  retrieve( )//!
 //!        Object & retrieve( ) const
-        { return current.data; }
+        { return current.data; }//!
 //!          { return current->data; }
 
         // Protected constructor for const_iterator.
@@ -265,7 +254,7 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
 //!          { return const_iterator::operator*( ); }
         
         iterator increment ()//!
-//!           iterator & operator++ ( )
+//!        iterator & operator++ ( )
         {
         	this.current = this.current.next;//!
 //!            this->current = this->current->next;
@@ -305,7 +294,7 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
 //!      protected:
         // Protected constructor for iterator.
         // Expects the current position.
-        iterator (Node p) { current = p; }
+        iterator (Node p) { current = p; }//!
 //!        iterator( Node *p ) : const_iterator{ p }
 //!          { }
 
@@ -346,9 +335,9 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
 //!          : theSize{ rhs.theSize }, head{ rhs.head }, tail{ rhs.tail }
         {
         	rhs.theSize = 0;
-            rhs.head = null;
+            rhs.head = null;//!
 //!            rhs.head = nullptr;
-            rhs.tail = null;
+            rhs.tail = null;//!
 //!            rhs.tail = nullptr;
         }
        
@@ -368,9 +357,9 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
         { return new iterator( head.next);}//!
 //!          { return iterator( head->next ); }
 
-        const_iterator constbegin( )
+        const_iterator constbegin( )//!
 //!        const_iterator begin( ) const
-        { return new const_iterator( head.next ); }
+        { return new const_iterator( head.next ); }//!
 //!          { return const_iterator( head->next ); }
 
         // Return iterator representing endmarker of list.
@@ -418,11 +407,21 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
 
         void push_front( String x)//!
 //!        void push_front( const Object & x )
-          { insert( begin( ), x ); }
+        { 
+        	ActivationRecord arec = activate(getClass());//!
+    	    arec.refParam("x", x).breakHere("entered push_front");//!
+    	    insert( begin( ), x );
+        	arec.breakHere("finished push_front");//!
+        }
 
-        void push_back( String x )
+        void push_back( String x )//!
 //!        void push_back( const Object & x )
-          { insert( end( ), x ); }
+        {
+        	ActivationRecord arec = activate(getClass());//!
+    	    arec.refParam("x", x).breakHere("entered push_back");//!
+    	    insert( end( ), x );
+        	arec.breakHere("finished push_back");//!
+        }
 
 //!        void push_front( Object && x )
 //!          { insert( begin( ), std::move( x ) ); }
@@ -431,24 +430,41 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
 //!          { insert( end( ), std::move( x ) ); }
 
         void pop_front( )
-          { erase( begin( ) ); }
+        { 
+        	ActivationRecord arec = activate(getClass());//!
+    	    arec.breakHere("entered pop_front");//!
+        	erase( begin( ) ); 
+        	arec.breakHere("finished pop_front");//!
+        }
 
         void pop_back( )
-        { erase( end( ).decrement() ); }
+        {//! 
+        	ActivationRecord arec = activate(getClass());//!
+    	    arec.breakHere("entered pop_back");//!
+        	erase( end( ).decrement() );//! 
+        	arec.breakHere("finished pop_back");//!
 //!          { erase( --end( ) ); }
+        }//!
 
         // Insert x before itr.
-        iterator insert( iterator itr, String x )
+        iterator insert( iterator itr, String x )//!
 //!        iterator insert( iterator itr, const Object & x )
         {
         	
-        	Node p = itr.current;
+        	ActivationRecord arec = activate(getClass());//!
+    	    arec.refParam("x",x).breakHere("entered insert");//!
+        	Node p = itr.current;//!
+        	arec.refVar("p", p).var("theSize", theSize);//!
 //!            Node *p = itr.current;
             ++theSize;
-            Node addNode = new Node( x, p.prev, p ) ;
-            p.prev.next = addNode;
-            p.prev = addNode;      
-            return new iterator( addNode );
+            arec.var("theSize", theSize);//!
+            Node addNode = new Node( x, p.prev, p ) ;//!
+            p.prev.next = addNode;//!
+            arec.refVar("p.prev.next", p.prev.next);//!
+            p.prev = addNode;//!     
+            arec.refVar("p.prev", p.prev);//!
+            arec.breakHere("finished insert");//!
+            return new iterator( addNode );//!
 //!            return iterator( p->prev = p->prev->next = new Node{ x, p->prev, p } );
         }
 
@@ -463,9 +479,7 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
         // Erase item at itr.
         iterator erase( iterator itr )
         {
-        	System.out.println("clear");
         	Node p = itr.current;//!
-        	System.out.println(p.data);
 //!            Node *p = itr.current;
         	iterator retVal = new iterator(p.next);//!
 //!            iterator retVal( p->next );
@@ -497,17 +511,17 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
         {
             theSize = 0;
             head = new Node();//!
- //!           head = new Node;
+//!            head = new Node;
             tail = new Node();//!
- //!           tail = new Node;
+//!            tail = new Node;
             head.next = tail;//!
 //!            head->next = tail;
             tail.prev = head;//!
 //!            tail->prev = head;
             vhead = new SimpleReference(null, 90, 125);//!
-            vhead.set(head);
+            vhead.set(head);//!
             vtail = new SimpleReference(null, 100, 125);//!
-            vtail.set(tail);
+            vtail.set(tail);//!
         }
   
     
@@ -518,13 +532,13 @@ class Node implements CanBeRendered<Node>, Renderer<Node> {//!
   	public Color getColor(LList obj) {//!
   		return Color.green.darker();//!
   	}//!
-  	public List<Component> getComponents(LList obj) {
+  	public List<Component> getComponents(LList obj) {//!
   		vhead.set(head);//!
   		vtail.set(tail);//!
   		LinkedList<Component> data = new LinkedList<Component>();//!
   		data.add (new Component(vhead, ""));//!
   		data.add (new Component(vtail, ""));//!
-  		data.add (new Component(theSize, "size"));
+  		data.add (new Component(theSize, "size"));//!
   		return data;//!
   	}//!
   	public List<Connection> getConnections(LList obj) {//!
