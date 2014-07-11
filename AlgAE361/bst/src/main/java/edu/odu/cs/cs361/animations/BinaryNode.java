@@ -1,9 +1,6 @@
 package edu.odu.cs.cs361.animations;//!
 
 
-
-
-
 public class BinaryNode<T> {//!
 
 		  

@@ -441,7 +441,6 @@ public class BinarySearchTree<T extends Comparable<T>> {//!
 //!       t = nullptr;
    }
 
-
    /**
     * Internal method to print a subtree rooted at t in sorted order.
     */
