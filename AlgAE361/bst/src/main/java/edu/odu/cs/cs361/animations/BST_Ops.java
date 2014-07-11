@@ -18,6 +18,7 @@ import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
 public class BST_Ops extends LocalJavaAnimation {
 
 	public BST_Ops() {
+		
 		super("Binary Search Trees");
 	}
 
