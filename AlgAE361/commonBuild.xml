@@ -209,12 +209,13 @@
           <attribute name="Main-Class" value="${mainClassName}" />
         </manifest>
       </jar>
-    <!-- We immediately self-certify the jar because browsers are 
+    <!--
+         We immediately self-certify the jar because browsers are 
          so painful about loading applets from
          file:// locations, making debugging painful -->
     <copy file="target/${projectName}.unsigned.jar" 
-          tofile="target/selfcert-${projectName}.jar"/>
-    <signjar jar="target/selfcert-${projectName}.jar"
+          tofile="target/${projectName}.jar"/>
+    <signjar jar="target/${projectName}.jar"
              keystore="${developersKeystore}"
              alias="devKey" 
              storepass="developer" 
@@ -222,7 +223,6 @@
     <copy toDir="target">
       <fileset dir="src/main/data">
         <include name="**/*.html"/>
-        <include name="**/*.jnlp"/>
       </fileset>
       <filterset>
         <filter token="JAR" value="selfcert-${projectName}.jar"/>
@@ -233,6 +233,9 @@
     </copy>
   </target>
         
+  <!-- With the decline of support for Java applets, there seems to be little
+       reason to worry about doing a "proper" signing.  Keep this here for now,
+       unused, just in case. -->
   <target name="signing-password" if="algae-361-weiss.keystore.file" 
                                   unless="algae-361-weiss.keystore.password">
     <input message="Please enter password for keystore ${algae-361-weiss.keystore.file}:" 
@@ -250,7 +253,7 @@
              verbose="false"/>
   </target>     
   
-  <target name="package" depends="sign-jar" 
+  <target name="package" depends="build" 
           description="Prepare zip file with signed jar and accompanying html file">
     <copy toDir="target" overwrite="true">
       <fileset dir="src/main/data">
@@ -285,7 +288,6 @@
         <include name="${projectName}.jar"/>
         <include name="javahelp.jar"/>
         <include name="*.html"/>
-        <include name="*.jnlp"/>
       </fileset>
     </copy>
   </target>
