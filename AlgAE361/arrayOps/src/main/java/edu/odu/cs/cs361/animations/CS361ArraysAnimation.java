@@ -6,8 +6,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
 import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
@@ -16,7 +16,7 @@ import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;
 import edu.odu.cs.AlgAE.Server.Utilities.Index;
 
 
-public class CS361ArraysAnimation extends LocalJavaAnimation {
+public class CS361ArraysAnimation extends LocalJavaAnimationApplet {
 
 public CS361ArraysAnimation() {
     super("Array Operations");
@@ -101,14 +101,14 @@ public void selected() {
 });
 
 
-register ("sequential orderred search", new MenuFunction() {
+register ("sequential ordered search", new MenuFunction() {
 @Override
 public void selected() {
        String value = promptForInput("Value to search for:", "[0-9]+");
        try {
              Integer v = Integer.parseInt(value);
              Index k = new ArrayOperations().seqOrderedSearch(array, size, v);
-             out.println ("seqorderredSearch returned " + k);
+             out.println ("seqorderedSearch returned " + k);
              } catch (Exception e) {
              // do nothing
              }
@@ -126,7 +126,7 @@ public void selected() {
              Index k = new ArrayOperations().seqSearch(array, size, v);
              out.println ("seqSearch returned " + k);
              } catch (Exception e) {
-             // do nothing
+                System.err.println ("Unexpected exception from animated code: " + e);
              }
 }
 });

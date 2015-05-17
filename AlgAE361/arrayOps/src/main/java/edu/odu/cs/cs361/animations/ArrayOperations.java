@@ -1,6 +1,6 @@
 package edu.odu.cs.cs361.animations;//!
 
-import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
 import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;//!
 import edu.odu.cs.AlgAE.Server.Utilities.Index;//!

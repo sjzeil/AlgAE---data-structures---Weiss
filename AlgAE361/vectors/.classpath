@@ -2,26 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=vectors&amp;ivyXmlPath=ivy.xml&amp;confs=*&amp;ivySettingsPath=&amp;loadSettingsOnDemand=false&amp;ivyUserDir=&amp;propertyFiles="/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/algae-client-4.0.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/algae-client-src-4.0.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/algae-jserver-4.0.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/algae-jserver-src-4.0.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/ant-1.7.1.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/ant-launcher-1.7.1.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/asm-debug-all-5.0.1.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/javahelp-2.0.05.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/javahelp-2.0.05-javadoc.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/javahelp-2.0.05-sources.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/junit-4.11.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/junit-4.11-javadoc.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/junit-4.11-sources.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/org.jacoco.agent-0.7.1.201405082137.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/org.jacoco.ant-0.7.1.201405082137.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/org.jacoco.ant-0.7.1.201405082137-javadoc.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/org.jacoco.ant-0.7.1.201405082137-sources.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/org.jacoco.core-0.7.1.201405082137.jar"/>
-	<classpathentry kind="lib" path="Z:/git/AlgAE---data-structures---Weiss/AlgAE361/vectors/lib/org.jacoco.report-0.7.1.201405082137.jar"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=361vectors&amp;ivyXmlPath=ivy.xml&amp;confs=*&amp;ivySettingsPath=&amp;loadSettingsOnDemand=false&amp;ivyUserDir=&amp;propertyFiles="/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

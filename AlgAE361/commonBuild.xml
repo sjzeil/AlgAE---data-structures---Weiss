@@ -110,17 +110,12 @@
     <taskdef resource="org/apache/ivy/ant/antlib.xml" 
              uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
   </target>
-  
-  <target name="retrieve-ivy" depends="install-ivy,install-jsch" 
-          unless="skip.download" description="Retrieve library dependencies">
-    <ivy:retrieve/>
-  </target>
-  
-  <target name="resolve-ivy" depends="retrieve-ivy" 
+    
+  <target name="resolve-ivy" depends="install-ivy,install-jsch" 
           description="Resolve library dependencies">
-    <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-      <classpath refid="test.classpath"/>
-    </taskdef>
+  	  <ivy:resolve/>
+  	  <ivy:cachepath pathid="ivy.classpath"/>
+  	  <ivy:cachefileset setid="ivy.fileset"/>
   </target>
   
   <!-- === Class Paths for Compilation and Execution === -->
@@ -129,16 +124,12 @@
   <path id="compile-datagen.classpath">
     <pathelement location="${compile.dest}"/>
     <pathelement location="../generatedSource/target/classes"/>
-    <fileset dir="${thirdPartyLibs}">
-      <filename name="*.jar"/>
-    </fileset>
+  	<path refid="ivy.classpath"/>
   </path>
   
   <!-- Classpath for compilation of src/main/java -->
   <path id="compile.classpath">
-    <fileset dir="${thirdPartyLibs}/">
-      <filename name="*.jar" />
-    </fileset>
+  	<path refid="ivy.classpath"/>
   </path>
   
   
@@ -146,20 +137,14 @@
   <path id="test-compile.classpath">
     <pathelement location="${compile.dest}" />
     <pathelement location="${test.dest}" />
-    <fileset dir="${thirdPartyLibs}/">
-      <filename name="*.jar" />
-    </fileset>
+  	<path refid="ivy.classpath"/>
   </path>
   
   <!-- Classpath for execution of Unit tests -->
   <path id="test.classpath">
     <pathelement location="${compile.dest}" />
     <pathelement location="${test.dest}" />
-    <fileset dir="${thirdPartyLibs}/">
-      <include name="*.jar" />
-      <exclude name="*-sources.jar" />
-      <exclude name="*-javadoc.jar" />
-    </fileset>
+  	<path refid="ivy.classpath"/>
   </path>
   
   
@@ -208,27 +193,22 @@
   
   <target name="build" depends="run-tests" 
           description="prepare the Jar file containing the binary library">
-    <copy toFile="target/javahelp.jar">
-      <fileset dir="lib">
-        <include name="javahelp-*.jar"/> 
-        <exclude name="javahelp*-*sources.jar"/> 
-        <exclude name="javahelp*-*javadoc.jar"/> 
-      </fileset>
-    </copy>
-    <jar destfile="target/${projectName}.unsigned.jar">
-      <fileset dir="${compile.dest}">
-      </fileset>
-      <zipfileset src="lib/algae-client-${version}.jar">
-        <include name="**/*"/>
-        <exclude name="META-INF/**/*"/>
-      </zipfileset>
-      <zipfileset includes="**/*.class" src="lib/algae-jserver-${version}.jar"/>
-      <zipfileset includes="**/*.class" src="target/javahelp.jar"/>
-      <fileset dir="${compile.src}"/>
-      <manifest>
-        <attribute name="Main-Class" value="${mainClassName}" />
-      </manifest>
-    </jar>
+  	  <pathconvert property="jarFileList" pathsep=" ">
+  		  <path refid="ivy.classpath"/>
+      </pathconvert>
+  	  <echo>3rd party libs are ${jarFileList}</echo>
+  	  <delete file="target/${projectName}.unsigned.jar"/>
+      <jar destfile="target/${projectName}.unsigned.jar"
+  	       duplicate="preserve"
+           >
+        <fileset dir="${compile.dest}">
+        </fileset>
+        <zipgroupfileset refid="ivy.fileset"/>
+        <fileset dir="${compile.src}"/>
+        <manifest>
+          <attribute name="Main-Class" value="${mainClassName}" />
+        </manifest>
+      </jar>
     <!-- We immediately self-certify the jar because browsers are 
          so painful about loading applets from
          file:// locations, making debugging painful -->
@@ -272,7 +252,7 @@
   
   <target name="package" depends="sign-jar" 
           description="Prepare zip file with signed jar and accompanying html file">
-    <copy toDir="target">
+    <copy toDir="target" overwrite="true">
       <fileset dir="src/main/data">
         <include name="**/*.html"/>
         <include name="**/*.jnlp"/>
