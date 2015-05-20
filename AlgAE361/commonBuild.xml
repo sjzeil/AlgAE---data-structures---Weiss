@@ -197,8 +197,8 @@
   		  <path refid="ivy.classpath"/>
       </pathconvert>
   	  <echo>3rd party libs are ${jarFileList}</echo>
-  	  <delete file="target/${projectName}.unsigned.jar"/>
-      <jar destfile="target/${projectName}.unsigned.jar"
+  	  <delete file="target/${projectName}.jar"/>
+      <jar destfile="target/${projectName}.jar"
   	       duplicate="preserve"
            >
         <fileset dir="${compile.dest}">
@@ -212,14 +212,14 @@
     <!--
          We immediately self-certify the jar because browsers are 
          so painful about loading applets from
-         file:// locations, making debugging painful -->
+         file:// locations, making debugging painful
     <copy file="target/${projectName}.unsigned.jar" 
           tofile="target/${projectName}.jar"/>
     <signjar jar="target/${projectName}.jar"
              keystore="${developersKeystore}"
              alias="devKey" 
              storepass="developer" 
-             verbose="false"/>
+             verbose="false"/>  -->
     <copy toDir="target">
       <fileset dir="src/main/data">
         <include name="**/*.html"/>
