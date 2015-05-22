@@ -1,7 +1,8 @@
 package edu.odu.cs.cs361.animations;//!
 
-import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;
-import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
+
 
 
 public class VectorUtility {//!

@@ -5,7 +5,7 @@
 package edu.odu.cs.cs361.animations;//!
 
 
-import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
 
 public class Vector {//!

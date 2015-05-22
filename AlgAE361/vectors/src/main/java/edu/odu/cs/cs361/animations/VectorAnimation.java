@@ -6,15 +6,15 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;
 
 
-public class VectorAnimation extends LocalJavaAnimation {
+public class VectorAnimation extends LocalJavaAnimationApplet {
 
 	public VectorAnimation() {
 		super("Array Operations");
