@@ -1,0 +1,5 @@
+/target
+/ivy
+/lib
+/*.log
+/target/

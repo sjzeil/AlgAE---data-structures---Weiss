@@ -1,13 +1,13 @@
-<project name="Singly Linked Lists (AlgAE animation)"
+<project name="Doubly Linked Lists (AlgAE animation)"
 	 default="build" basedir="." >
 
 	
   <description>
-  	Singly Linked Lists, Ford and Topp
+  	Doubly Linked Lists, Weiss
   </description>
 
 
-  <property name="projectName" value="algae-dsft-dllist"/>
+  <property name="projectName" value="algae-361-sllist"/>
   <property name="mainClassName" value="edu.odu.cs.cs361.animations.CS361DLAnimation" />
 
   <import file="../commonBuild.xml"/>

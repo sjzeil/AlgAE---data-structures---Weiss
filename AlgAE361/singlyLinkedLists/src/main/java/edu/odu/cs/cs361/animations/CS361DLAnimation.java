@@ -2,10 +2,10 @@ package edu.odu.cs.cs361.animations;
 
 
 
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 
-public class CS361DLAnimation extends LocalJavaAnimation {
+public class CS361DLAnimation extends LocalJavaAnimationApplet {
 
 	public CS361DLAnimation() {
 		super("Doublely Linked List Operations");

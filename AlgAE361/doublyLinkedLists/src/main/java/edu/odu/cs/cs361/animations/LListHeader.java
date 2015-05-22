@@ -10,7 +10,7 @@ import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
 import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
 import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
-import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
 
 public class LListHeader implements CanBeRendered<LListHeader>, Renderer<LListHeader> {//!

@@ -1,0 +1,10 @@
+<ivy-module version="2.0">
+    <info organisation="edu.odu.cs.algae" module="${projectName}"/>
+    <publications>
+       <artifact name="${projectName}" type="jar" ext="jar"/>
+    </publications>
+    <dependencies>
+	   <dependency org="edu.odu.cs.algae" name="algae" rev="4.1"/>
+       <dependency org="javax.help" name="javahelp" rev="2.0.05"/>       
+	</dependencies>
+</ivy-module>
