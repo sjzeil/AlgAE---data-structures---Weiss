@@ -3,7 +3,7 @@ package edu.odu.cs.cs361.animations;//!
 import java.util.Stack;//!
 
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
-import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
 //
 //	rpn calculator routine
