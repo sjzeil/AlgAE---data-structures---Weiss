@@ -1,0 +1,16 @@
+<project name="Queues"
+	 default="build" basedir="." >
+
+	
+  <description>
+    Implementing queues using arrays and linked lists.
+  </description>
+
+
+  <property name="projectName" value="algae-dsft-queues"/>
+  <property name="mainClassName" value="edu.odu.cs.cs361.animations.QueueDemo" />
+
+  <import file="../commonBuild.xml"/>
+
+
+</project>

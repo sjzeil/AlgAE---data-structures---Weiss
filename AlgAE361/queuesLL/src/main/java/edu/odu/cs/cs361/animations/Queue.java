@@ -4,13 +4,14 @@ import java.awt.Color;//!
 import java.util.ArrayList;//!
 import java.util.List;//!
 
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
 import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
-import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
 
 public class Queue {//!
@@ -194,11 +195,11 @@ class Queue_via_List
 }
 
 
-void listQDemo (LocalJavaAnimation self)
+void listQDemo (LocalJavaAnimationApplet self)
 {
 	ActivationRecord arec = activate(Queue.class);//!
 	Queue queue = new Queue();//!
-	self.getMemoryModel().globalVar("queue", queue);//!
+	self.getContext().getMemoryModel().globalVar("queue", queue);//!
 	arec.breakHere("queues");//!
 	for (int i = 0; i < 1000; ++i)
 	{

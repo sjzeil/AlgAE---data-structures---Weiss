@@ -7,15 +7,15 @@ import java.util.List;
 
 import edu.odu.cs.cs361.animations.Queue;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
 import edu.odu.cs.AlgAE.Server.Rendering.LinkedListRenderer;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 
 
-public class QueueDemo extends LocalJavaAnimation {
+public class QueueDemo extends LocalJavaAnimationApplet {
 
 
 	public class LQueueRenderer implements Renderer<Queue> {
@@ -52,7 +52,7 @@ public class QueueDemo extends LocalJavaAnimation {
 
 
 
-	private LocalJavaAnimation self;
+	private LocalJavaAnimationApplet self;
 	
 	public QueueDemo() {
 		super("Queue Implementations");
@@ -78,7 +78,7 @@ public class QueueDemo extends LocalJavaAnimation {
 			@Override
 			public void selected() {
 				//getAnimator().setSpeed(30);
-				getMemoryModel().render(LinkedList.class, new LinkedListRenderer<String>(true, false, self));
+				getMemoryModel().render(LinkedList.class, new LinkedListRenderer<String>(true, false, getContext()));
 				getMemoryModel().render(Queue.class, new LQueueRenderer());
 				
 				new Queue().listQDemo(self);
