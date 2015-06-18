@@ -1,17 +1,7 @@
 package edu.odu.cs.cs361.animations;//!
 
-import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
-
-import java.awt.Color;//!
-import java.util.LinkedList;//!
-import java.util.List;//!
-
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
-import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
-import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
-import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
-import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
-import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
 //!
 //!
 
@@ -142,6 +132,8 @@ public class BinarySearchTree<T extends Comparable<T>> {//!
    boolean contains( T x)//!
 //!   bool contains( const Comparable & x ) const
    {
+	   ActivationRecord arec = activate(getClass());//!
+	   arec.param("x", x).breakHere("entered contains");//!
        return contains( x, root );
    }
 
@@ -182,7 +174,7 @@ public class BinarySearchTree<T extends Comparable<T>> {//!
    void insert( T  x )//!
 //!   void insert( const Comparable & x )
    {
-       insert( x, root );
+	   root = insert (x, root);//!       insert( x, root );
    }
 
    /**
@@ -226,16 +218,16 @@ public class BinarySearchTree<T extends Comparable<T>> {//!
     * t is the node that roots the subtree.
     * Set the new root of the subtree.
     */
-   void insert( T x, BinaryNode<T> t )//!
+   BinaryNode<T> insert( T x, BinaryNode<T> t )//!
 //!   void insert( const Comparable & x, BinaryNode * & t )
    {
 	   ActivationRecord arec = activate(getClass());//!
-	   arec.param("x", x).param("t", t).breakHere("entered insert");//!
+	   arec.param("x", x).refParam("t", t).breakHere("entered insert");//!
 	   if( t == null)//!
 //!	   if( t == nullptr )
 	   {//!
 		   arec.breakHere("subtree is null, create the node");//!
-		   t = new BinaryNode<T>( x, null, null );//!
+		   return new BinaryNode<T>( x, null, null );//!
 //!		   t = new BinaryNode{ x, nullptr, nullptr };
 	   }//! 
 	   else if( x.compareTo(t.element)< 0 )//!
@@ -243,23 +235,25 @@ public class BinarySearchTree<T extends Comparable<T>> {//!
 	   {//!
 		   arec.breakHere("Go left.");//!
 		   arec.highlight(t.left);//!
-		   insert( x, t.left);//!
+		   t.left = insert( x, t.left);//!
 //!           insert( x, t->left );
 		   arec.refParam("t", t);//!
+		   return t;//!
 	   }//!
 	   else if( x.compareTo(t.element)> 0 )//!
 //!       else if( t->element < x )
 	   {//!
 		   arec.breakHere("Go right.");//!
 		   arec.highlight(t.right);//!
-		   insert( x, t.right);//!
+		   t.right = insert( x, t.right);//!
 //!           insert( x, t->right );
 		   arec.refParam("t", t);//!
+		   return t;//!
 	   }//!
        else
        {//!
     	   arec.breakHere("We found a duplicate item. Do nothing.");//!
-    	   ; // Duplicate; do nothing
+    	   return t; // Duplicate; do nothing
        }//!
       
    }
@@ -293,7 +287,7 @@ public class BinarySearchTree<T extends Comparable<T>> {//!
 //!   void remove( const Comparable & x, BinaryNode * & t )
    {
 	   ActivationRecord arec = activate(getClass());//!
-	   arec.param("x", x).param("t", t).breakHere("begin remove");//!
+	   arec.param("x", x).refParam("t", t).breakHere("begin remove");//!
 	   if( t == null)//!
 //!	   if( t == nullptr )
 	   {//!
@@ -392,19 +386,34 @@ public class BinarySearchTree<T extends Comparable<T>> {//!
    boolean contains( T x, BinaryNode<T> t )//!
 //!   bool contains( const Comparable & x, BinaryNode *t ) const
    {
-      if ( t == null )//!
+	  ActivationRecord arec = activate(getClass());//!
+	  if (t != null) arec.highlight(t);//!
+	  boolean result = false;//!
+	  arec.param("x", x).refParam("t", t).breakHere("entered recursive contains");//!
+      if ( t == null ) {//!
 //!	  if( t == nullptr )
+    	  arec.breakHere("Can't find x - it's not in the tree.");//!
          return false;
-      else if( x .compareTo(t.element) < 0 )//!
+      } else if( x .compareTo(t.element) < 0 ) {//!
 //!      else if( x < t->element )
-    	 return contains( x, t.left );//!
+    	  arec.breakHere("Look to the left.");//!
+    	 result = contains( x, t.left );//!
 //!         return contains( x, t->left );
-      else if( x.compareTo(t.element) > 0 )//!
+    	 arec.breakHere("returning");//!
+    	 return result;//!
+      } else if( x.compareTo(t.element) > 0 ) {//!
 //!      else if( t->element < x )
-    	 return contains( x, t.right );//!
+    	  arec.breakHere("Look to the right.");//!
+    	 result = contains( x, t.right );//!
 //!         return contains( x, t->right );
+    	 arec.breakHere("returning");//!
+    	 return result;//!
+      }//!
       else
+      {//!
+    	  arec.breakHere("Found it!");//!
          return true;    // Match
+      }//!
    }
 
    /****** NONRECURSIVE VERSION*************************

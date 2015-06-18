@@ -6,16 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
-import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
-import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
 import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
 
-public class BST_Ops extends LocalJavaAnimation {
+public class BST_Ops extends LocalJavaAnimationApplet {
 
 	public BST_Ops() {
 		
@@ -171,35 +169,21 @@ public class BST_Ops extends LocalJavaAnimation {
 			
 		});
 
-				
-	
-		register("create a random tree", new MenuFunction() {
+
+		register("search", new MenuFunction() {
 
 			@Override
 			public void selected() {
-				bst.root = null;
-				String nNodesS = promptForInput("How many nodes?", "[0-9]+");
-				int nNodes = Integer.parseInt(nNodesS);
-				int[] v = new int[nNodes];
-				int k = 0;
-				for (int i = 0; i < nNodes; ++i) {
-					k += 1 + rand.nextInt(3);
-					v[i] = k;
-				}
-				for (int i = 1; i < nNodes; ++i) {
-					int j = rand.nextInt(i+1);
-					int temp = v[i];
-					v[i] = v[j];
-					v[j] = temp;
-				}
-				for (int i = 0; i < nNodes; ++i) {
-					quickInsert (bst, v[i]);
-				}
-				//bst.treeSize = nNodes;
+				String xs = promptForInput("Value to search for:", "[0-9]+");
+				try { 
+					int x = Integer.parseInt(xs);
+					bst.contains(x);
+				} catch (Exception e) {}
 			}
+			
 		});
-		
-		
+
+	
 		register("insert value", new MenuFunction() {
 
 			@Override
@@ -240,6 +224,33 @@ public class BST_Ops extends LocalJavaAnimation {
 			
 		});
 
+		register("create a random tree", new MenuFunction() {
+
+			@Override
+			public void selected() {
+				bst.root = null;
+				String nNodesS = promptForInput("How many nodes?", "[0-9]+");
+				int nNodes = Integer.parseInt(nNodesS);
+				int[] v = new int[nNodes];
+				int k = 0;
+				for (int i = 0; i < nNodes; ++i) {
+					k += 1 + rand.nextInt(3);
+					v[i] = k;
+				}
+				for (int i = 1; i < nNodes; ++i) {
+					int j = rand.nextInt(i+1);
+					int temp = v[i];
+					v[i] = v[j];
+					v[j] = temp;
+				}
+				for (int i = 0; i < nNodes; ++i) {
+					quickInsert (bst, v[i]);
+				}
+				//bst.treeSize = nNodes;
+			}
+		});
+		
+		
 	}
 	
 
