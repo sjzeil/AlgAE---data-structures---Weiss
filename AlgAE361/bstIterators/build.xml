@@ -3,12 +3,12 @@
 
 	
   <description>
-    Binary search trees for Data Structures, Weiss
+    Iterating over Binary Search Trees, Weiss
   </description>
 
 
   <property name="projectName" value="algae-dsw-bst"/>
-  <property name="mainClassName" value="edu.odu.cs.cs361.animations.BST_Ops" />
+  <property name="mainClassName" value="edu.odu.cs.cs361.animations.BSTIteration" />
 
   <import file="../commonBuild.xml"/>
 
