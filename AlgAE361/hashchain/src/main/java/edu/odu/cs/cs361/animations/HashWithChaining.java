@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationStack;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
@@ -14,7 +14,7 @@ import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
 import edu.odu.cs.AlgAE.Server.Rendering.LinkedListRenderer;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 
-public class HashWithChaining extends LocalJavaAnimation {
+public class HashWithChaining extends LocalJavaAnimationApplet {
 
 	public class HashTableRendering implements Renderer<hash<?>> {
 
@@ -123,7 +123,7 @@ public class HashWithChaining extends LocalJavaAnimation {
 	}
 
 	hash<SillyString> table = new hash<HashWithChaining.SillyString>(6);
-	LocalJavaAnimation self;
+	LocalJavaAnimationApplet self;
 	
 	
 	@Override
@@ -138,7 +138,7 @@ public class HashWithChaining extends LocalJavaAnimation {
 				globalVar("table", table);
 				ActivationStack stk = getMemoryModel().getActivationStack();
 				stk.render(hash.class, new HashTableRendering());
-				stk.render(LinkedList.class, new LinkedListRenderer<String>(false, false, self));
+				stk.render(LinkedList.class, new LinkedListRenderer<String>(false, false, getContext()));
 			}
 		});
 		

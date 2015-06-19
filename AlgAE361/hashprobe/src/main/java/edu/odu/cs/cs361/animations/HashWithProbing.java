@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationStack;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
@@ -18,7 +18,7 @@ import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 //!
 //!
 
-public class HashWithProbing extends LocalJavaAnimation {
+public class HashWithProbing extends LocalJavaAnimationApplet {
 
 	public class LPHashTableRendering implements Renderer<hash_set_LP<?>> {
 
@@ -192,7 +192,7 @@ public class HashWithProbing extends LocalJavaAnimation {
 		}
 	}
 
-	LocalJavaAnimation self;
+	LocalJavaAnimationApplet self;
 	
 	hash_set_LP<SillyString> linear = new hash_set_LP<HashWithProbing.SillyString>();
 	hash_set_QP<SillyString> quadratic = new hash_set_QP<HashWithProbing.SillyString>();

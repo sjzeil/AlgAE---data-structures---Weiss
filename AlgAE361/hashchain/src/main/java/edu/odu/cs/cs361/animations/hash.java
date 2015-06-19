@@ -1,6 +1,7 @@
 package edu.odu.cs.cs361.animations;//!
 
-import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
+
 
 import java.util.ArrayList;//!
 import java.util.LinkedList;//!
