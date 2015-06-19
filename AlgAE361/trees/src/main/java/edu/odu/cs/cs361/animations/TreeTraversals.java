@@ -6,13 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 
-public class TreeTraversals extends LocalJavaAnimation {
+public class TreeTraversals extends LocalJavaAnimationApplet {
 
 	public TreeTraversals() {
 		super("Tree Traversals");
