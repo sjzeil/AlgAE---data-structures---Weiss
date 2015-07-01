@@ -1,0 +1,16 @@
+<project name="Graph Optimization"
+	 default="build" basedir="." >
+
+	
+  <description>
+    Graph algorithms: Dijkstra min-path, and Prim's min spanning tree algorithm
+  </description>
+
+
+  <property name="projectName" value="algae-ds-dijkstra"/>
+  <property name="mainClassName" value="edu.odu.cs.cs361.animations.DijkstraPrimDemo" />
+
+  <import file="../commonBuild.xml"/>
+
+
+</project>
