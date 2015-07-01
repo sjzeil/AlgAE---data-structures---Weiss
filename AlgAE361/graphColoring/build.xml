@@ -1,0 +1,16 @@
+<project name="Graph Algorithmss"
+	 default="build" basedir="." >
+
+	
+  <description>
+    Graph graph coloring
+  </description>
+
+
+  <property name="projectName" value="algae-dsft-graphcoloring"/>
+  <property name="mainClassName" value="edu.odu.cs.cs361.animations.GraphColoringDemo" />
+
+  <import file="../commonBuild.xml"/>
+
+
+</project>
