@@ -4,15 +4,15 @@ package edu.odu.cs.cs361.animations;
 import java.awt.Color;
 import java.util.Random;
 
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 import edu.odu.cs.cs361.animations.graphs.CppIterator;
 import edu.odu.cs.cs361.animations.graphs.DiGraph;
 import edu.odu.cs.cs361.animations.graphs.Edge;
 import edu.odu.cs.cs361.animations.graphs.Vertex;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
 
 
-public class GraphTraversalDemo extends LocalJavaAnimation {
+public class GraphTraversalDemo extends LocalJavaAnimationApplet {
 
 	public GraphTraversalDemo() {
 		super("Graph Traversals");

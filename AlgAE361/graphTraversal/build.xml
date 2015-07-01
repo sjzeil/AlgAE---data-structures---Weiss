@@ -8,8 +8,8 @@
   </description>
 
 
-  <property name="projectName" value="algae-dsft-graphs"/>
-  <property name="mainClassName" value="edu.odu.cs.cs361.animations.DijkstraPrimDemo" />
+  <property name="projectName" value="algae-ds361-graphtraversal"/>
+  <property name="mainClassName" value="edu.odu.cs.cs361.animations.GraphTraversalDemo" />
 
   <import file="../commonBuild.xml"/>
 
