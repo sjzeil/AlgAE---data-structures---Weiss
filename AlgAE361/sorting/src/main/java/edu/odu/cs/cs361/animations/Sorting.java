@@ -1,12 +1,12 @@
 package edu.odu.cs.cs361.animations;//!
 
 import java.awt.Color;//!
-import java.util.ArrayList;//!
 
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
 import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;//!
 import edu.odu.cs.AlgAE.Server.Utilities.Index;//!
-import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
+
 
 public class Sorting {//!
 
@@ -240,7 +240,7 @@ void mergeSort (DiscreteInteger[] a, DiscreteInteger[] tmpArray, int left, int r
 //!void mergeSort( vector<Comparable> & a,vector<Comparable> & tmpArray, int left, int right )
 {    
 	ActivationRecord arec = activate(getClass());//!
-	arec.refParam("a", a).param("tmpArray",tmpArray).param("left", left).param("right", right);//!
+	arec.refParam("a", a).refParam("tmpArray",tmpArray).param("left", left).param("right", right);//!
 	arec.breakHere("starting mergeSort");//!
 	if( left < right )
     {
@@ -269,7 +269,8 @@ void mergeSort( DiscreteInteger[] a, int length )//!
 	arec.breakHere("starting mergeSort");//!
 	
 	DiscreteInteger[] tmpArray = new DiscreteInteger[length];//!
-	arec.refParam("tmpArray",tmpArray);//!
+	for (int i = 0; i < tmpArray.length; ++i) tmpArray[i] = new DiscreteInteger(-99);//!
+	arec.refVar("tmpArray",tmpArray);//!
 //!     vector<Comparable> tmpArray( a.size( ) );
      mergeSort( a, tmpArray, 0, length-1 );
 }
@@ -285,12 +286,11 @@ void mergeSort( DiscreteInteger[] a, int length )//!
  * rightEnd is the right-most index of the subarray.
  */
 //!template <typename Comparable>
-void merge(DiscreteInteger[] a,  DiscreteInteger[] tmpArray2, int leftPos, int rightPos, int rightEnd){//!
+void merge(DiscreteInteger[] a,  DiscreteInteger[] tmpArray, int leftPos, int rightPos, int rightEnd){//!
 //!void merge( vector<Comparable> & a, vector<Comparable> & tmpArray,int leftPos, int rightPos, int rightEnd ){
 
 	ActivationRecord arec = activate(getClass());//!
-	DiscreteInteger[] tmpArray = new DiscreteInteger[8];//!
-	arec.param("a", "").param("leftPos", leftPos).param("rightPos", rightPos).param("rightEnd", rightEnd);//!
+	arec.param("a", "").refParam("tmpArray", tmpArray).param("leftPos", leftPos).param("rightPos", rightPos).param("rightEnd", rightEnd);//!
 	arec.breakHere("starting merge");//!
 	
 	int leftEnd = rightPos - 1;//!
@@ -300,11 +300,11 @@ void merge(DiscreteInteger[] a,  DiscreteInteger[] tmpArray2, int leftPos, int r
     int numElements = rightEnd - leftPos + 1;//!
 //!    int numElements = rightEnd - leftPos + 1;
     
-	arec.var("tmpArray", tmpArray).var("leftPos", new Index(leftPos, a)).var("rightPos", new Index(rightPos, a)).var("tmpPos", new Index(tmpPos, tmpArray));//!
+	arec.var("leftEnd", new Index(leftEnd, a)).var("tmpPos", new Index(tmpPos, tmpArray)).var("numElements", numElements);//!
 
 	for (int i = leftPos; i < rightPos; ++i)//!
 		arec.highlight(a[i], Color.yellow);//!
-	for (int i = rightPos; i < Math.min(rightEnd, a.length); ++i)//!
+	for (int i = rightPos; i < Math.min(rightEnd+1, a.length); ++i)//!
 		arec.highlight(a[i], Color.blue);//!
 	arec.breakHere("leftPos and rightPos point to start of sublists");//!
 	
@@ -317,21 +317,20 @@ void merge(DiscreteInteger[] a,  DiscreteInteger[] tmpArray2, int leftPos, int r
 //!        if( a[ leftPos ] <= a[ rightPos ] )
         {
         	arec.breakHere("add a[leftPos++] to tmpArray");//!
-        	arec.breakHere("add a[leftPos++] to tmpArrayget");//!
-        	tmpArray[tmpPos++] = a[leftPos++];//!
+        	tmpArray[tmpPos++].set(a[leftPos++].get());//!
+        	arec.highlight(tmpArray[tmpPos-1]);//!
 //!            tmpArray[ tmpPos++ ] = std::move( a[ leftPos++ ] );
         	arec.highlight(a[leftPos-1], Color.gray);//!
         }
         else
         {
         	arec.breakHere("add a[rightPos++] to tmpArrayfdfd");//!
-        	arec.breakHere("add a[rightPos++] to tmpArrayget");//!
-        	tmpArray[tmpPos++] = a[rightPos++];//!
+        	tmpArray[tmpPos++].set(a[rightPos++].get());//!
+        	arec.highlight(tmpArray[tmpPos-1]);//!
 //!            tmpArray[ tmpPos++ ] = std::move( a[ rightPos++ ] );
         	arec.highlight(a[rightPos-1], Color.gray);//!
         }
-        arec.var("leftPos", new Index(leftPos, a)).var("rightPos", new Index(rightPos, a)).var("tmpPos", new Index(tmpPos, tmpArray));//!
-    	arec.breakHere("repeat if both sublists are non-empty");//!
+        arec.breakHere("repeat if both sublists are non-empty");//!
 	}//!
 	
 	arec.breakHere("one or both sublists is empty");//!
@@ -340,7 +339,8 @@ void merge(DiscreteInteger[] a,  DiscreteInteger[] tmpArray2, int leftPos, int r
 	while( leftPos <= leftEnd )    // Copy rest of first half
     {
 		arec.breakHere("copy remaining left element");//!
-		tmpArray[tmpPos++] = a[leftPos++];//!
+		tmpArray[tmpPos++].set(a[leftPos++].get());//!
+		arec.highlight(tmpArray[tmpPos-1]);//!
 //!        tmpArray[ tmpPos++ ] = std::move( a[ leftPos++ ] );
 		arec.highlight(a[leftPos-1], Color.gray);//!
 		arec.var("leftPos", new Index(leftPos, a)).var("tmpPos", new Index(tmpPos,tmpArray));//!
@@ -350,7 +350,8 @@ void merge(DiscreteInteger[] a,  DiscreteInteger[] tmpArray2, int leftPos, int r
     while( rightPos <= rightEnd )  // Copy rest of right half
     {
     	arec.breakHere("copy remaining right element");//!
-    	tmpArray[tmpPos++] = a[rightPos++];//!
+    	tmpArray[tmpPos++].set(a[rightPos++].get());//!
+    	arec.highlight(tmpArray[tmpPos-1]);//!
 //!        tmpArray[ tmpPos++ ] = std::move( a[ rightPos++ ] );
     	arec.highlight(a[rightPos-1], Color.gray);//!
     	arec.var("rightPos", new Index(rightPos, a)).var("tmpPos", new Index(tmpPos,tmpArray));//!

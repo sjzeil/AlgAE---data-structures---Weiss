@@ -5,17 +5,18 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
 import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
 
-public class CS361SortingAnimation extends LocalJavaAnimation {
+public class CS361SortingAnimation extends LocalJavaAnimationApplet {
 
 	public CS361SortingAnimation() {
 		super("Sorting Algorithms");
@@ -180,9 +181,6 @@ public class CS361SortingAnimation extends LocalJavaAnimation {
 		String value = promptForInput("How many elements?", "\\d+");
 		int n = Integer.parseInt(value);
 		generateReverseArray(n);
-		
-		ActivationRecord arec = activate(this);//!
-		arec.var("array", array).breakHere("generated");//!
 	}
 
 	public void generateReverseArray(int n)
