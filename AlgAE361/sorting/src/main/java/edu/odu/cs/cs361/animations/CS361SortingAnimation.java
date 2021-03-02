@@ -5,18 +5,16 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
 import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;
-import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
 
-public class CS361SortingAnimation extends LocalJavaAnimationApplet {
+public class CS361SortingAnimation extends LocalJavaAnimation {
 
 	public CS361SortingAnimation() {
 		super("Sorting Algorithms");
