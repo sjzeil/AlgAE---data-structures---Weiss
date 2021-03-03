@@ -97,22 +97,17 @@ void insertionSort( DiscreteInteger[] a, int left, int right )//!
 //!        Comparable tmp = std::move( a[ p ] );
         int j = 789;//!
 //!        int j;
-        arec.var("j", new Index(j, a));//!
-        arec.breakHere("look for the position to put tmp");//!
       
         for( j = p; j > left && tmp.get() < a[ j - 1 ].get(); --j )//!
 //!        for( j = p; j > left && tmp < a[ j - 1 ]; --j )
         {
-      	   arec.breakHere("scan down from j");//!
-      	   arec.var("j", new Index(j, a));//!
       	   a[ j ] = a[ j - 1 ] ;//!
 //!           a[ j ] = std::move( a[ j - 1 ] );
         }
-        arec.breakHere("Put tmp at a[j]");//!
         a[ j ] = tmp;//!
 //!        a[ j ] = std::move( tmp );
     }
-	arec.breakHere("done sorting");//!
+	arec.breakHere("done with insertion sort");//!
 }
 
 /*
@@ -389,6 +384,9 @@ final DiscreteInteger median3( DiscreteInteger[] a, int left, int right )//!
 
 	int center = ( left + right ) / 2;
 	arec.var("center", new Index(center, a));//!
+	arec.highlight (a[left], Color.lightGray);//!
+	arec.highlight (a[center], Color.lightGray);//!
+	arec.highlight (a[right], Color.lightGray);//!
  
 	if( a[ center ].get() < a[ left ].get() ) //!
 //!    if( a[ center ] < a[ left ] )
@@ -450,12 +448,14 @@ void quicksort(DiscreteInteger[] a, int left, int right) {//!
 //!void quicksort( vector<Comparable> & a, int left, int right ) {
 	ActivationRecord arec = activate(getClass());//!
 	arec.refParam("a", a).param("left", left).param("right",right);//!
+	arec.breakHere("begin quick sort");//!
 	
-	if( left + 10 <= right )
+	if( left + 4 <= right ) // reduced from 10 to 4 for demo purposes
     {
 		DiscreteInteger pivot = median3( a, left, right );//!
 //!        const Comparable & pivot = median3( a, left, right );
 		arec.var("pivot", pivot);//!
+        arec.highlight(a[right-1], Color.lightGray);//!
         // Begin partitioning
 		arec.breakHere("begin partitioning");//!
         int i = left, j = right - 1;
@@ -491,7 +491,8 @@ void quicksort(DiscreteInteger[] a, int left, int right) {//!
 //!        std::swap( a[ i ], a[ right - 1 ] ); // Restore pivot
     	a[ i ] = a[ right - 1 ];//!
     	a[ right - 1 ] = temp;//!
-        
+        arec.highlight(a[i], Color.green);//!
+
     	arec.breakHere("Sort small elements");//!
     	quicksort( a, left, i - 1 );        // Sort small elements
     	
