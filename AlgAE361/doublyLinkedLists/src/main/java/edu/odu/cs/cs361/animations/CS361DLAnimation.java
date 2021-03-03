@@ -3,12 +3,12 @@ package edu.odu.cs.cs361.animations;
 
 
 import static edu.odu.cs.AlgAE.Server.LocalServer.activate;
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;
 import edu.odu.cs.cs361.animations.LList.iterator;
 
-public class CS361DLAnimation extends LocalJavaAnimationApplet {
+public class CS361DLAnimation extends LocalJavaAnimation {
 
 	public CS361DLAnimation() {
 		super("Doubly Linked List Operations");

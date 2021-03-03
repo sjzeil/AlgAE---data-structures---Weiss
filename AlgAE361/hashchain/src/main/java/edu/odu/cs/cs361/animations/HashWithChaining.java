@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationStack;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
@@ -14,7 +14,7 @@ import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
 import edu.odu.cs.AlgAE.Server.Rendering.LinkedListRenderer;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 
-public class HashWithChaining extends LocalJavaAnimationApplet {
+public class HashWithChaining extends LocalJavaAnimation {
 
 	public class HashTableRendering implements Renderer<hash<?>> {
 
@@ -123,7 +123,7 @@ public class HashWithChaining extends LocalJavaAnimationApplet {
 	}
 
 	hash<SillyString> table = new hash<HashWithChaining.SillyString>(6);
-	LocalJavaAnimationApplet self;
+	LocalJavaAnimation self;
 	
 	
 	@Override

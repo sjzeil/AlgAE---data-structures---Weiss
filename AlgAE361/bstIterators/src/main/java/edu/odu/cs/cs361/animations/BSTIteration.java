@@ -6,14 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
 import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
 
-public class BSTIteration extends LocalJavaAnimationApplet {
+public class BSTIteration extends LocalJavaAnimation {
 
 	public BSTIteration() {
 		

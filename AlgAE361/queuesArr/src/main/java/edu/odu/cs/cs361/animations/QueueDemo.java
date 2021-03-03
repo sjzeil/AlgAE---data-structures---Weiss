@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import edu.odu.cs.cs361.animations.Queue;
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
@@ -14,7 +14,7 @@ import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 import edu.odu.cs.AlgAE.Server.Utilities.Index;
 
 
-public class QueueDemo extends LocalJavaAnimationApplet {
+public class QueueDemo extends LocalJavaAnimation {
 
 
 	public class AQueueRenderer implements Renderer<Queue> {
@@ -53,7 +53,7 @@ public class QueueDemo extends LocalJavaAnimationApplet {
 
 
 
-	private LocalJavaAnimationApplet self;
+	private LocalJavaAnimation self;
 	
 	public QueueDemo() {
 		super("Queue Implementations");

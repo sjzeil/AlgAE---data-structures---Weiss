@@ -12,10 +12,10 @@ import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
 import edu.odu.cs.AlgAE.Server.Rendering.LinkedListRenderer;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 
 
-public class QueueDemo extends LocalJavaAnimationApplet {
+public class QueueDemo extends LocalJavaAnimation {
 
 
 	public class LQueueRenderer implements Renderer<Queue> {
@@ -52,7 +52,7 @@ public class QueueDemo extends LocalJavaAnimationApplet {
 
 
 
-	private LocalJavaAnimationApplet self;
+	private LocalJavaAnimation self;
 	
 	public QueueDemo() {
 		super("Queue Implementations");

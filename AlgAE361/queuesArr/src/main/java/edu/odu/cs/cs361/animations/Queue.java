@@ -1,7 +1,7 @@
 package edu.odu.cs.cs361.animations;//!
 
 
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;//!
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
 import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
@@ -72,7 +72,7 @@ public class Queue {//!
 		int theSize = 0;
 	//!}
 
-void arrayQDemo (LocalJavaAnimationApplet self)
+void arrayQDemo (LocalJavaAnimation self)
 {
 	ActivationRecord arec = activate(Queue.class);//!
 	Queue queue = new Queue();//!

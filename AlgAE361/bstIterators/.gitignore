@@ -3,3 +3,6 @@
 /ivy
 /lib
 /bin
+**/.project
+**/.classpath
+**/.build/

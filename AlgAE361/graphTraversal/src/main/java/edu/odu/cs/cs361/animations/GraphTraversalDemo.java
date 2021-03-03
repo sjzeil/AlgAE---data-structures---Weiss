@@ -8,11 +8,11 @@ import edu.odu.cs.cs361.animations.graphs.CppIterator;
 import edu.odu.cs.cs361.animations.graphs.DiGraph;
 import edu.odu.cs.cs361.animations.graphs.Edge;
 import edu.odu.cs.cs361.animations.graphs.Vertex;
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
 
 
-public class GraphTraversalDemo extends LocalJavaAnimationApplet {
+public class GraphTraversalDemo extends LocalJavaAnimation {
 
 	public GraphTraversalDemo() {
 		super("Graph Traversals");

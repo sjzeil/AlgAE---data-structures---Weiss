@@ -27,9 +27,9 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'CS361/Weiss Sorting Algorithms',
+        attributes 'Implementation-Title': 'CS361/Tree traversals',
            'Implementation-Version': version,
-            'Main-Class': 'edu.odu.cs.cs361.animations.CS361SortingAnimation'
+            'Main-Class': 'edu.odu.cs.cs361.animations.TreeTraversals'
     }
     from { configurations.runtimeClasspath.collect {
          it.isDirectory() ? it : zipTree(it) } }
@@ -54,7 +54,7 @@ publishing {
     publications {
         ivyJava(IvyPublication) {
             organisation 'edu.odu.cs.cs361'
-            module 'cs361-sorting'
+            module 'cs361-' + project.name
             revision project.version
             descriptor.status = 'integration'   // milestone, release
             descriptor.branch = 'v4'

@@ -4,7 +4,7 @@ import java.awt.Color;//!
 import java.util.ArrayList;//!
 import java.util.List;//!
 
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
@@ -194,7 +194,7 @@ class Queue_via_List
 }
 
 
-void listQDemo (LocalJavaAnimationApplet self)
+void listQDemo (LocalJavaAnimation self)
 {
 	ActivationRecord arec = activate(Queue.class);//!
 	Queue queue = new Queue();//!

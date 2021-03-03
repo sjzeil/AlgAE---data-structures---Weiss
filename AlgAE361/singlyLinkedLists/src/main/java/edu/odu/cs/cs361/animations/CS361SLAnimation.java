@@ -3,10 +3,10 @@ package edu.odu.cs.cs361.animations;
 
 
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 
 
-public class CS361SLAnimation extends LocalJavaAnimationApplet {
+public class CS361SLAnimation extends LocalJavaAnimation {
 
 	public CS361SLAnimation() {
 		super("Singly Linked List Operations");

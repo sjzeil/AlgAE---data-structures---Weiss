@@ -4,7 +4,7 @@ package edu.odu.cs.cs361.animations;//!
 import java.awt.Color;//!
 import java.util.Random;//!
 
-import edu.odu.cs.AlgAE.Animations.LocalJavaAnimationApplet;//!
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;//!
 import edu.odu.cs.cs361.animations.graphs.CppIterator;//!
 import edu.odu.cs.cs361.animations.graphs.DiGraph;//!
 import edu.odu.cs.cs361.animations.graphs.Edge;//!
@@ -12,7 +12,7 @@ import edu.odu.cs.cs361.animations.graphs.Graph;//!
 import edu.odu.cs.cs361.animations.graphs.Vertex;//!
 import edu.odu.cs.AlgAE.Server.MenuFunction;//!
 
-public class GraphColoringDemo extends LocalJavaAnimationApplet {
+public class GraphColoringDemo extends LocalJavaAnimation {
 
 	public GraphColoringDemo() {
 		super("Graph Coloring");
