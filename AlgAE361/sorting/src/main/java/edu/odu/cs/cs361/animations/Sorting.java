@@ -3,6 +3,7 @@ package edu.odu.cs.cs361.animations;//!
 import java.awt.Color;//!
 
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
+import edu.odu.cs.AlgAE.Server.Utilities.ArrayList;
 import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;//!
 import edu.odu.cs.AlgAE.Server.Utilities.Index;//!
 import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
@@ -26,51 +27,55 @@ public class Sorting {//!
 /*
 * Simple insertion sort.
 */
-//!template <typename Comparable>
-public void insertionSort (DiscreteInteger[] v, int n)//!
+//!template <typename Comparable>xxx
+public void insertionSort (ArrayList<DiscreteInteger> v, int n)//!
 //!void insertionSort( vector<Comparable> & a )
 {
 	ActivationRecord arec = activate(getClass());//!
-	arec.refParam("v", v);//!
+	arec.refParam("a", v);//!
+	v.pushIndices();
 	arec.breakHere("starting insertion sort");//!
-	
+//!	
 	DiscreteInteger tmp = new DiscreteInteger(-97);//!
-	
-	arec.var("n", n);//!
-	arec.breakHere("starting loop");//!
-		
-	for(int p = 1; p< n; p++)//!
+//!	
+    DiscreteInteger p = new DiscreteInteger(-1);//!
+    arec.var("p", p);//!
+    v.indexedBy(p, "p");//!
+//!		
+	for(int p0 = 1; p0< n; p0++)//!
 //!    for( int p = 1; p < a.size( ); ++p )
 	{
-		    //arec.pushScope();//!    
-		    arec.var("p", new Index(p, v));//!
-		    
-			arec.breakHere("Where should we put v[p]?");//!
-		    
-		    tmp = v[p];//!
+		    p.set(p0);//!
+			arec.breakHere("Where should we put a[p]?");//!
+		    tmp.set(v.get(p0));//!
 //!           Comparable tmp = std::move( a[ p ] );
 		    arec.var("tmp", tmp);//!
 		    
-	        int j = 468;//!
+	        DiscreteInteger j = new DiscreteInteger(468);//!
+	        v.indexedBy(j, "j");//!
 //!           int j;
-	        arec.var("j", new Index(j, v));//!
+	        arec.var("j", j);//!
 
 			arec.breakHere("scan down from j");//!   
-	        for(j = p; j > 0 && tmp.get() < v[j-1].get(); j--)//!
+			j.set(p0);//!
+			int j0 = p0;//!
+	        for(j0 = p0; j0 > 0 && tmp.get() < v.get(j0-1).get(); j0--)//!
 //!           for( j = p; j > 0 && tmp < a[ j - 1 ]; --j )
 	        {
-	        	  arec.var("j", new Index(j, v));//!
-	        	  arec.breakHere("Not there yet: shift v[j-1] up");//!
-	        	  v[j] = v[j-1];//!
+	        	  j.set(j0);//!
+	        	  arec.breakHere("Not there yet: shift a[j-1] up");//!
+	        	  v.get(j0).set(v.get(j0-1).get());//!
 //!                 a[ j ] = std::move( a[ j - 1 ] );
 	        	  arec.breakHere("and continue scanning");//!
-	        	  arec.var("j", new Index(j, v));//!
 	        }
-		    arec.breakHere("Put the tmp at v[j]");//!
-	        v[j] = tmp;//!
+	        j.set(j0);//!
+		    arec.breakHere("Put the tmp at a[j]");//!
+	        v.get(j0).set(tmp.get());//!
 //!           a[ j ] = std::move( tmp );
+	        v.removeIndex("j");//!
 	    }
 	    arec.breakHere("done sorting");//!
+	    v.popIndices();//!
 	}
 
 
@@ -82,34 +87,34 @@ public void insertionSort (DiscreteInteger[] v, int n)//!
 * right is the right-most index of the subarray.
 */
 //!template <typename Comparable>
-void insertionSort( DiscreteInteger[] a, int left, int right )//!
+void insertionSort( ArrayList<DiscreteInteger> a, DiscreteInteger left, DiscreteInteger right )//!
 //!void insertionSort( vector<Comparable> & a, int left, int right )
 {
 	ActivationRecord arec = activate(getClass());//!
 	arec.param("a","").param("left", left).param("right",right);//!
+	for (int i = left.get(); i <= right.get(); ++i) arec.highlight(a.get(i), Color.blue.brighter().brighter());//!
 	arec.breakHere("begin insertionSort");//!
 	
-	for( int p = left + 1; p <= right; ++p )
+	for( int p = left.get() + 1; p <= right.get(); ++p )
     {
 		arec.var("p", new Index(p, a));//!
 		
-		DiscreteInteger tmp = a[ p ];//!
+		int tmp = a.get(p).get();//!
 //!        Comparable tmp = std::move( a[ p ] );
         int j = 789;//!
 //!        int j;
         arec.var("j", new Index(j, a));//!
-        arec.breakHere("look for the position to put tmp");//!
+//        arec.breakHere("look for the position to put tmp");//!
       
-        for( j = p; j > left && tmp.get() < a[ j - 1 ].get(); --j )//!
+        for( j = p; j > left.get() && tmp < a.get( j - 1 ).get(); --j )//!
 //!        for( j = p; j > left && tmp < a[ j - 1 ]; --j )
         {
-      	   arec.breakHere("scan down from j");//!
-      	   arec.var("j", new Index(j, a));//!
-      	   a[ j ] = a[ j - 1 ] ;//!
+//      	   arec.breakHere("scan down from j");//!
+      	   a.get(j).set(a.get(j-1).get());//!
 //!           a[ j ] = std::move( a[ j - 1 ] );
         }
-        arec.breakHere("Put tmp at a[j]");//!
-        a[ j ] = tmp;//!
+//        arec.breakHere("Put tmp at a[j]");//!
+        a.get(j).set(tmp);//!
 //!        a[ j ] = std::move( tmp );
     }
 	arec.breakHere("done sorting");//!
@@ -236,17 +241,24 @@ void shellSort(DiscreteInteger[] a, int n )//!
 * right is the right-most index of the subarray.
 */
 //!template <typename Comparable>
-void mergeSort (DiscreteInteger[] a, DiscreteInteger[] tmpArray, int left, int right)//!
+void mergeSort (ArrayList<DiscreteInteger> a, ArrayList<DiscreteInteger> tmpArray, int left, int right)//!
 //!void mergeSort( vector<Comparable> & a,vector<Comparable> & tmpArray, int left, int right )
 {    
 	ActivationRecord arec = activate(getClass());//!
-	arec.refParam("a", a).refParam("tmpArray",tmpArray).param("left", left).param("right", right);//!
+	DiscreteInteger left0 = new DiscreteInteger(left);
+	DiscreteInteger right0 = new DiscreteInteger(right);
+	arec.refParam("a", a).refParam("tmpArray",tmpArray).param("left", left0).param("right", right0);//!
+	a.pushIndices();
+	a.indexedBy(left0, "left");//!
+	a.indexedBy(right0, "right");//!
 	arec.breakHere("starting mergeSort");//!
 	if( left < right )
     {
-
+//!
 		int center = ( left + right ) / 2;
       
+		DiscreteInteger center0 = new DiscreteInteger(center);//!
+		a.indexedBy(center0, "center");//!
 		arec.var("center", center);//!
 		arec.breakHere("sort to left of center");//!
         mergeSort( a, tmpArray, left, center );
@@ -254,23 +266,25 @@ void mergeSort (DiscreteInteger[] a, DiscreteInteger[] tmpArray, int left, int r
         mergeSort( a, tmpArray, center + 1, right );
         arec.breakHere("merge sorted subarrays");//!
         merge( a, tmpArray, left, center + 1, right );
-  }
+    }
+	a.popIndices();//!
 }
 
 /*
 * Mergesort algorithm (driver).
 */
 //!template <typename Comparable>
-void mergeSort( DiscreteInteger[] a, int length )//!
+void mergeSort( ArrayList<DiscreteInteger> a, int length )//!
 //!void mergeSort( vector<Comparable> & a )
 {
 	ActivationRecord arec = activate(getClass());//!
 	arec.refParam("a", a);//!
 	arec.breakHere("starting mergeSort");//!
-	
-	DiscreteInteger[] tmpArray = new DiscreteInteger[length];//!
-	for (int i = 0; i < tmpArray.length; ++i) tmpArray[i] = new DiscreteInteger(-99);//!
+//!	
+	ArrayList<DiscreteInteger> tmpArray = new ArrayList<DiscreteInteger>();//!
+	for (int i = 0; i < a.size(); ++i) tmpArray.add(new DiscreteInteger(-99));//!
 	arec.refVar("tmpArray",tmpArray);//!
+	arec.breakHere("allocated temporary array");//!
 //!     vector<Comparable> tmpArray( a.size( ) );
      mergeSort( a, tmpArray, 0, length-1 );
 }
@@ -286,49 +300,57 @@ void mergeSort( DiscreteInteger[] a, int length )//!
  * rightEnd is the right-most index of the subarray.
  */
 //!template <typename Comparable>
-void merge(DiscreteInteger[] a,  DiscreteInteger[] tmpArray, int leftPos, int rightPos, int rightEnd){//!
+void merge(ArrayList<DiscreteInteger> a,  ArrayList<DiscreteInteger> tmpArray, int leftPos0, int rightPos0, int rightEnd0){//!
 //!void merge( vector<Comparable> & a, vector<Comparable> & tmpArray,int leftPos, int rightPos, int rightEnd ){
-
+    DiscreteInteger leftPos = new DiscreteInteger(leftPos0);//!
+    DiscreteInteger rightPos = new DiscreteInteger(rightPos0);//!
+    DiscreteInteger rightEnd = new DiscreteInteger(rightEnd0);//!
 	ActivationRecord arec = activate(getClass());//!
 	arec.param("a", "").refParam("tmpArray", tmpArray).param("leftPos", leftPos).param("rightPos", rightPos).param("rightEnd", rightEnd);//!
 	arec.breakHere("starting merge");//!
-	
-	int leftEnd = rightPos - 1;//!
+	a.pushIndices();//!
+	tmpArray.pushIndices();//!
+	a.indexedBy(leftPos, "leftPos");//!
+	a.indexedBy(rightPos, "rightPos");//!
+	a.indexedBy(rightEnd, "rightEnd");//!
+	DiscreteInteger leftEnd = new DiscreteInteger(rightPos0 - 1);//!
+	a.indexedBy(rightEnd, "leftEnd");//!
 //!    int leftEnd = rightPos - 1;
-    int tmpPos = leftPos;//!
+    DiscreteInteger tmpPos = new DiscreteInteger(leftPos0);//!
+    tmpArray.indexedBy(tmpPos, "tmpPos");//!
 //!    int tmpPos = leftPos;
-    int numElements = rightEnd - leftPos + 1;//!
+    int numElements = rightEnd.get() - leftPos.get() + 1;//!
 //!    int numElements = rightEnd - leftPos + 1;
-    
-	arec.var("leftEnd", new Index(leftEnd, a)).var("tmpPos", new Index(tmpPos, tmpArray)).var("numElements", numElements);//!
+//!    
+	arec.var("leftEnd", leftEnd).var("tmpPos", tmpPos).var("numElements", numElements);//!
 
-	for (int i = leftPos; i < rightPos; ++i)//!
-		arec.highlight(a[i], Color.yellow);//!
-	for (int i = rightPos; i < Math.min(rightEnd+1, a.length); ++i)//!
-		arec.highlight(a[i], Color.blue);//!
+	for (int i = leftPos.get(); i < rightPos.get(); ++i)//!
+		arec.highlight(a.get(i), Color.yellow);//!
+	for (int i = rightPos.get(); i < Math.min(rightEnd.get()+1, a.size()); ++i)//!
+		arec.highlight(a.get(i), Color.blue);//!
 	arec.breakHere("leftPos and rightPos point to start of sublists");//!
 	
     // Main loop
-	while( leftPos <= leftEnd && rightPos <= rightEnd )//!
+	while( leftPos.get() <= leftEnd.get() && rightPos.get() <= rightEnd.get() )//!
 //!    while( leftPos <= leftEnd && rightPos <= rightEnd )
 	{
 		arec.breakHere("choose smaller of a[leftPos] and a[leftPos]");//!
-        if(a[ leftPos ].get() <= a[ rightPos].get())//!
+        if(a.get(leftPos).get() <= a.get( rightPos).get())//!
 //!        if( a[ leftPos ] <= a[ rightPos ] )
         {
         	arec.breakHere("add a[leftPos++] to tmpArray");//!
-        	tmpArray[tmpPos++].set(a[leftPos++].get());//!
-        	arec.highlight(tmpArray[tmpPos-1]);//!
+        	tmpArray.get(tmpPos).set(a.get(leftPos));tmpPos.incr();leftPos.incr();//!
+        	arec.highlight(tmpArray.get(tmpPos.get()-1));//!
 //!            tmpArray[ tmpPos++ ] = std::move( a[ leftPos++ ] );
-        	arec.highlight(a[leftPos-1], Color.gray);//!
+        	arec.highlight(a.get(leftPos.get()-1), Color.gray);//!
         }
         else
         {
         	arec.breakHere("add a[rightPos++] to tmpArrayfdfd");//!
-        	tmpArray[tmpPos++].set(a[rightPos++].get());//!
-        	arec.highlight(tmpArray[tmpPos-1]);//!
+        	tmpArray.get(tmpPos).set(a.get(rightPos)); tmpPos.incr(); rightPos.incr();//!
+        	arec.highlight(tmpArray.get(tmpPos.get()-1));//!
 //!            tmpArray[ tmpPos++ ] = std::move( a[ rightPos++ ] );
-        	arec.highlight(a[rightPos-1], Color.gray);//!
+        	arec.highlight(a.get(rightPos.get()-1), Color.gray);//!
         }
         arec.breakHere("repeat if both sublists are non-empty");//!
 	}//!
@@ -336,42 +358,47 @@ void merge(DiscreteInteger[] a,  DiscreteInteger[] tmpArray, int leftPos, int ri
 	arec.breakHere("one or both sublists is empty");//!
 
     
-	while( leftPos <= leftEnd )    // Copy rest of first half
+//!	while( leftPos <= leftEnd )    // Copy rest of first half
+	while( leftPos.get() <= leftEnd.get() )    // Copy rest of first half//!
     {
 		arec.breakHere("copy remaining left element");//!
-		tmpArray[tmpPos++].set(a[leftPos++].get());//!
-		arec.highlight(tmpArray[tmpPos-1]);//!
+		tmpArray.get(tmpPos).set(a.get( leftPos)); tmpPos.incr();leftPos.incr();//!
+		arec.highlight(tmpArray.get(tmpPos.get()-1));//!
 //!        tmpArray[ tmpPos++ ] = std::move( a[ leftPos++ ] );
-		arec.highlight(a[leftPos-1], Color.gray);//!
-		arec.var("leftPos", new Index(leftPos, a)).var("tmpPos", new Index(tmpPos,tmpArray));//!
+		arec.highlight(a.get(leftPos.get()-1), Color.gray);//!
     }
     
 	arec.breakHere("all elements have been copied from the left sublist");//!
-    while( rightPos <= rightEnd )  // Copy rest of right half
+    while( rightPos.get() <= rightEnd.get() )  // Copy rest of right half//!
+//!    while( rightPos <= rightEnd )  // Copy rest of right half
     {
     	arec.breakHere("copy remaining right element");//!
-    	tmpArray[tmpPos++].set(a[rightPos++].get());//!
-    	arec.highlight(tmpArray[tmpPos-1]);//!
+		tmpArray.get(tmpPos).set(a.get(rightPos)); tmpPos.incr();rightPos.incr();//!
+    	arec.highlight(tmpArray.get(tmpPos.get()-1));//!
 //!        tmpArray[ tmpPos++ ] = std::move( a[ rightPos++ ] );
-    	arec.highlight(a[rightPos-1], Color.gray);//!
-    	arec.var("rightPos", new Index(rightPos, a)).var("tmpPos", new Index(tmpPos,tmpArray));//!
+    	arec.highlight(a.get(rightPos.get()-1), Color.gray);//!
     }
         
     arec.breakHere("all elements have been copied from the right sublist");//!
-    
+//!    
     // Copy tmpArray back
     arec.pushScope();//!
-    for( int i = 0; i < numElements; ++i, --rightEnd )
+    DiscreteInteger i = new DiscreteInteger();//!
+    a.indexedBy(i, "i");//!
+    for( int i0 = 0; i0 < numElements; ++i0, rightEnd.decr() )//!
+//!    for( int i = 0; i < numElements; ++i, --rightEnd )
     {
-    	arec.var("i", new Index(i, tmpArray)).var("rightEnd",new Index(i, tmpArray));//!
+    	i.set(i0);//!
+    	arec.var("i", i);//!
 		arec.breakHere("copy temp element back to original vector");//!
-    	a[ rightEnd ].set(tmpArray[ rightEnd ].get() );//!
+    	a.get(rightEnd).set(tmpArray.get(rightEnd));//!
 //!        a[ rightEnd ] = std::move( tmpArray[ rightEnd ] );
         
     }
     arec.popScope();//!
 	arec.breakHere("finished merge");//!
-        
+	a.popIndices();//!
+	tmpArray.popIndices();//!
 }
 
 
@@ -381,57 +408,55 @@ void merge(DiscreteInteger[] a,  DiscreteInteger[] tmpArray, int leftPos, int ri
 * Order these and hide the pivot.
 */
 //!template <typename Comparable>
-final DiscreteInteger median3( DiscreteInteger[] a, int left, int right )//!
+final DiscreteInteger median3( ArrayList<DiscreteInteger> a, DiscreteInteger left, DiscreteInteger right )//!
 //!const Comparable & median3( vector<Comparable> & a, int left, int right )
 {
 	ActivationRecord arec = activate(getClass());//!
 	arec.param("a","").param("left", left).param("right",right);//!
 
-	int center = ( left + right ) / 2;
-	arec.var("center", new Index(center, a));//!
+	DiscreteInteger center = new DiscreteInteger( (left.get() + right.get() ) / 2);
+//!    int center = ( left + right ) / 2;
+	arec.var("center", center);//!
+	a.pushIndices();//!
+	a.indexedBy(left, "left");//!
+	a.indexedBy(right, "right");//!
+	a.indexedBy(center, "center");//!
  
-	if( a[ center ].get() < a[ left ].get() ) //!
+	if( a.get( center ).get() < a.get( left ).get() ) //!
 //!    if( a[ center ] < a[ left ] )
 	{
 		arec.breakHere("swap  a[ left ] and  a[ center ]");//!
-		DiscreteInteger temp = a[ left ];//!
 //!        std::swap( a[ left ], a[ center ] );
-		a[ left ] = a[ center ];//!
-		a[ center ] = temp;//!
+		a.get( left ).swap( a.get(center));//!
 		arec.breakHere("done with swapping left and center");//!
 		
 	}
-	if( a[ right ].get() < a[ left ].get() )//!
+	if( a.get( right ).get() < a.get( left ).get() )//!
 //!    if( a[ right ] < a[ left ] )
 	{
 		arec.breakHere("swap  a[ right ] and  a[ left ]");//!
-		DiscreteInteger temp = a[ left ];//!
 //!        std::swap( a[ left ], a[ right ] );
-		a[ left ] = a[ right ];//!
-		a[ right ] = temp;//!
+		a.get( left ).swap( a.get(right) );//!
 		arec.breakHere("done with swapping right and left");//!
 	}
-	if( a[ right ].get() < a[ center ].get() )//!
+	if( a.get( right ).get() < a.get( center ).get() )//!
 //!    if( a[ right ] < a[ center ] )
 	{
 		arec.breakHere("swap  a[ right ] and  a[ center ]");//!
-		DiscreteInteger temp = a[ right ];//!
 //!        std::swap( a[ right ], a[ center ] );
-		a[ right ] = a[ center ];//!
-		a[ center ] = temp;//!
+		a.get( right ).swap(a.get( center ));//!
 		arec.breakHere("done with swapping right and center");//!
 	}
 
  // Place pivot at position right - 1
 	arec.breakHere("Place pivot at position right - 1");//!
 	arec.breakHere("swap  a[ center ] and  a[ right - 1 ]");//!
-	DiscreteInteger temp = a[ center ];//!
 //!    std::swap( a[ center ], a[ right - 1 ] );
-	a[ center ] = a[ right - 1 ];//!
-	a[ right - 1 ] = temp;//!
+	a.get( center ).swap( a.get( right.get() - 1 ));//!
 	arec.breakHere("done with swapping center and right - 1");//!
  
-    return a[ right - 1 ];
+    return a.get( right.get() - 1 );//!
+//!    return a[ right - 1 ];
 }
 
 
@@ -446,63 +471,76 @@ final DiscreteInteger median3( DiscreteInteger[] a, int left, int right )//!
 * right is the right-most index of the subarray.
 */
 //!template <typename Comparable>
-void quicksort(DiscreteInteger[] a, int left, int right) {//!
+void quicksort(ArrayList<DiscreteInteger> a, int left0, int right0) {//!
 //!void quicksort( vector<Comparable> & a, int left, int right ) {
 	ActivationRecord arec = activate(getClass());//!
+	DiscreteInteger left = new DiscreteInteger(left0);//!
+	DiscreteInteger right = new DiscreteInteger(right0);//!
+	a.pushIndices();//!
+	a.indexedBy(left, "left");//!
+	a.indexedBy(right, "right");//!
 	arec.refParam("a", a).param("left", left).param("right",right);//!
+	for (int i = left0; i <= right0; ++i)
+		arec.highlight(a.get(i), Color.blue.brighter().brighter());
 	
-	if( left + 10 <= right )
+	if( left.get() + 4 <= right.get() )//!
+//!	if( left + 4 <= right )
     {
+		arec.breakHere("Choose the pivot.");//!
 		DiscreteInteger pivot = median3( a, left, right );//!
 //!        const Comparable & pivot = median3( a, left, right );
 		arec.var("pivot", pivot);//!
         // Begin partitioning
 		arec.breakHere("begin partitioning");//!
-        int i = left, j = right - 1;
-        arec.var("i", new Index(i, a)).var("j",new Index(j, a));//!
+        DiscreteInteger i = new DiscreteInteger(left.get());//!
+        DiscreteInteger j = new DiscreteInteger(right.get() - 1);//!
+        a.indexedBy(i, "i");//!
+        a.indexedBy(j, "j");//!
+//!        int i = left, j = right - 1;
+        arec.var("i", i).var("j", j);//!
         arec.breakHere("look for elements to swap");//!
         for( ; ; )
         {
-        	while( a[ ++i ].get() < pivot.get() ) {//! 
-//!            while( a[ ++i ] < pivot ) { }
+        	i.incr();//!
+        	while( a.get(i).get() < pivot.get() ) {i.incr();//! 
         		arec.breakHere("scan up from the left");//!
-        		arec.var("i", new Index(i, a));//!
+//!            while( a[ ++i ] < pivot ) { }
         	}//!
-            while( pivot.get() < a[ --j ].get() ) {//!
+        	j.decr();//!
+            while( pivot.get() < a.get(j).get() ) {j.decr();//!
+        	arec.breakHere("scan down from the right");//!
 //!            while( pivot < a[ --j ] ) { }
-            	arec.breakHere("scan down from the right");//!
-            	arec.var("j", new Index(j, a));//!
             }//!
             arec.breakHere("Either we are ready to swap or we are done pivoting");//!
-            if( i < j )
+            if( i.get() < j.get() )//!
+//!            if( i < j )
             {
             	arec.breakHere("Swap the out-of-position elements");//!
-            	DiscreteInteger temp = a[ i ];//!
 //!                std::swap( a[ i ], a[ j ] );
-            	a[ i ] = a[ j ];//!
-            	a[ j ] = temp;//!
+            	a.get(i).swap(a.get(j));//!
             }
             else
                 break;
         }
 
         arec.breakHere("Restore pivot");//!
-        DiscreteInteger temp = a[ i ];//!
 //!        std::swap( a[ i ], a[ right - 1 ] ); // Restore pivot
-    	a[ i ] = a[ right - 1 ];//!
-    	a[ right - 1 ] = temp;//!
+    	a.get(i).swap(a.get(right.get() - 1));//!
         
     	arec.breakHere("Sort small elements");//!
-    	quicksort( a, left, i - 1 );        // Sort small elements
+    	quicksort( a, left.get(), i.get() - 1 );//!
+//!    	quicksort( a, left, i - 1 );        // Sort small elements
     	
     	arec.breakHere("Sort large elements");//!
-        quicksort( a, i + 1, right );       // Sort large elements
+        quicksort( a, i.get() + 1, right.get() );//!
+//!        quicksort( a, i + 1, right );       // Sort large elements
     }
     else  
     {// Do an insertion sort on the subarray
     	arec.breakHere("Do an insertion sort on the subarray");//!
         insertionSort( a, left, right );
     }
+	a.popIndices();//!
 }
 
 
@@ -514,7 +552,7 @@ void quicksort(DiscreteInteger[] a, int left, int right) {//!
 *  Quicksort algorithm (driver).
 */
 //!template <typename Comparable>
-void quicksort( DiscreteInteger[] a, int size)//!
+void quicksort( ArrayList<DiscreteInteger> a, int size)//!
 //!void quicksort( vector<Comparable> & a )
 {
 	ActivationRecord arec = activate(getClass());//!

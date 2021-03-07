@@ -33,6 +33,7 @@ jar {
     }
     from { configurations.runtimeClasspath.collect {
          it.isDirectory() ? it : zipTree(it) } }
+	from sourceSets.main.java
 }
 
 
@@ -54,7 +55,7 @@ publishing {
     publications {
         ivyJava(IvyPublication) {
             organisation 'edu.odu.cs.cs361'
-            module 'cs361-sorting'
+            module 'cs361-' + project.name
             revision project.version
             descriptor.status = 'integration'   // milestone, release
             descriptor.branch = 'v4'

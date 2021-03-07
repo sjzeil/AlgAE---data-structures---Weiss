@@ -1,16 +1,9 @@
 package edu.odu.cs.cs361.animations;
 
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
-import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
-import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
-import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.Utilities.ArrayList;
 import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;
 
 
@@ -23,50 +16,14 @@ public class CS361SortingAnimation extends LocalJavaAnimation {
 	@Override
 	public String about() {
 		return "Demonstration of Sorting Algorithms,\n" +
-				"prepared for CS 361, Advanced Data Strcutures\n" +
-				"and Algorithms, Old Dominion Universi"
+				"prepared for CS 361, Data Structures\n" +
+				"and Algorithms, Old Dominion University"
 				+ "ty\n" +
 				"Summer 2010";
 	}
 
 	
-	private DiscreteInteger[] array = new DiscreteInteger[0];
-	private class ArrayContainer implements CanBeRendered<ArrayContainer>, Renderer<ArrayContainer> {
-
-		@Override
-		public Renderer<ArrayContainer> getRenderer() {
-			return this;
-		}
-
-		@Override
-		public Color getColor(ArrayContainer obj) {
-			return Color.white;
-		}
-
-		@Override
-		public List<Component> getComponents(ArrayContainer obj) {
-			ArrayList<Component> c = new ArrayList<Component>();
-			c.add (new Component(array));
-			return c;
-		}
-
-		@Override
-		public List<Connection> getConnections(ArrayContainer obj) {
-			return new ArrayList<Connection>();
-		}
-
-		@Override
-		public int getMaxComponentsPerRow(ArrayContainer obj) {
-			return 1;
-		}
-
-		@Override
-		public String getValue(ArrayContainer obj) {
-			return "";
-		}
-		
-	}
-
+	private ArrayList<DiscreteInteger> array = new ArrayList<>();
 
 	
 	
@@ -79,36 +36,7 @@ public class CS361SortingAnimation extends LocalJavaAnimation {
 			@Override
 			public void selected() {
 				generateRandomArray(12);
-				globalVar("vector", new ArrayContainer());
-				/*
-				getActivationStack().render(ArrayList.class, 
-						new Renderer<ArrayList<?>>() {
-							@Override
-							public Color getColor(ArrayList<?> obj) {
-								return null;
-							}
-
-							@Override
-							public List<Component> getComponents(ArrayList<?> obj) {
-								return null;
-							}
-
-							@Override
-							public List<Connection> getConnections(ArrayList<?> obj) {
-								return null;
-							}
-
-							@Override
-							public int getMaxComponentsPerRow(ArrayList<?> obj) {
-								return 100;
-							}
-
-							@Override
-							public String getValue(ArrayList<?> obj) {
-								return null;
-							}
-					
-				});*/
+				globalVar("v", array);
 			}
 		});
 		
@@ -129,30 +57,32 @@ public class CS361SortingAnimation extends LocalJavaAnimation {
 		register ("Insertion Sort", new MenuFunction() {
 			@Override
 			public void selected() {
-				new Sorting().insertionSort (array, array.length);
+				new Sorting().insertionSort (array, array.size());
 			}
 		});
-
+/*
 		register ("Shell Sort", new MenuFunction() {
 			@Override
 			public void selected() {
-				new Sorting().shellSort (array, array.length);
+				new Sorting().shellSort (array, array.size());
 			}
 		});
+*/
 
 		register ("Merge Sort", new MenuFunction() {
 			@Override
 			public void selected() {
-				new Sorting().mergeSort (array, array.length);
+				new Sorting().mergeSort (array, array.size());
 			}
 		});
 
 		register ("Quick Sort", new MenuFunction() {
 			@Override
 			public void selected() {
-				new Sorting().quicksort (array, array.length);
+				new Sorting().quicksort (array, array.size());
 			}
 		});
+
 	}
 	
 	public void randomArrayGenerated()
@@ -164,11 +94,9 @@ public class CS361SortingAnimation extends LocalJavaAnimation {
 
 	public void generateRandomArray(int n)
 	{
-		if (n != array.length) {
-			array = new DiscreteInteger[n];
-		}
+		array.clear();
 		for (int i = 0; i < n; ++i) {
-			array[i] = new DiscreteInteger((int)((double)(2*n) * Math.random()));
+			array.add(new DiscreteInteger((int)((double)(2*n) * Math.random())));
 		}
 		
 	}
@@ -183,12 +111,13 @@ public class CS361SortingAnimation extends LocalJavaAnimation {
 
 	public void generateReverseArray(int n)
 	{
-		if (n != array.length) {
-			array = new DiscreteInteger[n];
+		array.clear();
+		for (int i = 0; i < n; ++i) {
+			array.add(null);
 		}
-		array[n-1] = new DiscreteInteger ((int)(3.0 * Math.random()));  
+		array.set(n-1, new DiscreteInteger ((int)(3.0 * Math.random())));  
 		for (int i = n-2; i >= 0; --i) {
-			array[i] = new DiscreteInteger(array[i+1].get() + (int)(3.0 * Math.random()));
+			array.set(i, new DiscreteInteger(array.get(i+1).get() + (int)(3.0 * Math.random())));
 		}
 		
 	}

@@ -8,7 +8,10 @@ pluginManagement {
     }
 }
 
+include 'bst'
+include 'bstIterators'
 include 'sorting'
+include 'trees'
 
 
 
