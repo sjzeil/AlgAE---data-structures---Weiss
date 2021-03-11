@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import edu.odu.cs.AlgAE.Server.MenuFunction;
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
@@ -15,9 +15,9 @@ import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
 import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;//!
 
-public class BST_Ops extends LocalJavaAnimation {
+public class AVL_Ops extends LocalJavaAnimation {
 
-	public BST_Ops() {
+	public AVL_Ops() {
 		super("Binary Search Trees");
 	}
 
@@ -32,25 +32,25 @@ public class BST_Ops extends LocalJavaAnimation {
 
 	boolean displayParentPointers = false;
 
-	class BinaryNodeRendering implements Renderer<BinaryNode<Integer>> {
+	class avlNodeRendering implements Renderer<avlNode<Integer>> {
 		
 		@Override
-		public Color getColor(BinaryNode<Integer> obj) {
+		public Color getColor(avlNode<Integer> obj) {
 			return Color.cyan;
 		}
 
 		@Override
-		public List<Component> getComponents(BinaryNode<Integer> obj) {
+		public List<Component> getComponents(avlNode<Integer> t) {
 			List<Component> results = new LinkedList<Component>();
 			return results;
 		}
 		
 		@Override
-		public List<Connection> getConnections(BinaryNode<Integer> t) {
+		public List<Connection> getConnections(avlNode<Integer> t) {
 			LinkedList<Connection> results = new LinkedList<Connection>();
 			//Connection parC = new Connection(t.parent, 340, 20);
-			Connection leftC = new Connection(t.left, 215, 215);
-			Connection rightC = new Connection(t.right, 145, 145);
+			Connection leftC = new Connection(t.leftChild, 215, 215);
+			Connection rightC = new Connection(t.rightChild, 145, 145);
 			//if (displayParentPointers)
 				//results.add (parC);
 			results.add (leftC);
@@ -58,45 +58,47 @@ public class BST_Ops extends LocalJavaAnimation {
 			return results;
 		}
 		@Override
-		public int getMaxComponentsPerRow(BinaryNode<Integer> obj) {
-			return 0;
+		public int getMaxComponentsPerRow(avlNode<Integer> obj) {
+			return 1;
 		}
 		
 		@Override
-		public String getValue(BinaryNode<Integer> t) {
-			return "" + t.element;
+		public String getValue(avlNode<Integer> t) {
+			return "" + t.value + " (bf:" + t.balanceFactor + ")";
 		}
 			
 	}
 	
 	
-	class BinaryTreeRendering implements Renderer<BinarySearchTree<Integer>> {
+	class BinaryTreeRendering implements Renderer<AVLtree<Integer>> {
 
 		@Override
-		public Color getColor(BinarySearchTree<Integer> obj) {
+		public Color getColor(AVLtree<Integer> obj) {
 			return null;
 		}
 
 		@Override
-		public List<Component> getComponents(BinarySearchTree<Integer> bst) {
+		public List<Component> getComponents(AVLtree<Integer> bst) {
 			LinkedList<Component> comps = new LinkedList<Component>();
-			comps.add (new Component(new SimpleReference(bst.root, 140, 220), "root"));
+			//comps.add (new Component(new SimpleReference(bst.root, 140, 220), "root"));
+			bst.rootRef.set(bst.root);
+			comps.add(new Component(bst.rootRef, "root"));
 			//comps.add (new Component(bst.treeSize, "treeSize"));
 			return comps;
 		}
 
 		@Override
-		public List<Connection> getConnections(BinarySearchTree<Integer> obj) {
+		public List<Connection> getConnections(AVLtree<Integer> obj) {
 			return new LinkedList<Connection>();
 		}
 
 		@Override
-		public int getMaxComponentsPerRow(BinarySearchTree<Integer> obj) {
+		public int getMaxComponentsPerRow(AVLtree<Integer> obj) {
 			return 2;
 		}
 
 		@Override
-		public String getValue(BinarySearchTree<Integer> obj) {
+		public String getValue(AVLtree<Integer> obj) {
 			return "";
 		}
 		
@@ -104,42 +106,16 @@ public class BST_Ops extends LocalJavaAnimation {
 
 
 
-	public void quickInsert (BinaryNode<Integer> t, int element)
-	{ 
-		if (element < t.element) 
-		{
-			if (t.left != null)
-			{
-				quickInsert (t.left, element);
-			}
-			else
-			{
-				t.left = new BinaryNode<Integer>(element, null, null);
-			}
-		} 
-		else
-		{
-			if (t.right != null)
-			{
-				quickInsert (t.right, element);
-			}
-			else
-			{
-				t.right = new BinaryNode<Integer>(element, null, null);
-			}
-		} 
-		
-	}
 
-	public void quickInsert (BinarySearchTree<Integer> tree, int element)
+	public void quickInsert (AVLtree<Integer> tree, int element)
 	{ 
 		if (tree.root != null)
-			quickInsert(tree.root, element);
+			tree.root = tree.root.quickinsert(element);
 		else
-			tree.root = new BinaryNode<Integer>(element);
+			tree.root = new avlNode<Integer>(element);
 	}
 	
-	public void createSampleTree1(BinarySearchTree<Integer> bst) {
+	public void createSampleTree1(AVLtree<Integer> bst) {
 		bst.root = null;
 		int[] data = {30, 20, 70, 10, 50, 40, 60};
 		for (int k: data) {
@@ -150,7 +126,7 @@ public class BST_Ops extends LocalJavaAnimation {
 	}
 
 	
-	BinarySearchTree<Integer> bst = new BinarySearchTree<Integer>();
+	AVLtree<Integer> bst = new AVLtree<Integer>();
 	//BinarySearchTree<Integer>.iterator current = bst.quickEnd();
 	Random rand = new Random();
 	
@@ -164,8 +140,8 @@ public class BST_Ops extends LocalJavaAnimation {
 				globalVar("tree", bst);
 				//globalVar("current", current);
 				createSampleTree1(bst);
-				getMemoryModel().getActivationStack().render(BinaryNode.class, new BinaryNodeRendering());
-				getMemoryModel().getActivationStack().render(BinarySearchTree.class, new BinaryTreeRendering());
+				getMemoryModel().getActivationStack().render(avlNode.class, new avlNodeRendering());
+				getMemoryModel().getActivationStack().render(AVLtree.class, new BinaryTreeRendering());
 			}
 			
 		});
@@ -246,7 +222,7 @@ public class BST_Ops extends LocalJavaAnimation {
 	
 	
 	public static void main (String[] args) {
-		BST_Ops demo = new BST_Ops();
+		AVL_Ops demo = new AVL_Ops();
 		demo.runAsMain();
 	}
 

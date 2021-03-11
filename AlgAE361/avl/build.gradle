@@ -1,0 +1,79 @@
+plugins {
+    id 'java'
+	id 'application'
+	id 'ivy-publish'
+}
+
+java {
+	sourceCompatibility = JavaVersion.toVersion(11)
+	targetCompatibility = JavaVersion.toVersion(11)
+}
+
+version = '1.2'
+
+repositories {
+    jcenter()
+	//mavenCentral()
+    ivy { // Use my own CS dept repo
+        url 'https://www.cs.odu.edu/~zeil/ivyrepo'
+    }         
+}
+
+
+dependencies {
+    implementation 'edu.odu.cs.algae:algae-client-server:4.2-SNAPSHOT'
+}
+
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'CS361/Binary search trees',
+           'Implementation-Version': version,
+            'Main-Class': 'edu.odu.cs.cs361.animations.BST_Ops'
+    }
+    from { configurations.runtimeClasspath.collect {
+         it.isDirectory() ? it : zipTree(it) } }
+	from sourceSets.main.java
+}
+
+
+// Publishing
+
+// Credentials are loaded from ~/.gradle/gradle.properties
+if(project.hasProperty("ivyRepoUser")){
+    ext.ivyRepoUser = "$ivyRepoUser";
+} else {
+    ext.ivyRepoUser = "user";
+}
+if(project.hasProperty("ivyRepoPass")){
+    ext.ivyRepoPass = "$ivyRepoPass";
+} else {
+    ext.ivyRepoPass = "password";
+}
+
+publishing {
+    publications {
+        ivyJava(IvyPublication) {
+            organisation 'edu.odu.cs.cs361'
+            module 'cs361-' + project.name
+            revision project.version
+            descriptor.status = 'integration'   // milestone, release
+            descriptor.branch = 'v4'
+
+            from components.java
+        }
+    }
+
+    repositories {
+        ivy {
+            name 'ivyRepo'
+            url 'sftp://linux.cs.odu.edu:22/home/zeil/secure_html/ivyrepo'
+            // Readable via https://www.cs.odu.edu/~zeil/ivyrepo
+            credentials {
+                username project.ivyRepoUser
+                password project.ivyRepoPass
+            }
+        }
+    }
+}
+
