@@ -8,10 +8,23 @@ pluginManagement {
     }
 }
 
+include 'arrayOps'
+include 'avl'
 include 'bst'
 include 'bstIterators'
+include 'dijkstraPrim'
+include 'doublyLinkedLists'
+include 'graphColoring'
+include 'graphTraversal'
+include 'hashchain'
+include 'hashprobe'
+include 'heaps'
+include 'queuesArr'
+include 'queuesLL'
+include 'rpnCalculator'
+include 'singlyLinkedLists'
 include 'sorting'
+include 'stacks'
 include 'trees'
-
-
+include 'vectors'
 

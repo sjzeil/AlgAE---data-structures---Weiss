@@ -4,14 +4,14 @@ import java.awt.Color;//!
 import java.util.ArrayList;//!
 import java.util.List;//!
 
-import edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation;//!
+import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
 import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
-import static edu.odu.cs.AlgAE.Server.Animations.LocalJavaAnimation.activate;//!
 
 public class Stack {//!
 
@@ -112,7 +112,7 @@ void demo (LocalJavaAnimation anim)
 {
 	ActivationRecord arec = activate(Stack.class);//!
 	Stack lstack = new Stack();//!
-	anim.getMemoryModel().globalVar("lstack", lstack);//!
+	anim.getContext().getMemoryModel().globalVar("lstack", lstack);//!
 	arec.breakHere("stacks");//!
 	arec.breakHere("pushed onto vector stack");//!
 	lstack.push("Adams");
