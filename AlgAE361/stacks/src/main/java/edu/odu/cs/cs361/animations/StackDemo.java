@@ -77,7 +77,6 @@ public class StackDemo extends LocalJavaAnimation {
 			@Override
 			public void selected() {
 				//getAnimator().setSpeed(30);
-				getMemoryModel().render(LinkedList.class, new LinkedListRenderer<String>(true, false, self));
 				getMemoryModel().render(Stack.class, new StackRenderer());
 				
 				new Stack().demo(self);
