@@ -2,7 +2,6 @@ package edu.odu.cs.cs361.animations;
 
 
 import java.awt.Color;
-import java.util.LinkedList;
 import java.util.List;
 
 import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
@@ -11,8 +10,8 @@ import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationStack;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
 import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
-import edu.odu.cs.AlgAE.Server.Rendering.LinkedListRenderer;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
+import edu.odu.cs.AlgAE.Server.Utilities.LinkedList;
 
 public class HashWithChaining extends LocalJavaAnimation {
 
@@ -138,7 +137,6 @@ public class HashWithChaining extends LocalJavaAnimation {
 				globalVar("table", table);
 				ActivationStack stk = getMemoryModel().getActivationStack();
 				stk.render(hash.class, new HashTableRendering());
-				stk.render(LinkedList.class, new LinkedListRenderer<String>(false, false, getContext()));
 			}
 		});
 		

@@ -10,6 +10,8 @@ import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
 import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.Utilities.RenderedReference;
+
 import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
 
@@ -106,6 +108,7 @@ public class Stack {//!
 	
 	//!private:
 	Node first = null; //!    List<Object> theList;
+	RenderedReference<Node> firstR = new RenderedReference<Stack.Node>(null, 140, 180);//!
 	
 
 void demo (LocalJavaAnimation anim)

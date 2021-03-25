@@ -3,7 +3,6 @@ package edu.odu.cs.cs361.animations;//!
 import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
 import java.awt.Color;//!
-import java.util.ArrayList;//!
 import java.util.LinkedList;
 import java.util.List;//!
 
@@ -12,8 +11,9 @@ import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
 import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
-import edu.odu.cs.AlgAE.Server.Utilities.Index;//!
+import edu.odu.cs.AlgAE.Server.Utilities.ArrayList;//!
 //!
+import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;
 
 
 public class hash_set_QP<T>  {//!
@@ -102,19 +102,20 @@ public Renderer<HashEntry> getRenderer() {//!
   {
 	  ActivationRecord arec = activate(getClass());//!
 	  arec.param("element",element);//!
+	  table.pushIndices();//!
 	  arec.breakHere("Starting insert");//!
-    int h0 = element.hashCode();//!      unsigned h0 = hash(element);
+	  DiscreteInteger h0 = new DiscreteInteger(element.hashCode());//!      unsigned h0 = hash(element);
 	  arec.var("h0", h0);//!
+	  table.indexedBy(h0, "h0");//!
 	  arec.breakHere("Computed hashcode - search for element");//!
-    int h = find(element, h0);//!      unsigned h = find(element, h0);
-    arec.var("h", new Index(h, table));//!
-    arec.breakHere("Returned from find");//!
-    if (h == hSize) {//!     if (h == hSize) {
-  	  arec.breakHere("element is not in the table - look for an empty slot in which to put it.");//!
+	  DiscreteInteger h = new DiscreteInteger(find(element, h0));//!      unsigned h = find(element, h0);
+	  table.indexedBy(h, "h");//!
+	  arec.breakHere("Returned from find");//!
+	  if (h.get() == hSize) {//!     if (h == hSize) {
+  	      arec.breakHere("element is not in the table - look for an empty slot in which to put it.");//!
       int count = 0;//!      unsigned count = 0;
-      h = h0;//!        h = h0;
-      arec.var("h", new Index(h, table));//!
-  	  arec.var("count", count);//!
+      h.set(h0);//!        h = h0;
+      arec.var("count", count);//!
   	  arec.breakHere("While looking count how many probes we have done.");//!
       while (table.get(h).info == HashStatus.Occupied //!        while (table[h].info == Occupied 
 	     && count < hSize)//!               && count < hSize)
@@ -122,14 +123,13 @@ public Renderer<HashEntry> getRenderer() {//!
       	arec.breakHere("table[h] is occupied - keep probing.");//!
 	    ++count;
 	    arec.var("count", count);//!
-	    h = (h0 + /*f(count)*/ count*count) % hSize;
-	    arec.var("h", new Index(h, table));//!
+	    h.set((h0.get() + /*f(count)*/ count*count) % hSize);//!	    h = (h0 + /*f(count)*/ count*count) % hSize;
       	arec.breakHere("Next possiblity for h.");//!
       }
       arec.breakHere("Finished searching.");//!
       if (count >= hSize)//!        if (count >= hSize)
       {arec.breakHere("Could not find an open slot.");//!
-
+      table.popIndices();//!
            return false;  // could not add
       }//!
       else
@@ -139,11 +139,13 @@ public Renderer<HashEntry> getRenderer() {//!
           table.get(h).data = element;//!          table[h].data = element;
           ++theSize;
           arec.breakHere("Done.");//!
+          table.popIndices();//!
           return true;//!          return true;
       }
     }
     else { // replace
     	table.get(h).data = element;//!         table[h].data = element;
+        table.popIndices();//!
     	return true;
     }
   }
@@ -182,15 +184,19 @@ public Renderer<HashEntry> getRenderer() {//!
   int count (T element)//!  int count (const T& element)
   {//!    {
 	  ActivationRecord arec = activate(getClass());//!
+	  table.pushIndices();//!
 	  arec.param("element",element);//!
 	  arec.breakHere("Starting count");//!
-    int h0 = element.hashCode();//!      unsigned h0 = hash(element);
+	  DiscreteInteger h0 = new DiscreteInteger(element.hashCode());//!      unsigned h0 = hash(element);
 	  arec.var("h0", h0);//!
+	  table.indexedBy(h0, "h0");
 	  arec.breakHere("Computed hashcode - search for element");//!
-    int h = find(element, h0);//!      unsigned h = find(element, h0);
-    arec.var("h", new Index(h, table));//!
+	  DiscreteInteger h = new DiscreteInteger(find(element, h0));//!      unsigned h = find(element, h0);
+	  arec.var("h", h);//!
+	  table.indexedBy(h, "h");//!
 	  arec.breakHere("Returned from find - return 0 or 1");//!
-    return  (h != hSize) ? 1 : 0;
+	  table.popIndices();//!
+	  return  (h.get() != hSize) ? 1 : 0;//!	  return  (h != hSize) ? 1 : 0;
   }
   
   
@@ -200,20 +206,24 @@ public Renderer<HashEntry> getRenderer() {//!
   {
 	  ActivationRecord arec = activate(getClass());//!
 	  arec.param("element",element);//!
+	  table.pushIndices();//!
 	  arec.breakHere("Starting erase");//!
-    int h0 = element.hashCode();//!      unsigned h0 = hash(element);
+    DiscreteInteger h0 = new DiscreteInteger(element.hashCode());//!      unsigned h0 = hash(element);
 	  arec.var("h0", h0);//!
+	  table.indexedBy(h0, "h0");//!
 	  arec.breakHere("Computed hashcode - search for element");//!
-    int h = find(element, h0);//!      unsigned h = find(element, h0);
-    arec.var("h", new Index(h, table));//!
+	  DiscreteInteger h = new DiscreteInteger(find(element, h0));//!      unsigned h = find(element, h0);
+      arec.var("h", h);//!
+      table.indexedBy(h, "h");//!
 	  arec.breakHere("Returned from find");//!
-    if (h != hSize)//!     if (h != hSize)
-    {
+	  if (h.get() != hSize)//!     if (h != hSize)
+	  {
     	arec.breakHere("Found the element - mark its slot as Deleted");//!
     	table.get(h).info = HashStatus.Deleted;//!          table[h].info = Deleted;
     	--theSize;
-    }//!
+	  }//!
     arec.breakHere("Done");//!
+    table.popIndices();
   }//!    }
   //!
   //!
@@ -226,14 +236,17 @@ public Renderer<HashEntry> getRenderer() {//!
   //!
   //!private:
   //!
-  int find (T element, int h0)//!  int find (const T& element, int h0) const
+  int find (T element, DiscreteInteger h0)//!  int find (const T& element, int h0) const
   {//!    {
 	  ActivationRecord arec = activate(getClass());//!
 	  arec.param("element",element);//!
 	  arec.param("h0", h0);//!
+	  table.pushIndices();//!
+	  table.indexedBy(h0, "h0");
 	  arec.breakHere("Starting insert");//!
-    int h = h0 % hSize;//!      unsigned h = h0 % hSize;
-    arec.var("h", new Index(h, table));//!
+	  DiscreteInteger h = new DiscreteInteger(h0.get() % hSize);//!      unsigned h = h0 % hSize;
+	  arec.var("h", h);//!
+	  table.indexedBy(h, "h");//!
 	  arec.breakHere("Computed hashcode - search for element");//!
     int count = 0;
     arec.var("count", count);//!
@@ -246,19 +259,20 @@ public Renderer<HashEntry> getRenderer() {//!
       	arec.breakHere("table[h] is occupied or deleted - keep probing.");//!
     	++count;
     	arec.var("count", count);//!
-    	h = (h0 + /*f(count)*/ count*count) % hSize;
-        arec.var("h", new Index(h, table));//!
-     	arec.breakHere("Next possiblity for h.");//!
+    	h.set((h0.get() + /*f(count)*/ count*count) % hSize);//!    	h = (h0 + /*f(count)*/ count*count) % hSize;
+        arec.breakHere("Next possiblity for h.");//!
      }
     arec.breakHere("Finished searching.");//!
     if (count >= hSize 
 	|| table.get(h).info == HashStatus.Empty)//!          || table[h].info == Empty)
     {arec.breakHere("Could not find the element.");//!
+    table.popIndices();//!
      return hSize;
     }//!
     else 
     {arec.breakHere("Found it!");//!
-      return h;
+      table.popIndices();//!
+      return h.get();//!      return h;
     }//!
   }
 //!

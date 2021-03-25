@@ -17,41 +17,6 @@ import edu.odu.cs.AlgAE.Server.Utilities.Index;
 public class QueueDemo extends LocalJavaAnimation {
 
 
-	public class AQueueRenderer implements Renderer<Queue> {
-
-		@Override
-		public Color getColor(Queue obj) {
-			return Color.LIGHT_GRAY;
-		}
-
-		@Override
-		public List<Component> getComponents(Queue q) {
-			LinkedList<Component> comps = new LinkedList<Component>();
-			comps.add (new Component(new Index(q.start, q.array), "start"));
-			comps.add (new Component(new Index(q.stop, q.array), "stop"));
-			comps.add (new Component(q.theSize, "theSize"));
-			comps.add (new Component(q.array, "array"));
-			return comps;
-		}
-
-		@Override
-		public List<Connection> getConnections(Queue obj) {
-			return new LinkedList<Connection>();
-		}
-
-		@Override
-		public int getMaxComponentsPerRow(Queue obj) {
-			return 3;
-		}
-
-		@Override
-		public String getValue(Queue obj) {
-			return "";
-		}
-
-	}
-
-
 
 	private LocalJavaAnimation self;
 	
@@ -79,7 +44,6 @@ public class QueueDemo extends LocalJavaAnimation {
 			@Override
 			public void selected() {
 				//getAnimator().setSpeed(30);
-				getMemoryModel().render(Queue.class, new AQueueRenderer());
 				
 				new Queue().arrayQDemo(self);
 			}

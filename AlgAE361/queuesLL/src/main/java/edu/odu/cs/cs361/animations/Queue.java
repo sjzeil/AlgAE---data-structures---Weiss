@@ -2,6 +2,7 @@ package edu.odu.cs.cs361.animations;//!
 
 import java.awt.Color;//!
 import java.util.ArrayList;//!
+import java.util.Arrays;
 import java.util.List;//!
 
 import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
@@ -10,10 +11,13 @@ import edu.odu.cs.AlgAE.Server.MemoryModel.Component;//!
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;//!
 import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;//!
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;//!
+import edu.odu.cs.AlgAE.Server.Utilities.LinkedList;
+import edu.odu.cs.AlgAE.Server.Utilities.RenderedReference;
+
 import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
 
-public class Queue {//!
+public class Queue implements CanBeRendered<Queue>, Renderer<Queue> {//!
 
 
 //!#include "dsexceptions.h"
@@ -29,48 +33,11 @@ public class Queue {//!
 //!class Queue
 //!{
 //!  public:
-	
-	class Node implements Renderer<Node>, CanBeRendered<Node> {//!
-		String data;//!
-		Node next;//!
-		//!
-		Node (String d, Node nxt)//!
-		{//!
-			data = d;//!
-			next = nxt;//!
-		}//!
-//!
-		@Override//!
-		public Renderer<Node> getRenderer() {//!
-			return this;//!
-		}//!
-//!
-		@Override//!
-		public String getValue(Node obj) {//!
-			return data;//!
-		}//!
-//!
-		@Override//!
-		public Color getColor(Node obj) {//!
-			return null;//!
-		}//!
-//!
-		@Override//!
-		public List<Component> getComponents(Node obj) {//!
-			return new ArrayList<Component>();//!
-		}//!
-//!
-		@Override//!
-		public List<Connection> getConnections(Node obj) {//!
-			ArrayList<Connection> conn = new ArrayList<Connection>();//!
-			conn.add (new Connection(next, 90.0, 90.0));//!
-			return conn;//!
-		}//!
-//!
-		@Override//!
-		public int getMaxComponentsPerRow(Node obj) {//!
-			return 1;//!
-		}//!
+
+	Queue()//!
+	{//!
+		list = new LinkedList<>();//!
+		list.showBackLinks(false);//!
 	}//!
 	
 //!	bool isEmpty( ) const
@@ -81,7 +48,7 @@ public class Queue {//!
 		{
 			ActivationRecord arec = activate(getClass());//!
 			arec.breakHere("getting front");//!
-			return (first != null) ? first.data : "";//!
+			return list.get(0);//!
 	//!        return theList.front( );
 		}
 	
@@ -91,7 +58,7 @@ public class Queue {//!
 		ActivationRecord arec = activate(getClass());//!
 		arec.param("x", x);//!
 		arec.breakHere("pushing");//!
-		if (first == null) first = last = new Node(x, null); else last = last.next = new Node(x, null);;//!
+		list.add(x);//!
 //!        theList.push_back( x );
 		arec.breakHere("done pushing");//!
 	}
@@ -101,97 +68,15 @@ public class Queue {//!
 	{
 		ActivationRecord arec = activate(getClass());//!
 		arec.breakHere("popping");//!
-		first = first.next; if(first == null) last = null;//!
+		list.remove(0);//!
 //!        x = theList.front( ); theList.pop_front( );
 		arec.breakHere("done popping");//!
 	}
 	//!private:
-	Node first = null; Node last = null;//!
-//!    List<Object> theList;
+	LinkedList<String> list;//!
+//!    list<Object> theList;
 
 	
-
-//!template <typename T>
-class Queue_via_List
-{
-//!public:
-	Queue_via_List()	{}
-	
-	class Node implements Renderer<Node>, CanBeRendered<Node> {//!
-		String data;//!
-		Node next;//!
-		//!
-		Node (String d, Node nxt)//!
-		{//!
-			data = d;//!
-			next = nxt;//!
-		}//!
-//!
-		@Override//!
-		public Renderer<Node> getRenderer() {//!
-			return this;//!
-		}//!
-//!
-		@Override//!
-		public String getValue(Node obj) {//!
-			return data;//!
-		}//!
-//!
-		@Override//!
-		public Color getColor(Node obj) {//!
-			return null;//!
-		}//!
-//!
-		@Override//!
-		public List<Component> getComponents(Node obj) {//!
-			return new ArrayList<Component>();//!
-		}//!
-//!
-		@Override//!
-		public List<Connection> getConnections(Node obj) {//!
-			ArrayList<Connection> conn = new ArrayList<Connection>();//!
-			conn.add (new Connection(next, 90.0, 90.0));//!
-			return conn;//!
-		}//!
-//!
-		@Override//!
-		public int getMaxComponentsPerRow(Node obj) {//!
-			return 1;//!
-		}//!
-	}//!
-	
-	void push (String x)//!	void push (const T& x)
-	{
-		ActivationRecord arec = activate(getClass());//!
-		arec.param("x", x);//!
-		arec.breakHere("pushing");//!
-		if (first == null) first = last = new Node(x, null); else last = last.next = new Node(x, null);;//!		list.push_back(x);
-		arec.breakHere("done pushing");//!
-	}
-	
-	void pop ()
-	{
-		ActivationRecord arec = activate(getClass());//!
-		arec.breakHere("popping");//!
-		first = first.next; if(first == null) last = null;//!		list.pop_front(x);
-		arec.breakHere("done popping");//!
-	}
-	
-	String front()//!    T front() const
-	{
-		ActivationRecord arec = activate(getClass());//!
-		arec.breakHere("getting front");//!
-		return (first != null) ? first.data : "";//!        return list.front();
-	}
-
-	void clear ()
-	{
-		first = last = null;//!		list.clear();
-	}
-
-	//!private:
-	Node first = null; Node last = null;//!    list<T> list;
-}
 
 
 void listQDemo (LocalJavaAnimation self)
@@ -221,5 +106,38 @@ void listQDemo (LocalJavaAnimation self)
 	}
 }
 
+/*! */
+@Override
+public Color getColor(Queue arg0) {
+	return null;
+}
+
+@Override
+public List<Component> getComponents(Queue q) {
+	Component[] components = {new Component(list, "list")};
+	return Arrays.asList(components);
+}
+
+@Override
+public List<Connection> getConnections(Queue arg0) {
+	return new ArrayList<Connection>();
+}
+
+@Override
+public int getMaxComponentsPerRow(Queue arg0) {
+	return 1;
+}
+
+@Override
+public String getValue(Queue arg0) {
+	return "";
+}
+
+@Override
+public Renderer<Queue> getRenderer() {
+	return this;
+}
+
+/* !*/
 
 }//!

@@ -10,7 +10,7 @@ import edu.odu.cs.AlgAE.Server.Rendering.CanBeRendered;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
 
 /**
- * A wrapper for ints.  Unlike Integer, this is mutable. More important,
+ * A wrapper for strings.  Unlike String, this is mutable. More important,
  * there is no hidden sharing.
  *
  * @author zeil

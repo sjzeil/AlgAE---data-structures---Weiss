@@ -21,7 +21,7 @@ repositories {
 
 
 dependencies {
-    implementation 'edu.odu.cs.algae:algae-client-server:4.2-SNAPSHOT'
+    implementation 'edu.odu.cs.algae:algae-client-server:4.2'
 }
 
 

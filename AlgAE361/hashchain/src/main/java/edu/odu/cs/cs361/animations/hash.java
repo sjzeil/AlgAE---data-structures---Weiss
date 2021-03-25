@@ -3,12 +3,12 @@ package edu.odu.cs.cs361.animations;//!
 import static edu.odu.cs.AlgAE.Server.LocalServer.activate;//!
 
 
-import java.util.ArrayList;//!
-import java.util.LinkedList;//!
+import edu.odu.cs.AlgAE.Server.Utilities.LinkedList;//!
 import java.util.ListIterator;//!
 
 import edu.odu.cs.AlgAE.Server.MemoryModel.ActivationRecord;//!
-import edu.odu.cs.AlgAE.Server.Rendering.ListIteratorRenderer;//!
+import edu.odu.cs.AlgAE.Server.Utilities.ArrayList;//!
+import edu.odu.cs.AlgAE.Server.Utilities.DiscreteInteger;//!
 import edu.odu.cs.AlgAE.Server.Utilities.Index;//!
 
 public class hash<T> {//!
@@ -378,8 +378,14 @@ public class hash<T> {//!
 //!  hashtableSize(0)
 	  numBuckets = nbuckets;//!
 	  bucket = new ArrayList<LinkedList<T>>();//!
+	  bucket.renderHorizontally(false);//!
 	  for (int i = 0; i < nbuckets; ++i) //!
-		  bucket.add (new LinkedList<T>());//!
+	  {//!
+		  LinkedList<T> b = new LinkedList<>();//!
+		  b.showBackLinks(false);//!
+		  b.showFirstLast(false);
+		  bucket.add (b);//!
+	  }//!
 	  hashtableSize = 0;//!
   }//!
 //!{}
@@ -449,22 +455,21 @@ public boolean find(T item)//!
   // hashIndex is the bucket number (index of the linked list)
 	arec.param("item", item);//!
 	arec.breakHere("Starting find - compute the hash function");//!
-	int hashIndex = item.hashCode() % numBuckets;//!  int hashIndex = int(hf(item) % numBuckets);
+	DiscreteInteger hashIndex = new DiscreteInteger(item.hashCode() % numBuckets);//!  int hashIndex = int(hf(item) % numBuckets);
   // use alias for bucket[hashIndex] to avoid indexing
-	arec.var("hashIndex", new Index(hashIndex, bucket));//!
+	bucket.indexedBy(hashIndex, "hashIndex");//!
 	arec.breakHere("Get the indicated bucket");//!
 	LinkedList<T> myBucket = bucket.get(hashIndex);//!  const list<T>& myBucket = bucket[hashIndex];
 	arec.refVar("myBucket",myBucket);//!
 	arec.breakHere("Get ready to search myBucket");//!
   // use to traverse the list bucket[hashIndex]
 	ListIterator<T> bucketIter = null;//!  typename list<T>::const_iterator bucketIter;
-	arec.render (new ListIteratorRenderer<T>(bucketIter, myBucket, false, false, arec.context()));//!
+	arec.var("bucketIter",bucketIter);//!
   // returned if we find item
   
   // traverse list and look for a match with item
 
 	   bucketIter = myBucket.listIterator();//!  bucketIter = myBucket.begin();
-	   arec.render (new ListIteratorRenderer<T>(bucketIter, myBucket, false, false, arec.context()));//!
 	   arec.breakHere("Start the search");//!
 	   while (bucketIter.hasNext())//!  while(bucketIter != myBucket.end())
     {
@@ -504,13 +509,13 @@ public boolean find(T item)//!
    arec.breakHere("Get ready to search myBucket");//!
    //!  // use iterator to traverse the list myBucket
    ListIterator<T> bucketIter = null;//!  typename list<T>::iterator bucketIter;
+   arec.var("bucketIter", bucketIter);//!
 //!  // specifies whether or not we do an insert
    boolean success = false;//!  bool success;
 //!  
 //!  // traverse list until we arrive at the end of
 //!  // the bucket or find a match with item
    bucketIter = myBucket.listIterator();//!  bucketIter = myBucket.begin();
-   arec.render (new ListIteratorRenderer<T>(bucketIter, myBucket, false, false, arec.context()));//!
    arec.var("bucketIter",bucketIter);//!
    T current = null;//!
    arec.var("success",success);//!

@@ -5,14 +5,11 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.odu.cs.cs361.animations.Stack;
-import edu.odu.cs.AlgAE.Server.MenuFunction;
 import edu.odu.cs.AlgAE.Animations.LocalJavaAnimation;
+import edu.odu.cs.AlgAE.Server.MenuFunction;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Component;
 import edu.odu.cs.AlgAE.Server.MemoryModel.Connection;
-import edu.odu.cs.AlgAE.Server.Rendering.LinkedListRenderer;
 import edu.odu.cs.AlgAE.Server.Rendering.Renderer;
-import edu.odu.cs.AlgAE.Server.Utilities.Index;
 import edu.odu.cs.AlgAE.Server.Utilities.SimpleReference;
 
 public class StackDemo extends LocalJavaAnimation {
@@ -28,7 +25,8 @@ public class StackDemo extends LocalJavaAnimation {
 		@Override
 		public List<Component> getComponents(Stack stk) {
 			LinkedList<Component> comps = new LinkedList<Component>();
-			comps.add (new Component(new SimpleReference(stk.first,140.0, 180.0), "first"));
+			stk.firstR.set(stk.first);
+			comps.add (new Component(stk.firstR, "first"));
 			return comps;
 		}
 
