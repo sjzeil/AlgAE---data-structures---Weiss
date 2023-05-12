@@ -1,4 +1,4 @@
-/.gradle/
+**/.gradle/
 **/.classpath
 **/.project
 **/*.log
@@ -6,3 +6,4 @@
 **/bin/
 **/.settings/
 **/*~
+**/.vscode/
